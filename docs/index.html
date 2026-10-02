@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Febin Francis - Systems Engineer specializing in AI Infrastructure, Verifiable Compute, and Sovereign Systems">
+    <title>Febin Francis - Systems Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #e0e0e0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        body.dark-mode .container {
+            background: #1e1e1e;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 500;
+            opacity: 0.95;
+        }
+
+        .header .tagline {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 2px solid white;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .links a:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            margin: 30px 0 20px 0;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        body.dark-mode h2 {
+            color: #9b8dd9;
+            border-color: #9b8dd9;
+        }
+
+        h3 {
+            font-size: 1.3em;
+            margin: 20px 0 10px 0;
+            color: #764ba2;
+        }
+
+        body.dark-mode h3 {
+            color: #a89cda;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .profile-code {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+
+        body.dark-mode .profile-code {
+            background: #2a2a2a;
+            color: #d0d0d0;
+        }
+
+        .systems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .system-card {
+            background: #f9f9f9;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        body.dark-mode .system-card {
+            background: #2a2a2a;
+            border-left-color: #9b8dd9;
+        }
+
+        .system-card h3 {
+            margin-top: 0;
+        }
+
+        .system-card a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        body.dark-mode .system-card a {
+            color: #9b8dd9;
+        }
+
+        .system-card a:hover {
+            text-decoration: underline;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th {
+            background: #f0f0f0;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #ddd;
+        }
+
+        body.dark-mode th {
+            background: #2a2a2a;
+            border-bottom-color: #444;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        body.dark-mode td {
+            border-bottom-color: #444;
+        }
+
+        .engineering-model {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        body.dark-mode .engineering-model {
+            background: #1a1f2e;
+            border-left-color: #9b8dd9;
+        }
+
+        .flowchart {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .flow-item {
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        body.dark-mode .flow-item {
+            background: #9b8dd9;
+        }
+
+        .flow-arrow {
+            font-size: 1.5em;
+            color: #667eea;
+        }
+
+        body.dark-mode .flow-arrow {
+            color: #9b8dd9;
+        }
+
+        .invariants {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #ff9800;
+        }
+
+        body.dark-mode .invariants {
+            background: #2a1f1f;
+            border-left-color: #ffb74d;
+        }
+
+        .code-block {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+
+        body.dark-mode .code-block {
+            background: #2a2a2a;
+            color: #d0d0d0;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid #eee;
+        }
+
+        body.dark-mode .footer {
+            background: #252525;
+            border-top-color: #444;
+        }
+
+        .footer h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        body.dark-mode .footer h2 {
+            color: #9b8dd9;
+        }
+
+        .footer p {
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        body.dark-mode .footer-links a {
+            color: #9b8dd9;
+        }
+
+        .footer-links a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        body.dark-mode .footer-links a:hover {
+            color: #c9b8e4;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        body.dark-mode .theme-toggle {
+            background: #1e1e1e;
+            border-color: #9b8dd9;
+            color: #9b8dd9;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        ul {
+            margin: 20px 0 20px 40px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px 20px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .header .subtitle {
+                font-size: 1.1em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .systems-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                font-size: 0.9em;
+                padding: 8px 12px;
+            }
+        }
+
+        .ml-8 {
+            margin-left: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+
+    <div class="container">
+        <div class="header">
+            <h1>FEBIN FRANCIS</h1>
+            <div class="subtitle">Systems Engineer · AI Infrastructure · Verifiable Compute</div>
+            <div class="tagline">Building systems that prove what happened instead of asking you to trust what happened.</div>
+            <div class="tags">
+                <span class="tag">AI Agents</span>
+                <span class="tag">Sovereign AI</span>
+                <span class="tag">MCP</span>
+                <span class="tag">Local LLMs</span>
+                <span class="tag">Zero-Knowledge</span>
+                <span class="tag">Distributed Systems</span>
+            </div>
+            <div class="links">
+                <a href="portfolio.html">Portfolio (20+ Repos)</a>
+                <a href="https://github.com/CodesbyFebin" target="_blank">GitHub</a>
+                <a href="https://www.linkedin.com/in/codes-by-febin/" target="_blank">LinkedIn</a>
+                <a href="https://orcid.org/0009-0002-8123-1531" target="_blank">ORCID</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <h2>SYSTEM PROFILE</h2>
+            <div class="profile-code">
+ENGINEER       Febin Francis
+HANDLE         CodesbyFebin
+FOCUS          AI Infrastructure · Verifiable Compute · Sovereign Systems
+BUILDS         Agents · runtimes · protocols · control planes · proof systems
+PRINCIPLE      Measure → Verify → Admit → Execute → Prove
+UNMEASURED     UNKNOWN
+            </div>
+
+            <p>I design infrastructure around <strong>signed intent, local policy, explicit execution state, evidence, and reproducible verification</strong>.</p>
+
+            <p>
+                If a capability is simulated, it should say <strong>SIMULATED</strong>.<br>
+                If it has not been measured, it should say <strong>UNKNOWN</strong>.<br>
+                If it cannot pass the gate, it should not silently pass.
+            </p>
+
+            <h2>WHAT I BUILD</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Domain</th>
+                        <th>Engineering Focus</th>
+                        <th>Technologies</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Agentic Infrastructure</strong></td>
+                        <td>Agents with explicit tools, policies, permissions and machine-readable contracts</td>
+                        <td>MCP · Agents · Local LLMs · Tool Gateways</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sovereign Infrastructure</strong></td>
+                        <td>Operator authority over identity, admission, execution and data</td>
+                        <td>Ed25519 · mTLS · WireGuard · Raft</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Verifiable Compute</strong></td>
+                        <td>Execution claims that can be independently checked</td>
+                        <td>STARKs · AIR · Winterfell · Attestation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Distributed Systems</strong></td>
+                        <td>Explicit desired, admitted, observed and verified state</td>
+                        <td>BLAKE3 · Merkle Trees · Chaos · Conformance</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>SELECTED SYSTEMS</h2>
+
+            <div class="systems-grid">
+                <div class="system-card">
+                    <h3><a href="https://github.com/CodesbyFebin/rust-stark-zkvm" target="_blank">rust-stark-zkvm</a></h3>
+                    <p><strong>Rust</strong></p>
+                    <p>A small zero-knowledge virtual machine with real STARK proving and verification.</p>
+                    <p>Custom VM ISA → execution trace → AIR → STARK proof → independent verification.</p>
+                    <ul>
+                        <li>ADD / SUB / MUL and JZ / JNZ execution</li>
+                        <li>Fixed register architecture with LOAD / STORE</li>
+                        <li>Winterfell STARK prover and verifier</li>
+                        <li>HTTP proving and verification API</li>
+                        <li>MCP prove / verify tools</li>
+                        <li>CI proof verification gates</li>
+                    </ul>
+                </div>
+
+                <div class="system-card">
+                    <h3><a href="https://github.com/CodesbyFebin/Decentralized-" target="_blank">Decentralized.Host</a></h3>
+                    <p><strong>Go</strong></p>
+                    <p>Self-hosted infrastructure where hosts remain sovereign.</p>
+                    <ul>
+                        <li>Ed25519 identities and signed intent</li>
+                        <li>Per-host local admission policy</li>
+                        <li>Desired / admitted / observed state separation</li>
+                        <li>BLAKE3 CAS and Merkle anti-entropy</li>
+                        <li>Raft + mTLS control plane</li>
+                        <li>Userspace WireGuard mesh</li>
+                    </ul>
+                </div>
+
+                <div class="system-card">
+                    <h3><a href="https://github.com/CodesbyFebin/decentralized.hosting" target="_blank">decentralized.hosting</a></h3>
+                    <p><strong>Python</strong></p>
+                    <p>A runnable self-hosted deployment mesh.</p>
+                    <div class="code-block">FastAPI Control Plane → Scheduler → Docker Node Agent → Traefik → Workload</div>
+                    <p>Includes a <code>dhost</code> CLI, resource-aware scheduling, rollback, local registry, Docker execution, Traefik edge routing and MCP integration.</p>
+                </div>
+
+                <div class="system-card">
+                    <h3><a href="https://www.xfree.in" target="_blank">XFree</a></h3>
+                    <p><strong>TypeScript</strong></p>
+                    <p>Browser-based developer, SEO and AI tooling.</p>
+                    <p>The live application uses <strong>React 19 · TypeScript · Vite 6 · Express 4</strong>, with server-side AI gateways and prerendered discovery surfaces.</p>
+                </div>
+            </div>
+
+            <h2>ENGINEERING MODEL</h2>
+            <div class="engineering-model">
+                <div class="flowchart">
+                    <div class="flow-item">Intent</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">Sign</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">Policy</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">Admit?</div>
+                </div>
+                <div class="flowchart">
+                    <div class="flow-item" style="background: #ff6b6b;">Refuse + Record</div>
+                    <div class="flow-arrow">✗</div>
+                </div>
+                <div class="flowchart">
+                    <div class="flow-item" style="background: #51cf66;">Execute</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">Observe</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">Verify</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-item">Evidence</div>
+                </div>
+
+                <div class="code-block" style="margin-top: 20px;">DESIRED ≠ ADMITTED ≠ EXECUTING ≠ OBSERVED ≠ VERIFIED</div>
+                <p>Collapsing these states into one green <code>SUCCESS</code> badge hides information that should remain inspectable.</p>
+            </div>
+
+            <h2>TOOLCHAIN</h2>
+            <p><strong>Languages</strong><br>
+            Rust · Go · TypeScript · Python · Shell</p>
+
+            <p><strong>Infrastructure & Cryptography</strong><br>
+            Winterfell · Raft · BLAKE3 · Ed25519 · WireGuard · Docker · Traefik · FastAPI · MCP</p>
+
+            <p><strong>Quality & Verification</strong><br>
+            CodeQL · Playwright · Dependabot · conformance tests · chaos tests · proof gates</p>
+
+            <h2>INVARIANTS</h2>
+            <div class="invariants">
+                <div class="code-block">
+FAIL_CLOSED       Unsupported or unverifiable state must not silently become success
+NO_FAKE_LIVE      Simulated capabilities stay visibly simulated
+UNKNOWN ≠ HEALTHY Missing telemetry cannot become green status
+LOCAL_AUTHORITY   The execution host retains admission authority
+EVIDENCE > CLAIMS Tests, signatures and artifacts outrank prose
+REPRODUCIBLE      Another implementation should be able to verify the contract
+SOURCE = PRODUCT  Public capability claims should correspond to inspectable code
+                </div>
+            </div>
+
+            <h2>DEVELOPER ECOSYSTEM</h2>
+            <p>I build and document systems so they can be understood by <strong>humans, coding agents, automation and external developer platforms</strong> without inventing capabilities that are not present.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Surface</th>
+                        <th>Role in the Engineering Workflow</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>GitHub</strong></td>
+                        <td>Source, issues, pull requests, CI, security automation, evidence and release history</td>
+                    </tr>
+                    <tr>
+                        <td><strong>MCP</strong></td>
+                        <td>Explicit tool/resource boundary for AI agents and developer automation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Agent Skills</strong></td>
+                        <td>Reusable, scoped instructions for repeatable engineering workflows</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LinkedIn</strong></td>
+                        <td>Professional identity and public project discovery</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Vercel</strong></td>
+                        <td>Web/application deployment for applicable projects</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Docker</strong></td>
+                        <td>Reproducible workload packaging and local/self-hosted execution</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Agent-native Repository Contract</h3>
+            <p>This profile follows the increasingly common separation between human documentation, agent instructions, compact LLM discovery and reusable skills:</p>
+
+            <div class="code-block">
+README.md
+   ├── human technical profile
+   ├── implemented systems
+   └── verification links
+
+AGENTS.md
+   ├── agent operating rules
+   ├── claim boundaries
+   └── source-of-truth guidance
+
+llms.txt
+   ├── compact identity
+   ├── project discovery
+   └── verification entry points
+
+SKILL.md / skills/
+   ├── reusable engineering workflows
+   └── evidence-first project inspection
+
+agents.txt / agents.json
+   └── machine-readable capability discovery
+            </div>
+
+            <p>The repository does <strong>not</strong> treat the presence of an MCP server, skill file, social profile or deployment provider as proof of engineering capability. Those surfaces are interfaces. The underlying source, tests, specifications and evidence remain authoritative.</p>
+        </div>
+
+        <div class="footer">
+            <h2>PROOF > PROMISES</h2>
+            <p><strong>BUILD · MEASURE · VERIFY · IMPROVE</strong></p>
+            <div class="footer-links">
+                <a href="https://github.com/CodesbyFebin" target="_blank">GitHub</a>
+                <a href="https://www.linkedin.com/in/codes-by-febin/" target="_blank">LinkedIn</a>
+                <a href="https://orcid.org/0009-0002-8123-1531" target="_blank">ORCID</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.querySelector('.theme-toggle').textContent = '☀️ Light Mode';
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const toggle = document.querySelector('.theme-toggle');
+
+            body.classList.toggle('dark-mode');
+
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                toggle.textContent = '☀️ Light Mode';
+            } else {
+                localStorage.setItem('theme', 'light');
+                toggle.textContent = '🌙 Dark Mode';
+            }
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

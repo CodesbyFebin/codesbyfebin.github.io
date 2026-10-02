@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Febin Francis - Systems Engineer specializing in AI Infrastructure, Verifiable Compute, and Sovereign Systems. Explore 20+ open-source projects built on Rust, Go, TypeScript, and Python.">
+    <meta name="keywords" content="systems engineer, AI infrastructure, verifiable compute, zero-knowledge proofs, MCP, sovereign systems, distributed systems, rust, go, typescript">
+    <meta name="author" content="Febin Francis">
+    <meta property="og:title" content="Febin Francis - Systems Engineer & Open Source Developer">
+    <meta property="og:description" content="Building systems that prove what happened. Explore 20+ repositories spanning verifiable computation, agentic infrastructure, and sovereign systems.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://codesbyfebin.github.io/">
+    <title>Febin Francis - Systems Engineer | Portfolio & Open Source Projects</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #ff9800;
+            --success: #51cf66;
+            --danger: #ff6b6b;
+            --dark: #1a1a1a;
+            --light: #f5f7fa;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #e0e0e0;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header .role {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            font-weight: 500;
+            opacity: 0.95;
+        }
+
+        .header .tagline {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            font-style: italic;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .header .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+            color: white;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .theme-toggle {
+            background: #1e1e1e;
+            border-color: #9b8dd9;
+            color: #9b8dd9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        section {
+            margin-bottom: 80px;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 20px;
+            display: inline-block;
+        }
+
+        body.dark-mode h2 {
+            color: #9b8dd9;
+            border-color: #9b8dd9;
+        }
+
+        h3 {
+            font-size: 1.4em;
+            margin: 30px 0 15px 0;
+            color: var(--secondary);
+        }
+
+        body.dark-mode h3 {
+            color: #a89cda;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+
+        .about-intro {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            border-left: 5px solid var(--primary);
+        }
+
+        body.dark-mode .about-intro {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+        }
+
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .expertise-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            border-top: 4px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .expertise-card {
+            background: #1e1e1e;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .expertise-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .expertise-card h3 {
+            margin-top: 0;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .tech-badge {
+            background: var(--primary);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+
+        body.dark-mode .tech-badge {
+            background: #9b8dd9;
+        }
+
+        .repos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .repo-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body.dark-mode .repo-card {
+            background: #1e1e1e;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .repo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border-left-color: var(--accent);
+        }
+
+        .repo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .repo-name {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0;
+        }
+
+        body.dark-mode .repo-name {
+            color: #9b8dd9;
+        }
+
+        .repo-stars {
+            background: var(--accent);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .repo-description {
+            color: #666;
+            margin: 12px 0;
+            flex-grow: 1;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        body.dark-mode .repo-description {
+            color: #aaa;
+        }
+
+        .repo-meta {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .repo-lang {
+            background: #f0f0f0;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        body.dark-mode .repo-lang {
+            background: #2a2a2a;
+        }
+
+        .repo-link {
+            display: inline-block;
+            margin-top: auto;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .repo-link {
+            color: #9b8dd9;
+        }
+
+        .repo-link:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .category-label {
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        body.dark-mode .category-label {
+            background: #9b8dd9;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .cta-section h2 {
+            color: white;
+            border: none;
+            font-size: 2.2em;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid #ddd;
+            margin-top: 80px;
+        }
+
+        body.dark-mode .footer {
+            background: #252525;
+            border-top-color: #444;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        body.dark-mode .footer-links a {
+            color: #9b8dd9;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 50px 20px;
+            }
+
+            .header h1 {
+                font-size: 2.2em;
+            }
+
+            .header .role {
+                font-size: 1.1em;
+            }
+
+            .container {
+                padding: 40px 20px;
+            }
+
+            h2 {
+                font-size: 2em;
+            }
+
+            .repos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .expertise-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header .stats {
+                gap: 20px;
+            }
+        }
+
+        .experience-timeline {
+            position: relative;
+            margin: 40px 0;
+        }
+
+        .timeline-item {
+            margin-bottom: 40px;
+            padding-left: 40px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--primary);
+            border: 3px solid white;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            top: 5px;
+            box-shadow: 0 0 0 3px var(--primary);
+        }
+
+        body.dark-mode .timeline-item::before {
+            border-color: #1e1e1e;
+            box-shadow: 0 0 0 3px #9b8dd9;
+        }
+
+        .timeline-item h4 {
+            margin: 0 0 5px 0;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .timeline-item .year {
+            color: #999;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            margin: 20px 0 20px 40px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            line-height: 1.8;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(255, 152, 0, 0.2) 0%, transparent 100%);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .code-block {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+
+        body.dark-mode .code-block {
+            background: #2a2a2a;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
+
+    <header class="header">
+        <div class="header-content">
+            <h1>FEBIN FRANCIS</h1>
+            <div class="role">Systems Engineer • AI Infrastructure • Verifiable Compute</div>
+            <p class="tagline">Building systems that prove what happened instead of asking you to trust what happened.</p>
+
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">20+</span>
+                    <span class="stat-label">Open Source Repos</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">5+</span>
+                    <span class="stat-label">Core Systems</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">6</span>
+                    <span class="stat-label">Languages</span>
+                </div>
+            </div>
+
+            <div class="tag-list">
+                <span class="tag">AI Agents</span>
+                <span class="tag">Sovereign AI</span>
+                <span class="tag">MCP Servers</span>
+                <span class="tag">Verifiable Compute</span>
+                <span class="tag">Zero-Knowledge Proofs</span>
+                <span class="tag">Distributed Systems</span>
+                <span class="tag">STARK Proofs</span>
+                <span class="tag">Local LLMs</span>
+            </div>
+
+            <div class="header-links">
+                <a href="#about" class="btn">About</a>
+                <a href="#projects" class="btn">Projects</a>
+                <a href="https://github.com/CodesbyFebin" target="_blank" class="btn">GitHub</a>
+                <a href="https://www.linkedin.com/in/codes-by-febin/" target="_blank" class="btn">LinkedIn</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- About Section -->
+        <section id="about">
+            <h2>About & Expertise</h2>
+
+            <div class="about-intro">
+                <p>I am a systems engineer focused on building infrastructure that combines <strong>signed intent, local policy, explicit execution state, evidence, and reproducible verification</strong>. My work spans AI infrastructure, verifiable computation, and sovereign systems—with a core principle: <strong>PROOF > PROMISES</strong>.</p>
+                <p>Rather than trusting centralized claims, I design systems where every significant action is measurable, verifiable, and independently auditable. This approach applies equally to AI agents making decisions, distributed systems coordinating work, and zero-knowledge proofs validating computation.</p>
+            </div>
+
+            <h3>Engineering Philosophy</h3>
+            <p>My engineering model follows a clear progression:</p>
+            <div class="code-block">INTENT → SIGN → POLICY → ADMIT → EXECUTE → OBSERVE → VERIFY → EVIDENCE</div>
+            <p>Each state transition is distinct and measurable. Collapsing these into a single "SUCCESS" badge hides critical information that should remain inspectable.</p>
+            <p><strong>Key invariants I uphold:</strong></p>
+            <ul>
+                <li><strong>FAIL_CLOSED:</strong> Unsupported or unverifiable state must not silently become success</li>
+                <li><strong>NO_FAKE_LIVE:</strong> Simulated capabilities stay visibly simulated</li>
+                <li><strong>UNKNOWN ≠ HEALTHY:</strong> Missing telemetry cannot become green status</li>
+                <li><strong>LOCAL_AUTHORITY:</strong> The execution host retains admission authority</li>
+                <li><strong>EVIDENCE > CLAIMS:</strong> Tests, signatures, and artifacts outrank prose</li>
+                <li><strong>SOURCE = PRODUCT:</strong> Public capability claims correspond to inspectable code</li>
+            </ul>
+
+            <h3>Core Competencies</h3>
+            <div class="expertise-grid">
+                <div class="expertise-card">
+                    <h3>Agentic Infrastructure</h3>
+                    <p>Designing AI agents with explicit tools, permissions, and machine-readable contracts. Building MCP servers, tool gateways, and local LLM routing systems that maintain transparency about agent capabilities and limitations.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">MCP</span>
+                        <span class="tech-badge">Agents</span>
+                        <span class="tech-badge">Local LLMs</span>
+                        <span class="tech-badge">Tool Design</span>
+                    </div>
+                </div>
+
+                <div class="expertise-card">
+                    <h3>Verifiable Compute</h3>
+                    <p>Building zero-knowledge virtual machines and STARK-based proving systems. Creating computation proofs that can be independently verified without re-executing the original workload—critical for trustless systems.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">STARKs</span>
+                        <span class="tech-badge">AIR</span>
+                        <span class="tech-badge">Winterfell</span>
+                        <span class="tech-badge">Zero-Knowledge</span>
+                    </div>
+                </div>
+
+                <div class="expertise-card">
+                    <h3>Sovereign Infrastructure</h3>
+                    <p>Building self-hosted systems where operators retain full control over identity, admission policy, execution, and data. Using cryptographic techniques and signed intent to ensure local authority is preserved.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Ed25519</span>
+                        <span class="tech-badge">mTLS</span>
+                        <span class="tech-badge">WireGuard</span>
+                        <span class="tech-badge">Raft</span>
+                    </div>
+                </div>
+
+                <div class="expertise-card">
+                    <h3>Distributed Systems</h3>
+                    <p>Designing systems with explicit desired, admitted, observed, and verified state. Using BLAKE3 content-addressable storage, Merkle trees, and anti-entropy protocols to maintain consistency at scale.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">BLAKE3</span>
+                        <span class="tech-badge">Merkle Trees</span>
+                        <span class="tech-badge">Raft</span>
+                        <span class="tech-badge">Chaos Testing</span>
+                    </div>
+                </div>
+
+                <div class="expertise-card">
+                    <h3>Development Platforms</h3>
+                    <p>Building developer tools and platforms that serve both humans and AI agents. Designing CLI tools, APIs, and MCP servers that maintain clarity about capabilities and limitations across the stack.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">CLI Design</span>
+                        <span class="tech-badge">API Design</span>
+                        <span class="tech-badge">MCP Servers</span>
+                        <span class="tech-badge">DevX</span>
+                    </div>
+                </div>
+
+                <div class="expertise-card">
+                    <h3>Quality & Verification</h3>
+                    <p>Implementing automated verification gates, security scanning, and chaos testing. Using CI proof gates and conformance tests to ensure production systems meet stated requirements under real-world conditions.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">CodeQL</span>
+                        <span class="tech-badge">Playwright</span>
+                        <span class="tech-badge">Chaos Tests</span>
+                        <span class="tech-badge">Proof Gates</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Technology Stack</h3>
+            <p><strong>Languages:</strong> Rust · Go · TypeScript · Python · Shell · Solidity</p>
+            <p><strong>Infrastructure & Cryptography:</strong> Winterfell · Raft · BLAKE3 · Ed25519 · WireGuard · Docker · Traefik · FastAPI · Express</p>
+            <p><strong>Quality & Verification:</strong> CodeQL · Playwright · Dependabot · conformance tests · chaos tests · proof gates</p>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <h2>Featured Projects (20+ Open Source Repos)</h2>
+            <p>These repositories represent my core work in verifiable compute, agentic infrastructure, and sovereign systems. Each is built with the engineering philosophy of PROOF > PROMISES.</p>
+
+            <h3 style="margin-top: 50px;">Core Systems (Verifiable Compute & Infrastructure)</h3>
+            <div class="repos-grid">
+                <div class="repo-card">
+                    <div class="category-label">Verifiable Compute</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">rust-stark-zkvm</h3>
+                        <span class="repo-stars">⭐ 1</span>
+                    </div>
+                    <p class="repo-description">Open-source Rust zkVM for STARK-based verifiable computation, powered by Winterfell. Custom VM ISA with branching and registers, STARK prover/verifier, CLI, MCP server, HTTP proving API, CI proof gates, and on-chain attestation.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ Rust/HTML</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/rust-stark-zkvm" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+
+                <div class="repo-card">
+                    <div class="category-label">Agentic OS</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">G.O.D Machine</h3>
+                        <span class="repo-stars">⭐ 1</span>
+                    </div>
+                    <p class="repo-description">Open-source AI coding agent and self-hosted Agentic Development OS with autonomous agent swarms, MCP tools, local LLM routing, secure sandboxes, persistent memory, coding IDE, P99 verification, deployment and self-healing workflows.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ TypeScript</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/The-Omnipotent-G.O.D-Machine-" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+
+                <div class="repo-card">
+                    <div class="category-label">MCP Infrastructure</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">GitHub MCP CI/CD</h3>
+                        <span class="repo-stars">⭐ 0</span>
+                    </div>
+                    <p class="repo-description">Dedicated CI/CD engine for MCP servers. GitHub MCP repository synchronization, publisher and category routing, dependency-aware ranking invalidation, language classification and archive status tracking.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ Multi-language</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/github-mcpserver--ci-cd-engine" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 50px;">Multi-Agent & AI Infrastructure</h3>
+            <div class="repos-grid">
+                <div class="repo-card">
+                    <div class="category-label">Agent Systems</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">Open Swarm AI</h3>
+                        <span class="repo-stars">⭐ 0</span>
+                    </div>
+                    <p class="repo-description">Local-first multi-agent routing with parallel agents, stigmergy blackboard coordination, and LangGraph orchestration. Maintains the open mono-agent ethos while enabling multi-agent scale and coordination.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ Python</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/Open-Swarm-ai" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+
+                <div class="repo-card">
+                    <div class="category-label">Agent Cookbook</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">Agentic RAG Cookbook</h3>
+                        <span class="repo-stars">⭐ 0</span>
+                    </div>
+                    <p class="repo-description">Comprehensive guide to building RAG systems with AI agents. Covers retrieval strategies, agent decision-making, tool integration, and production deployment patterns.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ Multi-language</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/agentic-rag-cookbook" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+
+                <div class="repo-card">
+                    <div class="category-label">Agent Memory</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">Awesome Agent Memory</h3>
+                        <span class="repo-stars">⭐ 0</span>
+                    </div>
+                    <p class="repo-description">Curated collection of memory resources and patterns for AI agents. Covers persistent memory, context windows, retrieval strategies, and knowledge integration techniques.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ Multi-language</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/awesome-agent-memory" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+
+                <div class="repo-card">
+                    <div class="category-label">Multi-Agent Systems</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">Awesome Multi-Agent Systems</h3>
+                        <span class="repo-stars">⭐ 0</span>
+                    </div>
+                    <p class="repo-description">Comprehensive resource collection for multi-agent system design and implementation. Covers coordination patterns, communication protocols, and production deployment.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ Multi-language</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/awesome-multi-agent-systems" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+
+                <div class="repo-card">
+                    <div class="category-label">Autonomous Coding</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">JARVIS - TurboQuant</h3>
+                        <span class="repo-stars">⭐ 0</span>
+                    </div>
+                    <p class="repo-description">Autonomous AI coding agent that reads requirements, writes production-quality code, tests it, fixes bugs, and deploys it. Supports 20+ programming languages with deep GitHub integration.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ Multi-language</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/JARVIS---TurboQuant-" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 50px;">MCP Servers & Developer Tools</h3>
+            <div class="repos-grid">
+                <div class="repo-card">
+                    <div class="category-label">MCP Directory</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">Indian MCP Server</h3>
+                        <span class="repo-stars">⭐ 0</span>
+                    </div>
+                    <p class="repo-description">India's largest open MCP Server directory and developer platform. Guides, rankings, and resources for discovering and building Model Context Protocol servers.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ TypeScript</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/Indian-MCP-Server" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+
+                <div class="repo-card">
+                    <div class="category-label">MCP Resources</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">Awesome MCP Servers 2027</h3>
+                        <span class="repo-stars">⭐ 0</span>
+                    </div>
+                    <p class="repo-description">Curated collection of MCP servers and resources. Comprehensive guide to the MCP ecosystem and integration patterns.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ Multi-language</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/awesome-mcp-servers-2027" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+
+                <div class="repo-card">
+                    <div class="category-label">Web Applications</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">XFree Application</h3>
+                        <span class="repo-stars">⭐ 0</span>
+                    </div>
+                    <p class="repo-description">Browser-based developer, SEO and AI tooling. Built with React 19, TypeScript, Vite 6, and Express 4.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ HTML/TypeScript</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/xfree-app" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+
+                <div class="repo-card">
+                    <div class="category-label">Services Platform</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">XFree.in</h3>
+                        <span class="repo-stars">⭐ 0</span>
+                    </div>
+                    <p class="repo-description">Freemium services platform with live AI capabilities and developer tools.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ TypeScript</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/xfree.in" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 50px;">Knowledge & Optimization</h3>
+            <div class="repos-grid">
+                <div class="repo-card">
+                    <div class="category-label">Cookbook</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">AI Cost Optimization</h3>
+                        <span class="repo-stars">⭐ 0</span>
+                    </div>
+                    <p class="repo-description">Practical guide to AI/ML cost optimization. Covers inference optimization, batch processing, and resource efficiency patterns.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ Multi-language</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/ai-cost-optimization-cookbook" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+
+                <div class="repo-card">
+                    <div class="category-label">Cookbook</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">Prompt Engineering</h3>
+                        <span class="repo-stars">⭐ 0</span>
+                    </div>
+                    <p class="repo-description">Comprehensive prompt engineering guide. Covers techniques, patterns, and best practices for effective LLM interaction.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ Multi-language</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/prompt-engineering-cookbook" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+
+                <div class="repo-card">
+                    <div class="category-label">Development</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">Evidence Cookbook</h3>
+                        <span class="repo-stars">⭐ 0</span>
+                    </div>
+                    <p class="repo-description">Evidence-driven development practices and patterns. Practical guide to building systems with measurable outcomes.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ Multi-language</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/evidence-cookbook" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+
+                <div class="repo-card">
+                    <div class="category-label">Knowledge Graph</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">WIKI.EWASTE</h3>
+                        <span class="repo-stars">⭐ 0</span>
+                    </div>
+                    <p class="repo-description">Ontology modeling with semantic exports, AI-powered crawling, embedding-ready knowledge surfaces, and attribution-aware infrastructure.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ TypeScript</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/WIKI.EWASTE" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 50px;">Utilities & Infrastructure</h3>
+            <div class="repos-grid">
+                <div class="repo-card">
+                    <div class="category-label">Utilities</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">Android Flashing Tool</h3>
+                        <span class="repo-stars">⭐ 0</span>
+                    </div>
+                    <p class="repo-description">Flash, recover, and customize Android devices. Safe, powerful, transparent, and works offline.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ Python</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/Android-Flashing-Tool" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+
+                <div class="repo-card">
+                    <div class="category-label">Platform</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">Freemium Services</h3>
+                        <span class="repo-stars">⭐ 0</span>
+                    </div>
+                    <p class="repo-description">Freemium business model implementation and service infrastructure.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ TypeScript</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/freemium.services" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+
+                <div class="repo-card">
+                    <div class="category-label">Social Impact</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">E-Waste Kochi Monorepo</h3>
+                        <span class="repo-stars">⭐ 0</span>
+                    </div>
+                    <p class="repo-description">E-waste management and recycling platform for Kochi region. Full-stack implementation of sustainable technology initiatives.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ TypeScript</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/ewaste-kochi-monorepo" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+
+                <div class="repo-card">
+                    <div class="category-label">Network Infrastructure</div>
+                    <div class="repo-header">
+                        <h3 class="repo-name">TurboQuant Network</h3>
+                        <span class="repo-stars">⭐ 0</span>
+                    </div>
+                    <p class="repo-description">Distributed network infrastructure for autonomous agents and verification systems.</p>
+                    <div class="repo-meta">
+                        <span class="repo-lang">🏷️ Multi-language</span>
+                    </div>
+                    <a href="https://github.com/CodesbyFebin/turboquant-turboquant-network" target="_blank" class="repo-link">→ View Repository</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="cta-section">
+            <h2>Let's Build Something Verifiable Together</h2>
+            <p>Looking to implement verifiable compute, build AI agents with explicit contracts, or design sovereign infrastructure? I'm open to collaboration, speaking engagements, and technical partnerships.</p>
+            <div class="header-links">
+                <a href="https://github.com/CodesbyFebin" target="_blank" class="btn">View on GitHub</a>
+                <a href="https://www.linkedin.com/in/codes-by-febin/" target="_blank" class="btn">Connect on LinkedIn</a>
+                <a href="mailto:codesbyfebin@gmail.com" class="btn">Get in Touch</a>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p><strong>PROOF > PROMISES</strong></p>
+        <p>Building systems where evidence, verification, and reproducibility come first.</p>
+        <div class="footer-links">
+            <a href="https://github.com/CodesbyFebin" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/codes-by-febin/" target="_blank">LinkedIn</a>
+            <a href="https://orcid.org/0009-0002-8123-1531" target="_blank">ORCID</a>
+            <a href="https://www.xfree.in" target="_blank">XFree</a>
+        </div>
+        <p style="margin-top: 30px; color: #999; font-size: 0.9em;">© 2026 Febin Francis. All repositories are open source and available for collaborative development.</p>
+    </footer>
+
+    <script>
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.querySelector('.theme-toggle').textContent = '☀️ Light';
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const toggle = document.querySelector('.theme-toggle');
+
+            body.classList.toggle('dark-mode');
+
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                toggle.textContent = '☀️ Light';
+            } else {
+                localStorage.setItem('theme', 'light');
+                toggle.textContent = '🌙 Dark';
+            }
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
