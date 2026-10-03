@@ -1,0 +1,517 @@
+<!doctype html><html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI, STARK &amp; Self-Hosted Systems Guide | CodesbyFebin</title><meta name="description" content="Inspect the architecture and boundaries of CodesbyFebin’s STARK VM, hosting systems, AgentSwarm, OM workspace, and browser developer tooling."><meta name="author" content="Febin Francis"><meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large"><meta name="theme-color" content="#050c10"><meta name="geo.region" content="IN-KL"><meta name="geo.placename" content="Kerala, India"><link rel="canonical" href="https://codesbyfebin.github.io/systems.html"><meta property="og:title" content="AI, STARK &amp; Self-Hosted Systems Guide | CodesbyFebin"><meta property="og:description" content="Inspect the architecture and boundaries of CodesbyFebin’s STARK VM, hosting systems, AgentSwarm, OM workspace, and browser developer tooling."><meta property="og:type" content="website"><meta property="og:url" content="https://codesbyfebin.github.io/systems.html"><meta property="og:image" content="https://codesbyfebin.github.io/assets/images/og-image-1200x630.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="CodesbyFebin — AI Infrastructure, Verifiable Compute, Sovereign Systems"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="AI, STARK &amp; Self-Hosted Systems Guide | CodesbyFebin"><meta name="twitter:description" content="Inspect the architecture and boundaries of CodesbyFebin’s STARK VM, hosting systems, AgentSwarm, OM workspace, and browser developer tooling."><meta name="twitter:image" content="https://codesbyfebin.github.io/assets/images/twitter-1200x675.png"><link rel="icon" href="assets/images/logo.svg" type="image/svg+xml"><link rel="manifest" href="manifest.json"><link rel="stylesheet" href="assets/css/styles.css"><script defer src="assets/js/main.js"></script><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Person", "@id": "https://codesbyfebin.github.io/#person", "name": "Febin Francis", "alternateName": "CodesbyFebin", "url": "https://codesbyfebin.github.io/", "jobTitle": "Systems Engineer", "homeLocation": {"@type": "Place", "name": "Kerala, India"}, "sameAs": ["https://github.com/CodesbyFebin", "https://www.linkedin.com/in/codes-by-febin/", "https://orcid.org/0009-0002-8123-1531"], "knowsAbout": ["AI infrastructure", "Verifiable compute", "Sovereign systems", "Distributed systems"]}, {"@type": "WebSite", "@id": "https://codesbyfebin.github.io/#website", "name": "CodesbyFebin", "url": "https://codesbyfebin.github.io/", "inLanguage": "en", "author": {"@id": "https://codesbyfebin.github.io/#person"}}, {"@type": "WebPage", "@id": "https://codesbyfebin.github.io/systems.html#webpage", "url": "https://codesbyfebin.github.io/systems.html", "name": "AI, STARK & Self-Hosted Systems Guide | CodesbyFebin", "description": "Inspect the architecture and boundaries of CodesbyFebin’s STARK VM, hosting systems, AgentSwarm, OM workspace, and browser developer tooling.", "inLanguage": "en", "isPartOf": {"@id": "https://codesbyfebin.github.io/#website"}, "about": {"@id": "https://codesbyfebin.github.io/#person"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://codesbyfebin.github.io/"}, {"@type": "ListItem", "position": 2, "name": "Systems", "item": "https://codesbyfebin.github.io/systems.html"}]}]}</script></head><body><a class="skip" href="#main">Skip to content</a><header class="header"><div class="wrap header-inner"><a class="brand" href="index.html"><span aria-hidden="true">&gt;_</span>CodesbyFebin</a><button class="icon-button menu-button" data-menu aria-controls="navigation" aria-expanded="false">Menu</button><nav class="navigation" id="navigation" aria-label="Main navigation"><a href="index.html">Home</a><a href="about.html">About</a><a href="systems.html" aria-current="page">Systems</a><a href="projects.html">Projects</a><a href="blog.html">Writing</a><a href="services.html">Services</a><a href="research.html">Research</a><a href="contributions.html">Open source</a><a href="contact.html">Contact</a><a href="specifications.html">Specs</a></nav><button class="icon-button" data-theme-toggle aria-label="Switch to light theme">Light</button></div></header><main id="main"><section class="hero hero-small"><div class="wrap"><div class="breadcrumbs"><a href="index.html">Home</a> / Systems</div><div class="eyebrow">// Systems</div><h1>Intent. Execution. Evidence.</h1><p class="lede">Inspect the architecture and boundaries of CodesbyFebin’s STARK VM, hosting systems, AgentSwarm, OM workspace, and browser developer tooling.</p></div></section><div class="wrap content-layout"><aside class="toc" aria-label="On this page"><p>ON THIS PAGE</p><a href="#systems-with-explicit-boundaries">Systems with explicit boundaries</a><a href="#rust-stark-zkvm">rust-stark-zkvm</a><a href="#decentralized-host">Decentralized.Host</a><a href="#deployment-mesh">Deployment mesh</a><a href="#agentswarm">AgentSwarm</a><a href="#om">OM</a><a href="#xfree">XFree</a><a href="#read-the-source-guides">Read the source guides</a><a href="#source-rust-vm">Rust VM · repository guide</a><a href="#source-deployment-mesh">Python mesh · repository guide</a><a href="#source-agentswarm">AgentSwarm · repository guide</a><a href="#source-om">OM · repository guide</a></aside><article class="prose"><h2 id="systems-with-explicit-boundaries">Systems with explicit boundaries</h2>
+<p>The selected systems explore different layers of the same engineering problem: how to connect intent to execution and preserve enough evidence to inspect the result. They are separate repositories with different languages, assumptions, and maturity. The descriptions below are based on source documentation reviewed on 3 October 2026. A documentation review is not a new runtime qualification, security audit, or production deployment test.</p>
+<h3 id="what-each-system-is-for">What each system is for</h3>
+<div class="table-wrap"><table><thead><tr><th scope="col">System</th><th scope="col">Primary question</th><th scope="col">Inspect first</th></tr></thead><tbody><tr><td>rust-stark-zkvm</td><td>How can a small VM execution be checked with a STARK proof?</td><td>ISA, AIR, verifier, threat model</td></tr><tr><td>Decentralized.Host</td><td>Who admits work, and how does observed state differ from intent?</td><td>Local policy, identity, protocol, evidence</td></tr><tr><td>decentralized.hosting</td><td>How does uploaded source become a running container?</td><td>Build path, scheduler, agent, edge routing</td></tr><tr><td>AgentSwarm</td><td>How does an agent mission survive worker and queue failures?</td><td>Database state, leases, events, artifacts</td></tr><tr><td>OM</td><td>How can a personal AI workspace expose service readiness honestly?</td><td>Workspace records, model configuration, setup boundaries</td></tr><tr><td>XFree</td><td>How can browser tools and a discovery site remain distinct products?</td><td>Marketing repository and app repository</td></tr></tbody></table></div>
+<h2 id="rust-stark-zkvm">rust-stark-zkvm</h2>
+<p>The Rust project combines an interpreter, an algebraic intermediate representation, and Winterfell proving and verification. Its small instruction set includes arithmetic, forward conditional jumps, and a fixed register file. This scope makes it possible to inspect how a program becomes an execution trace and how the proof binds to the expected program.</p>
+<p>The repository documents an important limitation: this implementation has no private witness, and its verifier re-executes the program to determine expected trace information. It should therefore not be marketed as general private LLM inference, arbitrary confidential analytics, or a production replacement for a general-purpose zkVM. Its value is an inspectable implementation of a defined computation contract.</p>
+<p>The HTTP host exposes proving and verification interfaces. The MCP tools provide another interface to the same underlying service. Neither interface changes what the proof establishes. The on-chain demo also has its own trust boundary: an attested proof result is different from a fully on-chain STARK verifier. <a href="/specifications.html#zkvm-threat-model">Technical specifications</a> include the source threat model and service documentation.</p>
+<p>For a first review, read the instruction parser, execution semantics, and AIR together. Check what happens when the program, claimed result, active flags, or register selectors are changed. A negative control is particularly useful because a verifier that accepts everything can still appear to pass a collection of positive examples. The repository guide below preserves the original setup commands and explicit limitations.</p>
+<h2 id="decentralized-host">Decentralized.Host</h2>
+<p>Decentralized.Host is the Go repository at <a href="https://github.com/CodesbyFebin/Decentralized-">CodesbyFebin/Decentralized-</a>. The portfolio’s existing identity describes signed intent, Ed25519 identities, per-host admission, content-addressed storage, Raft, and WireGuard. Its central principle is that an execution host retains authority over the work it admits.</p>
+<p>The current README contains both broad infrastructure descriptions and a provider-discovery direction, with some capabilities assigned to later versions. That mixed scope makes a blanket production-readiness claim inappropriate. This portfolio links to the source and conformance documentation without treating every README badge as independently reproduced evidence.</p>
+<p>When inspecting this system, ask which state is authoritative for the decision you are making. A control-plane request can describe desired placement without establishing that a host accepted it. A host observation can establish a process or workload exists without proving application behavior. A cryptographic signature can establish the signer without establishing operational correctness. Each layer needs its own check.</p>
+<p>Review local policy, admission failure behavior, revocation, replay handling, source-bound evidence, and recovery under failure. Protocol conformance can show agreement between implementations for defined vectors. It does not replace a qualification on the actual machines, network, operating system, and workload combination used in an installation. <a href="/specifications.html#dh-conformance">The conformance reference</a> explains the documented test surface.</p>
+<h2 id="deployment-mesh">Deployment mesh</h2>
+<p>The separate <a href="https://github.com/CodesbyFebin/decentralized.hosting">decentralized.hosting repository</a> is a Python deployment mesh. Its documented architecture uses a FastAPI control plane, PostgreSQL, a Docker node agent, Traefik, a local registry, and the dhost CLI. It is a runnable local MVP with a concrete upload, build, schedule, and route path.</p>
+<p>The distinction between the developer machine and the execution host matters. The documented ship workflow uploads a source snapshot to the control plane. The node agent builds and runs the workload on the host Docker daemon. The developer does not need to run the container build locally for that path. The older init/deploy workflow remains a different path that performs a local build.</p>
+<p>A good review follows the same deployment through every component. Confirm the snapshot identity, build result, selected node, container state, and route. Then make an update and inspect the release history before exercising rollback. The README describes optional blockchain credits as devnet-only and disabled by default; that is not evidence of a production financial settlement service.</p>
+<p>Host Docker access is an important trust boundary. An operator should inspect the node agent’s access and the deployment environment before admitting workloads. The project’s documented local workflow is useful evidence of scope, but it does not by itself establish hostile multitenant isolation. Its source guide below is presented as project documentation, with commands linked back to the repository.</p>
+<h2 id="agentswarm">AgentSwarm</h2>
+<p>AgentSwarm connects a React command center to a Fastify API, PostgreSQL durable state, worker execution, a configured model provider, events, and artifacts. Its README now describes a real backend path rather than a client-side timer simulation. The worker’s state transitions remain distinct from the model’s generated output.</p>
+<p>PostgreSQL is documented as the source of mission and task truth. Redis/BullMQ provides wake-up signals, while persisted claims and leases govern execution. This design makes a queue message a hint rather than a second source of authority. A fallback poll supports progress when the queue is unavailable, and bounded retries keep recovery from becoming an unlimited execution loop.</p>
+<p>The repository documents real authentication and organization/project boundaries, together with remaining production-hardening work. Its current completion check verifies that succeeded tasks have persisted artifacts. That check is useful but narrow: it is not a build gate, security review, or proof that the task’s reasoning was correct. The source guide makes this limitation explicit.</p>
+<p>When evaluating an agent mission, inspect approval handling, expired lease recovery, event replay, and artifact provenance. Try a provider-unavailable path as well as a successful model call. Missing billing or token data should remain unknown. The <a href="services.html">collaboration page</a> describes how these questions can become a focused architecture or verification engagement.</p>
+<h2 id="om">OM</h2>
+<p>OM is a personal AI workspace that brings missions, agents, notes, prompts, findings, and infrastructure setup into one interface. The current repository documents workspace persistence and configuration surfaces for models, vector memory, object storage, and owned execution services. Those surfaces should not be confused with already-configured external infrastructure.</p>
+<p>The README explicitly distinguishes available workspace features from services that need endpoints, credentials, bindings, or owned workers. Local inference requires a reachable model service. Semantic retrieval requires the configured memory system. Autonomous execution requires an owned sandbox worker. These are operational requirements, not decorative badges.</p>
+<p>A practical review begins with durable workspace records and service readiness. Create and retrieve a note or project, then inspect what the application reports for an unavailable model endpoint. Check whether opting into a cloud provider is explicit. Follow the documented self-hosting requirements before calling the complete deployment sovereign or private.</p>
+<h2 id="xfree">XFree</h2>
+<p>XFree is a browser tooling and discovery project. The current marketing repository is <a href="https://github.com/CodesbyFebin/xfree.in">xfree.in</a>, while <a href="https://github.com/CodesbyFebin/xfree-app">xfree-app</a> is a separate application repository. The current marketing README documents a Next.js site and explicitly says the app lives elsewhere.</p>
+<p>This differs from the supplied draft, which described XFree as a cryptographic library with private messaging and anonymous credentials. Those claims do not belong in this portfolio. Useful inspection questions concern the actual tools, their client/server boundary, input handling, discoverability, and the relationship between the marketing site and the application.</p>
+<h2 id="read-the-source-guides">Read the source guides</h2>
+<p>The following sections preserve selected technical documentation from the public repositories. They are reference snapshots, with retrieval dates and source-file identifiers. Statements about prior tests belong to the source documentation; this website build does not rerun those project test suites. Use the linked repository to inspect current implementation and evidence before making a deployment decision.</p><section class="source-doc" id="source-rust-vm"><h2>Rust VM · repository guide</h2><div class="source-note"><strong>Repository documentation snapshot</strong><br>Reviewed 2026-10-03. <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/README.md">Read the current source file</a><br>GitHub blob: <code>eaaf163f7ec318c3a6a3e91d6be46a8d7674c58d</code><br>This is source documentation, not a new runtime test report.</div><h3 id="source-rust-vm-rust-stark-zkvm">rust-stark-zkvm</h3>
+<p>www.zkvm.host  STARK-Verifiable Virtual Machine for Provable Computation</p>
+<p>A small, real zero-knowledge virtual machine: an interpreter, a STARK arithmetization (AIR), and a prover/verifier built on <a href="https://github.com/facebook/winterfell">Winterfell</a>. It executes <code>ADD</code>/<code>SUB</code>/<code>MUL</code> programs with real conditional control flow (<code>JZ</code>/<code>JNZ</code>) and a small fixed register file (<code>LOAD</code>/<code>STORE</code>), and produces a STARK proof that a specific program — including which branch it took and which register it touched — was executed correctly.</p>
+<p>See <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/ROADMAP.md">ZZTOKEN0ZZ</a> for what this does and — just as importantly — does not cover yet, and how it relates to the larger multi-phase strategy it grew out of.</p>
+<p></p>
+<h4 id="source-rust-vm-layout">Layout</h4>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/crates/zkvm-isa">ZZTOKEN0ZZ</a> — the VM: instruction set, interpreter, <code>.zkasm</code> parser.</li>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/crates/zkvm-stark">ZZTOKEN0ZZ</a> — the AIR, prover, and verifier.</li>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/crates/zkvm-cli">ZZTOKEN0ZZ</a> — the <code>zkvm</code> command-line tool (<code>run</code>, <code>prove</code>,</li>
+</ul>
+<p><code>verify</code>, <code>deploy</code>, <code>demo</code>).</p>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/crates/zkvm-host-server">ZZTOKEN0ZZ</a> — an HTTP proving service:</li>
+</ul>
+<p><code>POST /v1/proofs</code> to push a program and get a proof back, <code>POST /v1/verify</code> to check one, plus a <code>ProverBackend</code>-trait-based <code>/v1/backends*</code> surface for routing to more than one prover (today: the real <code>stark</code> backend and an honestly-labeled <code>mock-echo</code> stub). Also exposes <code>prove</code>/<code>verify</code> as real MCP tools (port 4478) for MCP clients like Claude or Cursor. See <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/HOST_SERVICE.md">ZZTOKEN8ZZ</a> for exactly how this relates (and doesn&#x27;t) to the larger &quot;zkvm.host&quot; pitch it&#x27;s named after — including a from-first-principles investigation of what a real SP1 backend would actually take.</p>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/contracts">ZZTOKEN0ZZ</a> — a Foundry project: an on-chain task/reward orchestrator</li>
+</ul>
+<p>with a pluggable, honestly-scoped proof verifier (see <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/ONCHAIN_VERIFIER.md">ZZTOKEN0ZZ</a> for what a *real* on-chain STARK verifier would additionally require).</p>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/scripts/onchain_demo.sh">ZZTOKEN0ZZ</a> — wires the two together: a</li>
+</ul>
+<p>real proof from the real server gets attested and paid out on a local chain, end to end.</p>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/.github/workflows/zk-ci.yml">ZZTOKEN0ZZ</a> — &quot;proof as a CI</li>
+</ul>
+<p>check&quot;: every PR touching the VM, server, CLI, or contracts builds, tests, then deploys and verifies every example program against a live server.</p>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/MCP.md">ZZTOKEN0ZZ</a> — connect Claude Desktop, Cursor, or any MCP client</li>
+</ul>
+<p>straight to the prover; <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/THREAT_MODEL.md">ZZTOKEN0ZZ</a> — what&#x27;s trustless here (the proof) versus what isn&#x27;t yet (the on-chain payment); <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/RECURSION.md">ZZTOKEN1ZZ</a> — a literature-review scope (not an implementation) of what making the on-chain path trustless would actually require.</p>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/examples">ZZTOKEN0ZZ</a> — sample <code>.zkasm</code> programs, including</li>
+</ul>
+<p><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/examples/branching.zkasm">ZZTOKEN0ZZ</a> and <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/examples/counter.zkasm">ZZTOKEN1ZZ</a>.</p>
+<h4 id="source-rust-vm-quick-start">Quick start</h4>
+<pre><code class="language-bash">cargo build --release
+cargo test --release --workspace</code></pre>
+<p>Use <code>--release</code> for tests, not just binaries: one of <code>zkvm-stark</code>&#x27;s constraints has a data-dependent polynomial degree (see the comment in <code>evaluate_transition</code>), which trips a Winterfell debug-only self-check that&#x27;s stricter than actual soundness requires. <code>--release</code> compiles that check out; it isn&#x27;t hiding a real bug (all the same tests pass either way once that specific assertion is skipped) — see the code comment for the full explanation.</p>
+<pre><code class="language-bash"># run the full execute -&gt; prove -&gt; verify -&gt; tamper-check demo
+cargo run --release -p zkvm-cli -- demo
+
+# or drive it by hand
+cargo run --release -p zkvm-cli -- run    examples/fibonacci_like.zkasm
+cargo run --release -p zkvm-cli -- prove  examples/fibonacci_like.zkasm out.proof
+cargo run --release -p zkvm-cli -- verify examples/fibonacci_like.zkasm out.proof
+
+# a program whose result depends on runtime control flow, not just arithmetic
+cargo run --release -p zkvm-cli -- run examples/branching.zkasm
+
+# a program that holds a value in a register across unrelated arithmetic
+cargo run --release -p zkvm-cli -- run examples/counter.zkasm
+
+# or &quot;push code, get a proof&quot; over HTTP instead of proving locally
+cargo run --release -p zkvm-host-server &amp;           # listens on :4477
+cargo run --release -p zkvm-cli -- deploy examples/fibonacci_like.zkasm
+cargo run --release -p zkvm-cli -- verify examples/fibonacci_like.zkasm examples/fibonacci_like.zkasm.proof
+
+# and the on-chain orchestrator (Foundry)
+cd contracts &amp;&amp; forge test
+
+# or the full loop: a real proof, paid out on a local chain
+./scripts/onchain_demo.sh
+
+# or talk to it over MCP (see docs/MCP.md)
+cargo build --release -p zkvm-host-server &amp;&amp; ./scripts/mcp_demo.sh</code></pre>
+<h4 id="source-rust-vm-the-zkasm-format">The <code>.zkasm</code> format</h4>
+<pre><code class="language-text">INIT 5      # starting accumulator value
+ADD 3       # acc = acc + 3
+STORE r0    # registers[0] = acc
+JZ done     # forward jump to a label, taken if acc == 0
+MUL 2       # acc = acc * 2
+LOAD r0     # acc = registers[0]
+done:
+SUB 4       # acc = acc - 4</code></pre>
+<p><code>JZ</code>/<code>JNZ</code> targets are labels, resolved at parse time, and must jump forward only — see <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/ROADMAP.md">ZZTOKEN2ZZ</a> for why loops aren&#x27;t supported yet. <code>LOAD</code>/<code>STORE</code> address one of a small, fixed set of registers (<code>r0</code>..<code>r3</code>) — scratch space for holding a second live value across arithmetic, not general-purpose memory (there&#x27;s no dynamic addressing yet; see <code>docs/ROADMAP.md</code>).</p>
+<h4 id="source-rust-vm-how-the-proof-actually-binds-to-the-program">How the proof actually binds to the program</h4>
+<p>Each trace row has one row per *static* instruction (never revisited — see above), holding the accumulator value, the four register values, seven one-hot opcode selectors (<code>s_add, s_sub, s_mul, s_jz, s_jnz, s_load, s_store</code>), the shared immediate/target/register operand, an <code>active</code> flag (did this row actually run, or was it skipped by an earlier taken jump), and a one-hot <code>reg_sel</code> (which register a <code>LOAD</code>/<code>STORE</code> addresses).</p>
+<p>Every column except the accumulator and the registers — including <code>active</code> and <code>reg_sel</code> — is individually asserted (as a boundary constraint) against the specific program *and its actual execution*, for every row, not just the first and last. That&#x27;s sound without an algebraic is-zero/lookup gadget deriving branch outcomes or a mux selecting a register, specifically because this system has no private witness: the verifier already re-executes the program to know the correct value for every row (see the doc comment at the top of <code>zkvm-stark/src/lib.rs</code> for the full argument). The things that *are* checked algebraically, via the AIR&#x27;s transition constraints, are whether the accumulator&#x27;s and each register&#x27;s trajectory are consistent with that already-known-correct (opcode, active, reg_sel) sequence.</p>
+<p>A prover cannot swap in a different sequence of instructions, a different control-flow outcome, or a different register access, for the same instructions, and still produce a proof that verifies. <code>zkvm-stark</code>&#x27;s test suite checks this directly: tampering with the claimed result, program, <code>active</code> flags, or register selectors after proof generation causes verification to fail.</p>
+<h4 id="source-rust-vm-contributing">Contributing</h4>
+<p>Bug reports, <code>.zkasm</code> programs that break something, and small honestly-scoped PRs are welcome — see <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/CONTRIBUTING.md">ZZTOKEN1ZZ</a> for setup and the PR checklist. Found a soundness or security issue? Read <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/SECURITY.md">ZZTOKEN2ZZ</a> before filing a public issue. This project follows the <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/CODE_OF_CONDUCT.md">Contributor Covenant</a>. See <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/CHANGELOG.md">ZZTOKEN3ZZ</a> for release history.</p>
+<h4 id="source-rust-vm-funding">Funding</h4>
+<p>Sponsorship, one-time crypto donations (ETH, USDT, OP, ARB, FIL, BTC, SOL), and a list of real grant programs this project could reasonably apply to are at <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/funding">ZZTOKEN0ZZ</a> — or use the &quot;Sponsor&quot; button GitHub shows on this repo. See <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/GRANT_PITCH.md">ZZTOKEN1ZZ</a> for the one-page case made to grant reviewers specifically.</p></section><section class="source-doc" id="source-deployment-mesh"><h2>Python mesh · repository guide</h2><div class="source-note"><strong>Repository documentation snapshot</strong><br>Reviewed 2026-10-03. <a href="https://github.com/CodesbyFebin/decentralized.hosting/blob/main/README.md">Read the current source file</a><br>GitHub blob: <code>e75e58421238edea281418a83dfaa19df0dc3e5b</code><br>This is source documentation, not a new runtime test report.</div><h3 id="source-deployment-mesh-decentralized-hosting">decentralized.hosting</h3>
+<p>A working local MVP of an open-source, decentralized hosting mesh: a FastAPI control plane, a Docker-based node agent, a Traefik edge proxy, a local container registry, a <code>dhost</code> CLI, and an optional Solana-devnet node-operator credit system.</p>
+<p>This is <strong>Phase 1 and 2</strong> of the <a href="https://decentralized.host/roadmap/">live roadmap</a> — a real, runnable mesh, not a mockup. Confidential-computing enclaves and an optional mainnet credit migration are later phases.</p>
+<h5 id="source-deployment-mesh-why-decentralized-host">Why decentralized.host?</h5>
+<ul>
+<li><strong>No vendor lock-in</strong> — standard Docker containers, your own server, no proprietary APIs to migrate off of later.</li>
+<li><strong>No platform markup</strong> — the software is free (MIT); you pay only your own VPS/hardware provider, same as running anything else yourself.</li>
+<li><strong>Multi-node scheduling</strong> — deploy across whatever machines you register to your own mesh, scheduled by live CPU/RAM load.</li>
+<li><strong>Open source, no open-core trap</strong> — every capability described here is in this repository, not gated behind a paid tier.</li>
+</ul>
+<h5 id="source-deployment-mesh-project-facts-machine-readable">Project facts (machine-readable)</h5>
+<pre><code class="language-yaml">project:
+  name: decentralized.host
+  category:
+    - decentralized hosting
+    - self-hosted PaaS
+    - distributed compute
+  license: MIT
+  status: Phase 1 and 2 complete (see roadmap)
+
+interfaces:
+  - CLI (dhost)
+  - REST API
+  - Git SSH
+  - Web console (dashboard/)
+
+core:
+  control_plane: FastAPI
+  database: PostgreSQL
+  runtime: Docker
+  edge_router: Traefik
+  language: Python
+
+capabilities:
+  - application deployment (git push or CLI)
+  - resource-aware multi-node scheduling
+  - server-side container builds (no local Docker needed)
+  - deployment history and rollback
+  - automatic Let&#x27;s Encrypt TLS in production
+
+blockchain:
+  network: Solana
+  status: optional, off by default
+  environment: devnet only (no real funds)</code></pre>
+<h4 id="source-deployment-mesh-architecture">Architecture</h4>
+<pre><code class="language-">dhost CLI --snapshot+upload--&gt; Control Plane --forward--&gt; Node Agent --build/run--&gt; App Container
+   |         (no Git, no                                        |                        |
+   |          local Docker)                                     +----heartbeat-----&gt; Control Plane
+   |                                                                                       |
+   +----ship/update/history/rollback/status/logs----------------------------------------&gt; |
+                                                                                            |
+                                                                    +--(N heartbeats)--&gt; Solana devnet (credits)
+
+Traefik routes app.127.0.0.1.nip.io -&gt; the container the node agent just started</code></pre>
+<ul>
+<li><strong>control-plane/</strong> — FastAPI + PostgreSQL. Issues JWTs to nodes, schedules</li>
+</ul>
+<p>deployments onto the least-loaded healthy node, tracks state, proxies source uploads to the right node agent to build.</p>
+<ul>
+<li><strong>node-agent/</strong> — Runs on the host Docker daemon (via the mounted</li>
+</ul>
+<p>socket). Registers, sends heartbeats, <strong>builds images from uploaded source</strong> (<code>/build</code>), runs containers, writes Traefik&#x27;s routing config.</p>
+<ul>
+<li><strong>cli/</strong> — The <code>dhost</code> command: <code>ship</code>, <code>update</code>, <code>history</code>, <code>rollback</code>,</li>
+</ul>
+<p><code>status</code>, <code>logs</code>, <code>node join</code>, <code>node list</code>, <code>wallet</code>, <code>credits</code>, <code>keys add</code>/<code>keys list</code>, <code>clone-url</code> (plus the older <code>init</code>/<code>deploy</code>, kept for anyone who wants to build locally — see below).</p>
+<ul>
+<li><strong>git-server/</strong> — A real SSH git server: <code>git push</code> to auto-create a repo</li>
+</ul>
+<p>and deploy it, no separate CI config. See &quot;Real git push deploys&quot; below.</p>
+<ul>
+<li><strong>blockchain/</strong> — Solana devnet integration for node-operator credits.</li>
+</ul>
+<p>Optional, feature-flagged, fully documented in <a href="https://github.com/CodesbyFebin/decentralized.hosting/blob/main/blockchain/README.md">blockchain/README.md</a>.</p>
+<ul>
+<li><strong>mcp-server/</strong> — An MCP server exposing the control plane&#x27;s real API as</li>
+</ul>
+<p>tools (list/inspect deployments, logs, nodes, release/engine history, ship, delete) for Claude or any MCP client. Fully documented in <a href="https://github.com/CodesbyFebin/decentralized.hosting/blob/main/mcp-server/README.md">mcp-server/README.md</a>.</p>
+<ul>
+<li><strong>web/</strong> — The original single-page landing page. Still shippable through</li>
+</ul>
+<p>the mesh (<code>cd web &amp;&amp; dhost ship opengit-site --port 80</code>) as a live example of self-hosting, but no longer the canonical public site.</p>
+<ul>
+<li><strong>marketing-site/</strong> — The real public site: a React/Vite/TypeScript SEO</li>
+</ul>
+<p>content site (docs, guides, architecture explainer, honest competitor comparisons with evidence sources, an interactive deployment simulator). Meant for <strong>www.decentralized.host</strong> via Vercel — a legitimate static-hosting use case, distinct from the mesh itself. <code>npm install &amp;&amp; npm run dev</code> inside the directory; <code>npm run build</code> for a static <code>dist/</code>. Every <code>claimStatus</code>/<code>codeSource</code> field in its content data cites real files in this repo. It shipped with fabricated testimonials, fake case studies, and several fictional CLI commands/config formats (<code>dhost login</code>, <code>dhost.yml</code>, <code>--repo</code>/<code>--node</code> flags, an <code>install.sh</code>) — all removed or corrected to match what&#x27;s actually built; see the commit history for specifics if you&#x27;re curious what changed.</p>
+<ul>
+<li><strong>dashboard/</strong> — <strong>OpenGit Console</strong>: a single-page web dashboard (vanilla</li>
+</ul>
+<p>JS, no build step) at http://localhost:4001. Dashboard, Deployments (with live logs and teardown), <strong>Git Manager</strong> (real release history — every <code>dhost ship</code>/<code>update</code>/Launchpad ship records a <code>Release</code> row in Postgres with its message, snapshot id, and status), Mesh Nodes, Credits, Settings, and a <strong>Launchpad</strong> — drag a project folder into the browser and it&#x27;s detected, previewed (with an optional real Gemini note if <code>GOOGLE_API_KEY</code> is set on the control plane), and shipped through the exact same <code>/deployments/ship</code> pipeline as the CLI. No Dockerfile written to your repo, no local Docker or Git involved either way. A <strong>Sandbox</strong> tab lists 100 well-known open-source self-hosting tools (<code>dashboard/public/sandbox-catalog.js</code>) — 17 of them genuinely deploy with one click through the real <code>POST /deployments</code> endpoint (an existing pre-built image, no build step, same pipeline any deployment here uses), each individually verified to actually boot; the other 83 are reference entries with the specific real reason they don&#x27;t fit a single-click container (needs a cluster, needs launch arguments this mesh&#x27;s deploy pipeline can&#x27;t pass through, exceeds the mesh&#x27;s fixed 256MB per-container memory limit, etc.) — never a vague &quot;coming soon.&quot; No Analytics or chat-based AI Assistant pages — those would need fabricated data or a much bigger feature (a tool-using conversational agent) than &quot;dashboard,&quot; so they were left out rather than faked. Protected by HTTP Basic Auth (<code>dashboard/nginx.conf</code>) when exposed beyond localhost — generate your own <code>dashboard/.htpasswd</code> with <code>htpasswd -c dashboard/.htpasswd admin</code> (from the <code>apache2-utils</code>/<code>httpd-tools</code> package); it&#x27;s gitignored, not shipped in the repo.</p>
+<h4 id="source-deployment-mesh-quick-start">Quick start</h4>
+<p>Requires Docker (with Compose) running locally — on the machine running the mesh. <strong>The developer&#x27;s own machine does not need Docker or Git installed</strong> to use <code>dhost ship</code>.</p>
+<pre><code class="language-bash"># 1. Bring up the mesh (postgres, registry, traefik, control-plane, one node-agent)
+docker compose up -d --build
+
+# 2. Install the CLI
+pip install -e ./cli
+
+# 3. Confirm the mesh is healthy
+dhost node list
+
+# 4. Ship a sample app -- no Dockerfile written to disk, no git repo, no local docker build
+cd examples/hello-world
+dhost ship hello-world</code></pre>
+<p>Once it reports &quot;Live&quot;, visit the printed URL (<code>http://hello-world.127.0.0.1.nip.io</code>) — this is a real public DNS name that resolves to <code>127.0.0.1</code> (via the free <a href="https://nip.io">nip.io</a> wildcard DNS service), routed by Traefik to the container the node agent just built and started.</p>
+<p>Made a change? <code>dhost update &quot;what changed&quot;</code> snapshots and redeploys. <code>dhost history</code> lists every snapshot; <code>dhost rollback &lt;snapshot-id&gt;</code> restores and redeploys an older one. None of this touches <code>git</code> — see <a href="https://github.com/CodesbyFebin/decentralized.hosting/blob/main/cli/dhost/ledger.py">cli/dhost/ledger.py</a> for the real (SHA-256 content-addressed) versioning underneath, and <a href="https://github.com/CodesbyFebin/decentralized.hosting/blob/main/node-agent/agent.py">node-agent/agent.py</a>&#x27;s <code>build_and_run</code> for the server-side build that means your machine never runs <code>docker build</code>.</p>
+<p>Check <code>dhost status hello-world</code> and <code>dhost logs hello-world</code> to see it end-to-end.</p>
+<h5 id="source-deployment-mesh-the-older-init-deploy-path">The older <code>init</code> / <code>deploy</code> path</h5>
+<p>Still there, still works, for anyone who&#x27;d rather build locally: <code>dhost init</code> writes a real <code>Dockerfile</code> into your project and <code>dhost deploy &lt;name&gt;</code> runs <code>docker build</code>/<code>docker push</code> on your own machine before scheduling it. <code>ship</code>/<code>update</code> don&#x27;t use either of those — the Dockerfile is generated in memory and shipped over the wire, never written to your repo unless you ask for it via <code>init</code>.</p>
+<p>The landing page itself is hosted the same way: <code>cd web &amp;&amp; dhost ship opengit-site --port 80</code>, then visit <code>http://opengit-site.&lt;BASE_DOMAIN&gt;</code>. This project dogfoods itself rather than running its own site on a special-cased container.</p>
+<h4 id="source-deployment-mesh-ai-assistant-optional">AI assistant (optional)</h4>
+<p>A real chat assistant in the console&#x27;s Assistant tab -- one model (Gemini, same <code>GOOGLE_API_KEY</code> as the Launchpad&#x27;s stack notes), not a router across &quot;100 free models.&quot; It has <strong>read-only</strong> tool access to actual deployment status, logs, node health, and release history (<code>control-plane/app/routers/assistant.py</code>) -- it cannot deploy, delete, or change anything, and it&#x27;s instructed to say so and point at the right CLI command instead if asked to. Off by default; the console shows &quot;not configured&quot; honestly rather than a fake response when no key is set.</p>
+<pre><code class="language-bash"># in .env
+GOOGLE_API_KEY=your-real-key
+docker compose restart control-plane</code></pre>
+<h4 id="source-deployment-mesh-seo-files-for-static-sites">SEO files for static sites</h4>
+<p>Any deployment the build detects as a static site (an <code>index.html</code> at the root) gets a real <code>sitemap.xml</code> (every <code>.html</code> file it actually finds, correct scheme/domain for the environment) and <code>robots.txt</code> generated automatically on build, unless the project already has its own — see <code>_maybe_generate_seo_files</code> in <a href="https://github.com/CodesbyFebin/decentralized.hosting/blob/main/node-agent/agent.py">node-agent/agent.py</a>. Nothing is fabricated or auto-applied to non-static apps: there&#x27;s no way to know a Python/Node backend&#x27;s real routes without introspecting it, so this deliberately doesn&#x27;t try.</p>
+<h4 id="source-deployment-mesh-real-git-push-deploys">Real git push deploys</h4>
+<p>A real SSH git server, not the Git-free ledger path above — the two are independent front doors into the same build pipeline. First register a key, then push:</p>
+<pre><code class="language-bash">dhost keys add my-laptop ~/.ssh/id_ed25519.pub   # takes up to 30s to sync
+dhost clone-url my-app                            # prints the remote URL + setup commands
+
+cd my-app
+git remote add opengit ssh://git@localhost:2222/repos/my-app.git
+git push opengit main</code></pre>
+<p>First push auto-creates the repo and deploys it; every push after that redeploys. No <code>.opengit.yml</code> needed for the common case (port 8080, <code>&lt;name&gt;.&lt;BASE_DOMAIN&gt;</code>) — add one at the repo root only to override:</p>
+<pre><code class="language-yaml">port: 3000
+domain: custom.example.com   # optional, same override dhost ship --domain provides</code></pre>
+<p>Deploys whatever branch you push, single-branch-is-live (like a classic Heroku git remote) — there&#x27;s no multi-branch preview-environment support in this version. Auth is the same single-shared-secret model as the rest of the mesh: any registered key can push to any repo, no per-repo ACLs.</p>
+<h4 id="source-deployment-mesh-node-operator-credits-optional">Node-operator credits (optional)</h4>
+<p>Off by default. To turn on real Solana-devnet credit minting, see <a href="https://github.com/CodesbyFebin/decentralized.hosting/blob/main/blockchain/README.md">blockchain/README.md</a> — short version:</p>
+<pre><code class="language-bash">pip install -r blockchain/requirements.txt
+python blockchain/scripts/setup_devnet.py
+# copy the printed mint address into .env, set ENABLE_BLOCKCHAIN=true
+docker compose restart control-plane
+dhost wallet &lt;node_id&gt; &lt;your-devnet-wallet-pubkey&gt;</code></pre>
+<h4 id="source-deployment-mesh-adding-a-second-node">Adding a second node</h4>
+<p>For another container on this same Docker daemon (quick local testing):</p>
+<pre><code class="language-bash">dhost node join --node-name node-2
+dhost node list   # should now show two healthy nodes</code></pre>
+<p>For a genuinely separate machine, the control plane now tracks each node&#x27;s own reachable address (<code>Node.advertise_address</code>) and always talks to the specific node a deployment landed on — earlier versions of this project hardcoded one global node-agent URL, which would have silently misrouted builds/logs/teardown to the wrong machine the moment a second *real* node existed. Run the agent directly on the remote machine:</p>
+<pre><code class="language-bash">docker run -d --name dhost-node-agent \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -e CONTROL_PLANE_URL=https://api.&lt;your-domain&gt; \
+  -e NODE_JOIN_SECRET=&lt;your real NODE_JOIN_SECRET&gt; \
+  -e NODE_NAME=node-2 \
+  -e ADVERTISE_ADDRESS=&lt;this machine&#x27;s reachable host&gt;:8100 \
+  -p 8100:8100 \
+  dhost/node-agent:latest</code></pre>
+<p><code>ADVERTISE_ADDRESS</code> must be reachable *from the control plane*, not from you — a public IP/hostname for a real remote box, or the Docker network hostname for same-compose testing (the default). The scheduler picks whichever healthy node has the lowest combined CPU+RAM load.</p>
+<h4 id="source-deployment-mesh-keeping-the-mesh-up">Keeping the mesh up</h4>
+<p>Two independent checks, for two different failure modes:</p>
+<ul>
+<li><strong><code>.github/workflows/mesh-health-check.yml</code></strong> — a scheduled GitHub Actions</li>
+</ul>
+<p>job (daily, plus manual <code>workflow_dispatch</code>) that curls the public mesh hostnames from outside and fails loudly if any of them are down. External and read-only — it can observe the mesh but can&#x27;t fix anything on the machine it runs on.</p>
+<ul>
+<li><strong><code>scripts/mesh-watchdog.sh</code></strong> — a local script that checks Colima and</li>
+</ul>
+<p>every <code>dhost-*</code> container on this machine and restarts what it finds stopped. Exists because Colima was found stopping unpredictably (silently, twice within an hour) while the Cloudflare Tunnel in front of it stayed up — every request just 502&#x27;d until someone checked by hand. Install it as a per-user LaunchAgent (runs every 15 minutes, no sudo) with:</p>
+<pre><code class="language-bash">  bash scripts/install-mesh-watchdog.sh</code></pre>
+<p>Logs to <code>~/Library/Logs/dhost-mesh-watchdog.log</code>. Re-run the installer after editing <code>scripts/mesh-watchdog.sh</code> — it runs from an installed copy under <code>~/Library/Application Support</code>, not from this checkout, since launchd can&#x27;t read files under <code>~/Desktop</code> on this Mac.</p>
+<h4 id="source-deployment-mesh-configuration">Configuration</h4>
+<p>All runtime config lives in <code>.env</code> (copy <code>.env.example</code> if you don&#x27;t have one). Notable knobs:</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">Variable</th><th scope="col">Default</th><th scope="col">Purpose</th></tr></thead><tbody><tr><td><code>NODE_JOIN_SECRET</code></td><td><code>dev-join-secret</code></td><td>Shared secret nodes present to join the mesh</td></tr><tr><td><code>DEPLOY_API_KEY</code></td><td><code>dev-deploy-key</code></td><td>Bearer key the CLI uses to call <code>/deployments</code></td></tr><tr><td><code>BASE_DOMAIN</code></td><td><code>127.0.0.1.nip.io</code></td><td>Wildcard domain deployments are scheduled under</td></tr><tr><td><code>ENABLE_BLOCKCHAIN</code></td><td><code>false</code></td><td>Turn on Solana devnet credit minting</td></tr><tr><td><code>CREDITS_PER_REWARD</code> / <code>HEARTBEATS_PER_REWARD</code></td><td><code>10</code> / <code>6</code></td><td>Reward size and cadence</td></tr></tbody></table></div>
+<p>These are dev-friendly defaults, not production secrets — rotate <code>SECRET_KEY</code>, <code>NODE_JOIN_SECRET</code>, and <code>DEPLOY_API_KEY</code> before exposing this beyond your own machine.</p>
+<h4 id="source-deployment-mesh-what-s-not-real-yet">What&#x27;s not real yet</h4>
+<p>Being upfront about scope, matching the roadmap on the landing page:</p>
+<ul>
+<li><strong>Docker is still the container runtime</strong> — <code>ship</code>/<code>update</code> remove Docker</li>
+</ul>
+<p>from the *developer&#x27;s* machine, but the mesh itself (the node agent) still uses Docker internally to build and run containers, the same way most &quot;no Docker&quot; PaaS products work under the hood. This project does not reimplement a container runtime from scratch — doing that safely (namespaces, cgroups, image layering, sandboxing) is a much bigger undertaking than is reasonable here, and a half-built version of it would be a real security downgrade from what Docker already gives us.</p>
+<ul>
+<li>Single-machine <strong>by default</strong> — <code>dhost node join</code> still runs another</li>
+</ul>
+<p>agent container on the same Docker daemon for quick local testing. Real multi-machine now works (each node reports its own reachable address and the control plane addresses that node specifically — see &quot;Adding a second node&quot;), but it hasn&#x27;t been tested against an actual second physical/cloud machine, only reasoned through and code-reviewed.</p>
+<ul>
+<li>No real TLS/Let&#x27;s Encrypt for <strong>local dev</strong> — <code>nip.io</code> + Traefik gets you</li>
+</ul>
+<p>real routing, not HTTPS. Production deploys (<code>docker-compose.prod.yml</code>, see DEPLOY.md) do get real Let&#x27;s Encrypt certs.</p>
+<ul>
+<li>No per-user accounts/RBAC — one shared deploy key, one shared node join</li>
+</ul>
+<p>secret, and (new) any registered SSH key can push to any repo. Fine for a single operator running their own mesh, not for a multi-tenant service.</p>
+<ul>
+<li>The git server has no multi-branch preview environments, no per-repo</li>
+</ul>
+<p>access control, and deploys whatever branch you last pushed — a single shared &quot;production&quot; per repo, not a full CI/CD system.</p>
+<ul>
+<li>Credits run on Solana <strong>devnet</strong> only, by design (see</li>
+</ul>
+<p><a href="https://github.com/CodesbyFebin/decentralized.hosting/blob/main/blockchain/README.md">blockchain/README.md</a> for why).</p>
+<h4 id="source-deployment-mesh-documentation">Documentation</h4>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/decentralized.hosting/blob/main/DEPLOY.md">DEPLOY.md</a> — production deployment (real TLS, custom domains)</li>
+<li><a href="https://github.com/CodesbyFebin/decentralized.hosting/blob/main/blockchain/README.md">blockchain/README.md</a> — Solana devnet node-operator credits</li>
+<li><a href="https://github.com/CodesbyFebin/decentralized.hosting/blob/main/SECURITY.md">SECURITY.md</a> — reporting a vulnerability</li>
+<li><a href="https://github.com/CodesbyFebin/decentralized.hosting/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> — running this locally to make a change</li>
+<li>Full docs, guides, and API reference: <a href="https://decentralized.host/docs/">decentralized.host/docs/</a></li>
+<li>Live roadmap: <a href="https://decentralized.host/roadmap/">decentralized.host/roadmap/</a></li>
+</ul>
+<h4 id="source-deployment-mesh-license">License</h4>
+<p>MIT. See <a href="https://github.com/CodesbyFebin/decentralized.hosting/blob/main/LICENSE">LICENSE</a>.</p></section><section class="source-doc" id="source-agentswarm"><h2>AgentSwarm · repository guide</h2><div class="source-note"><strong>Repository documentation snapshot</strong><br>Reviewed 2026-10-03. <a href="https://github.com/CodesbyFebin/Agent-Swarm/blob/main/README.md">Read the current source file</a><br>GitHub blob: <code>ee8a2fed5418cb07238256bc8d1bc97c87ae5ce4</code><br>This is source documentation, not a new runtime test report.</div><h3 id="source-agentswarm-agentswarm-in-live-mission-control">AgentSwarm.in — Live Mission Control</h3>
+<p><strong>One goal. A governed swarm. Verified work.</strong></p>
+<p>This branch upgrades the original AgentSwarm demo into a real full-stack execution path:</p>
+<pre><code class="language-text">React Command Centre
+        ↓ HTTP / SSE
+Fastify Mission API
+        ↓
+PostgreSQL durable state + event store
+        ↓
+Worker / Scheduler
+        ↓
+Qwen Model Studio (OpenAI-compatible API)
+        ↓
+Task outputs → Artifacts
+        ↓
+Verification
+        ↓
+Mission completion</code></pre>
+<p>There is no client-side timer/random-number mission engine. The frontend renders persisted backend state and receives runtime events over SSE.</p>
+<h4 id="source-agentswarm-truth-model">Truth model</h4>
+<ul>
+<li><code>LIVE</code> — a request/operation actually succeeded.</li>
+<li><code>CONFIGURED</code> — credentials/configuration exist but a specific operation may not yet have run.</li>
+<li><code>UNAVAILABLE</code> — a required integration is not configured.</li>
+<li><code>UNKNOWN</code> — the upstream system did not provide the value.</li>
+<li><code>ERROR</code> — a real operation failed.</li>
+</ul>
+<p>The UI never guesses token usage or cost. If Qwen does not return usage, it is shown as unknown. Actual billing cost is not fabricated.</p>
+<h4 id="source-agentswarm-requirements">Requirements</h4>
+<ul>
+<li>Node.js 20+</li>
+<li>Docker (for local PostgreSQL + Redis) — or local installs of both; the stack was developed and verified against Homebrew-installed Postgres 17 and Redis 8, no Docker required</li>
+<li>A Qwen / Alibaba Cloud Model Studio API key and OpenAI-compatible base URL for live model execution</li>
+</ul>
+<h4 id="source-agentswarm-quick-start">Quick start</h4>
+<pre><code class="language-bash">cp .env.example .env
+docker compose up -d
+npm install
+npm run migrate
+npm run dev</code></pre>
+<p>Open <code>http://localhost:5173</code>.</p>
+<h5 id="source-agentswarm-configure-qwen">Configure Qwen</h5>
+<p>Set these server-side values in <code>.env</code>:</p>
+<pre><code class="language-bash">QWEN_API_KEY=...
+QWEN_BASE_URL=https://&lt;your-workspace-or-region-endpoint&gt;/compatible-mode/v1
+QWEN_MODEL=qwen-plus</code></pre>
+<p>If Qwen is not configured, a new mission is persisted but moves to <code>BLOCKED</code> with provider status <code>UNAVAILABLE</code>. It is never simulated.</p>
+<h4 id="source-agentswarm-services">Services</h4>
+<pre><code class="language-text">apps/web      React/Vite Command Centre
+apps/api      Fastify REST + SSE API
+apps/worker   durable mission planner/executor
+infra         PostgreSQL migration
+scripts       migration runner</code></pre>
+<h4 id="source-agentswarm-mission-lifecycle">Mission lifecycle</h4>
+<pre><code class="language-text">QUEUED
+→ PLANNING
+→ RUNNING
+→ WAITING_APPROVAL (when required)
+→ RUNNING
+→ VERIFYING
+→ COMPLETED</code></pre>
+<p>Terminal/control states include <code>PAUSED</code>, <code>FAILED</code>, <code>CANCELLED</code>, and <code>BLOCKED</code>.</p>
+<h4 id="source-agentswarm-task-lifecycle">Task lifecycle</h4>
+<pre><code class="language-text">QUEUED
+→ READY
+→ LEASED
+→ RUNNING
+→ SUCCEEDED</code></pre>
+<p>Optional states: <code>WAITING_APPROVAL</code>, <code>RETRY_WAIT</code>, <code>FAILED</code>, <code>CANCELLED</code>, <code>DEAD_LETTER</code>.</p>
+<p>Leases are persisted in PostgreSQL; expired leases are recovered by the worker. Retries are bounded by <code>MAX_TASK_ATTEMPTS</code>.</p>
+<h4 id="source-agentswarm-durable-dispatch-redis-bullmq-postgres">Durable dispatch (Redis/BullMQ + Postgres)</h4>
+<p>Postgres remains the <strong>sole source of mission/task truth</strong> — this was true before Redis existed in this stack and hasn&#x27;t changed. <code>FOR UPDATE SKIP LOCKED</code> is what actually decides which worker process claims a given mission or task; it&#x27;s safe for any number of concurrent workers by construction.</p>
+<p>Redis/BullMQ adds a low-latency <strong>wake-up signal</strong> on top of that, nothing more:</p>
+<ul>
+<li>After a Postgres transaction commits (mission created, task promoted to <code>READY</code>, a retry/lease-expiry recovery, an approval granted), the API/worker enqueues a lightweight BullMQ job.</li>
+<li>The worker&#x27;s <code>Worker</code> consumer reacts to jobs by attempting the same claim-and-process logic — the job payload is a *hint*, not an instruction, so a stale, duplicate, or dropped job can never cause duplicate or incorrect execution.</li>
+<li>A slow fallback poll (<code>WORKER_FALLBACK_POLL_MS</code>, default 5s) always runs independently of Redis, sweeping for retry-wait tasks, expired leases, and anything the queue missed.</li>
+<li><code>enqueue()</code> is timeout-bounded (1.5s) and never holds an open Postgres client while it runs — verified by actually killing Redis mid-request and confirming the API responds in ~1.6s instead of hanging, and that a mission created during the outage still reaches <code>BLOCKED</code>/<code>COMPLETED</code>/etc. via the fallback poll alone.</li>
+<li>If <code>REDIS_URL</code> is unset, the worker runs in <strong>Postgres-poll-only mode</strong> — same correctness, just higher dispatch latency (up to <code>WORKER_FALLBACK_POLL_MS</code>).</li>
+</ul>
+<p>This was verified end-to-end, not just written: mission creation during a real Redis outage, worker process killed and restarted mid-backlog (confirmed exactly one <code>mission.planning_started</code> event afterward — no duplicate processing), and Redis restarted and confirmed to reconnect automatically without a worker restart.</p>
+<h4 id="source-agentswarm-realtime-architecture">Realtime architecture</h4>
+<p>Every runtime event is inserted into the <code>events</code> table. A PostgreSQL trigger sends a <code>NOTIFY</code>; the API&#x27;s SSE endpoint listens and streams matching events to connected clients. Reconnecting clients pass the last event ID and receive missed events from the durable event store.</p>
+<h4 id="source-agentswarm-qwen-execution">Qwen execution</h4>
+<p>The worker uses the configured Qwen OpenAI-compatible chat-completions endpoint for:</p>
+<ol>
+<li>mission planning;</li>
+<li>specialist task execution.</li>
+</ol>
+<p>Planner output is parsed and validated with Zod before task records are created. Model output never mutates mission state directly.</p>
+<h4 id="source-agentswarm-approval-gates">Approval gates</h4>
+<p>A task can declare <code>requiresApproval</code> and a risk level. The worker creates a persisted approval request and stops the task in <code>WAITING_APPROVAL</code>. The API is authoritative for approve/reject actions; deciding requires <code>OPERATOR</code> role or above in the mission&#x27;s organization. Approval resumes the task; rejection fails the mission.</p>
+<h4 id="source-agentswarm-auth-tenancy">Auth &amp; tenancy</h4>
+<p>Real, DB-backed authentication — no fabricated &quot;logged in&quot; state:</p>
+<ul>
+<li>Passwords hashed with bcrypt (<code>bcryptjs</code>, cost 12). Sessions are opaque random tokens; only a SHA-256 hash of the token is stored in <code>sessions</code>, with a 30-day expiry.</li>
+<li>The session token is set as an <code>httpOnly</code>, <code>SameSite=Lax</code> cookie (<code>asw_session</code>) — never exposed to client-side JS, never stored in <code>localStorage</code>.</li>
+<li><code>POST /auth/signup</code> creates a <code>User</code>, an <code>Organization</code> (role <code>OWNER</code>), and a default <code>Project</code> in one transaction. <code>POST /auth/login</code>, <code>POST /auth/logout</code>, <code>GET /me</code>.</li>
+<li>Every mission belongs to exactly one <code>organization_id</code> + <code>project_id</code>, set server-side from a membership check — the client can request a project but can never assign a mission to an org it isn&#x27;t a member of.</li>
+<li>All mission/approval routes require a valid session and verify org membership before returning data; a mission in an org you don&#x27;t belong to returns <code>404</code> (not <code>403</code>), so its existence isn&#x27;t leaked to non-members.</li>
+<li>Roles are <code>OWNER &gt; ADMIN &gt; OPERATOR &gt; MEMBER &gt; VIEWER</code>. Creating a mission requires <code>MEMBER+</code>; deciding an approval requires <code>OPERATOR+</code>; creating a project requires <code>ADMIN+</code>.</li>
+<li><code>/auth/signup</code> and <code>/auth/login</code> are rate-limited (8/min) via <code>@fastify/rate-limit</code>; the rest of the API defaults to 300/min per IP.</li>
+</ul>
+<p>This covers the master build prompt&#x27;s §34 auth requirements and the §55 Gate C / Gate K cross-org-isolation acceptance tests, verified with real signup/login/cross-org-access curl + browser tests (not just written, actually run). Not yet implemented: OAuth providers, password recovery, org invites (multi-member orgs), and CSRF tokens (currently relying on <code>SameSite=Lax</code> + credentialed CORS restricted to <code>WEB_ORIGIN</code>).</p>
+<h4 id="source-agentswarm-verification">Verification</h4>
+<p>When every task succeeds, the mission enters <code>VERIFYING</code>. The current real verification gate checks that every succeeded task has a persisted artifact. Only then does the mission become <code>COMPLETED</code>.</p>
+<p>This is deliberately minimal and truthful; build/typecheck/security tool gates can be added as real tool adapters rather than decorative green checks.</p>
+<h4 id="source-agentswarm-api">API</h4>
+<p>See <a href="https://github.com/CodesbyFebin/Agent-Swarm/blob/main/docs/API.md">ZZTOKEN0ZZ</a>.</p>
+<h4 id="source-agentswarm-current-production-boundary">Current production boundary</h4>
+<p>This is a fully wired <strong>mission/API/model/event/artifact MVP with real auth, org/project tenancy, and durable Redis/Postgres dispatch</strong>, not the final enterprise control plane. Before exposing it publicly, still needed: OAuth/SSO, org invites, secret-vault integration (secrets currently come from server <code>.env</code> only), tool/MCP gateway, sandboxed task execution, richer verification gates (build/typecheck/security/a11y — today&#x27;s gate only checks artifact existence), audit ledger, and deployment hardening (CSRF tokens, security headers, production TLS).</p></section><section class="source-doc" id="source-om"><h2>OM · repository guide</h2><div class="source-note"><strong>Repository documentation snapshot</strong><br>Reviewed 2026-10-03. <a href="https://github.com/CodesbyFebin/-Om-Personal-Ai/blob/main/README.md">Read the current source file</a><br>GitHub blob: <code>506677c356c1d861b9435f2c81051abae66fff06</code><br>This is source documentation, not a new runtime test report.</div><h3 id="source-om-om-personal-ai-operating-universe">🕉 OM — Personal AI Operating Universe</h3>
+<p><strong>A sovereign, self-hostable AI workspace for private agents, local model routing, durable knowledge and auditable execution.</strong></p>
+<p><a href="https://personal-ai-codex.cyberteckmaster.chatgpt.site">Live workspace</a> · <a href="https://github.com/CodesbyFebin/-Om-Personal-Ai/blob/main/README.md#self-hosting">Self-hosting</a> · <a href="https://github.com/CodesbyFebin/-Om-Personal-Ai/blob/main/README.md#architecture">Architecture</a> · <a href="https://github.com/CodesbyFebin/-Om-Personal-Ai/blob/main/CONTRIBUTING.md">Contributing</a> · <a href="https://github.com/CodesbyFebin/-Om-Personal-Ai/blob/main/SECURITY.md">Security</a></p>
+<h4 id="source-om-what-is-om">What is OM?</h4>
+<p>OM is an open-source personal AI operating universe: one interface for missions, agents, notes, prompts, findings, local AI configuration and measured infrastructure health. It is designed for people who want an AI workspace they can inspect, operate and progressively move onto infrastructure they own.</p>
+<p>OM is not presented as a fully autonomous production runtime. The interface distinguishes implemented workspace capabilities from external services that still require configuration, credentials or owned infrastructure.</p>
+<h4 id="source-om-why-om">Why OM?</h4>
+<ul>
+<li><strong>Sovereign by design</strong> — self-hostable application with explicit private-service boundaries.</li>
+<li><strong>Local-model ready</strong> — configuration surfaces for Ollama and compatible model routers.</li>
+<li><strong>Durable knowledge</strong> — D1/Drizzle-backed records for workspace data.</li>
+<li><strong>Measured status</strong> — offline and setup-required services are shown honestly.</li>
+<li><strong>Auditable direction</strong> — production-readiness milestones and verification criteria are built into the product.</li>
+<li><strong>One workspace</strong> — command center, Kanban, projects, notes, prompts, findings and integrations.</li>
+</ul>
+<h4 id="source-om-current-capabilities">Current capabilities</h4>
+<div class="table-wrap"><table><thead><tr><th scope="col">Area</th><th scope="col">Available now</th><th scope="col">Requires external setup</th></tr></thead><tbody><tr><td>Workspace</td><td>Command Center, feature vault, Kanban, projects, notes, findings, prompt vault</td><td>—</td></tr><tr><td>Identity</td><td>Optional Sign in with ChatGPT helpers and hosting access policy</td><td>Provider configuration</td></tr><tr><td>Persistence</td><td>Cloudflare D1 + Drizzle schema/migrations</td><td>D1 binding for deployment</td></tr><tr><td>AI</td><td>UI and configuration surfaces</td><td>Ollama/vLLM or opted-in cloud provider</td></tr><tr><td>Memory</td><td>Knowledge records and readiness model</td><td>Qdrant for semantic retrieval</td></tr><tr><td>Storage</td><td>Storage setup and health surfaces</td><td>MinIO/S3-compatible endpoint</td></tr><tr><td>Execution</td><td>Mission and approval UX</td><td>Owned sandbox/edge worker</td></tr><tr><td>Private network</td><td>Status and setup surfaces</td><td>Tor/WireGuard infrastructure</td></tr></tbody></table></div>
+<h4 id="source-om-architecture">Architecture</h4>
+<pre><code class="language-text">Web / Desktop UI
+  └─ Authenticated OM application
+     ├─ D1 / SQL · workspace records
+     ├─ Model router · Ollama / vLLM / opt-in cloud
+     ├─ Vector memory · Qdrant
+     ├─ Object storage · MinIO / S3
+     └─ Sandbox worker · owned edge node</code></pre>
+<p>The repository currently uses Next.js 16, React 19, TypeScript, Vinext/Vite, Cloudflare Worker primitives, D1 and Drizzle ORM.</p>
+<h4 id="source-om-quick-start">Quick start</h4>
+<h5 id="source-om-requirements">Requirements</h5>
+<ul>
+<li>Node.js 22.13 or newer</li>
+<li>npm</li>
+<li>Linux, WSL2 or a compatible environment with <code>bash</code>, <code>flock</code> and GNU <code>timeout</code></li>
+</ul>
+<h5 id="source-om-install-and-run">Install and run</h5>
+<pre><code class="language-bash">git clone https://github.com/CodesbyFebin/-Om-Personal-Ai.git
+cd ./-Om-Personal-Ai
+npm ci
+npm run dev</code></pre>
+<p>Open the local URL printed by the development server.</p>
+<h5 id="source-om-validate">Validate</h5>
+<pre><code class="language-bash">npm run lint
+npm test</code></pre>
+<h4 id="source-om-self-hosting">Self-hosting</h4>
+<p>OM can be adapted for Cloudflare/Sites hosting or an owned deployment. A complete sovereign runtime additionally needs:</p>
+<ol>
+<li>An authenticated model endpoint such as Ollama or vLLM.</li>
+<li>Qdrant for semantic memory.</li>
+<li>MinIO or another S3-compatible object store.</li>
+<li>A sandboxed worker for agent execution.</li>
+<li>Secret storage, rotation, backups and restore testing.</li>
+<li>TLS, network policy and production monitoring.</li>
+</ol>
+<p>Never commit secrets. Copy documented keys into a local <code>.env</code> that is excluded by <code>.gitignore</code>, or use your deployment platform&#x27;s encrypted environment-variable store.</p>
+<h4 id="source-om-repository-map">Repository map</h4>
+<pre><code class="language-text">app/        Application routes and UI
+db/         D1 access and schema
+drizzle/    Database migrations
+public/     Public assets
+scripts/    Reproducible install/build validation
+selfhost/   Self-hosting resources
+tests/      Rendered-output and build tests
+worker/     Worker-side services</code></pre>
+<h4 id="source-om-frequently-asked-questions">Frequently asked questions</h4>
+<h5 id="source-om-can-om-run-local-llms">Can OM run local LLMs?</h5>
+<p>OM includes configuration and status surfaces for local model routing. Actual inference requires a reachable Ollama, vLLM or compatible endpoint that you operate.</p>
+<h5 id="source-om-is-om-fully-private-by-default">Is OM fully private by default?</h5>
+<p>The application is designed for private deployment, but privacy depends on your hosting, model providers, connectors and network configuration. Cloud integrations should be explicit opt-ins.</p>
+<h5 id="source-om-does-om-execute-autonomous-agents-today">Does OM execute autonomous agents today?</h5>
+<p>The product includes mission, approval and activity interfaces. Secure autonomous execution requires an owned sandbox worker and must not be inferred from UI simulation alone.</p>
+<h5 id="source-om-what-makes-om-different-from-a-chatbot">What makes OM different from a chatbot?</h5>
+<p>OM combines AI interaction with project operations, persistent knowledge, infrastructure health, approvals and a roadmap toward verifiable self-hosted execution.</p>
+<h4 id="source-om-roadmap">Roadmap</h4>
+<ul>
+<li>Owned local/cloud model router with streaming and circuit breakers</li>
+<li>Hybrid SQL + Qdrant memory with citations</li>
+<li>Durable mission queue, leases and idempotent transitions</li>
+<li>Rootless sandbox execution on owned edge nodes</li>
+<li>Encrypted connector credentials and rotation</li>
+<li>Backup/restore and multi-user isolation tests</li>
+</ul>
+<p>Progress should be accepted only with evidence from real services and tests.</p>
+<h4 id="source-om-contributing">Contributing</h4>
+<p>Issues and pull requests are welcome. Read <a href="https://github.com/CodesbyFebin/-Om-Personal-Ai/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> before proposing a change. Security reports belong in the private channel described in <a href="https://github.com/CodesbyFebin/-Om-Personal-Ai/blob/main/SECURITY.md">SECURITY.md</a>.</p>
+<h4 id="source-om-license">License</h4>
+<p>Released under the <a href="https://github.com/CodesbyFebin/-Om-Personal-Ai/blob/main/LICENSE">MIT License</a>.</p>
+<h4 id="source-om-citation-and-discovery">Citation and discovery</h4>
+<p>For AI assistants and research tools, a concise project fact sheet is available in <a href="https://github.com/CodesbyFebin/-Om-Personal-Ai/blob/main/llms.txt">llms.txt</a>. When describing OM, preserve the distinction between shipped application features and infrastructure that requires configuration.</p>
+<hr>
+<p>Built by <a href="https://github.com/CodesbyFebin">CodesbyFebin</a> for a more inspectable, owner-controlled AI future.</p></section></article></div><div class="wrap"><section class="callout"><div><h2>Build. Measure. Verify. Improve.</h2><p>Have a concrete system, question, or contribution in mind? Start with source, scope, and the result you want to inspect.</p></div><a class="button" href="contact.html">Start a conversation</a></section></div></main><footer class="footer"><div class="wrap"><div class="footer-grid"><div><a class="brand" href="index.html">&gt;_ CodesbyFebin</a><p>Systems Engineer · AI Infrastructure · Verifiable Compute<br>Kerala, India · IST UTC+5:30</p><p>Building systems that prove what happened instead of asking you to trust what happened.</p></div><nav aria-label="Explore"><a href="systems.html">Selected systems</a><a href="projects.html">Repository directory</a><a href="blog.html">Engineering notes</a><a href="research.html">Research interests</a><a href="specifications.html">Technical references</a></nav><nav aria-label="Connect"><a href="contact.html">Contact</a><a href="services.html">Collaboration</a><a href="contributions.html">Open-source workflow</a><a href="https://github.com/CodesbyFebin">GitHub</a><a href="https://www.linkedin.com/in/codes-by-febin/">LinkedIn</a><a href="https://orcid.org/0009-0002-8123-1531">ORCID</a></nav></div><div class="footer-bottom"><span>© 2026 Febin Francis · Proof over promises</span><span><a href="sitemap.xml">Sitemap</a> · <a href="llms.txt">AI discovery</a> · No third-party analytics</span></div></div></footer></body></html>

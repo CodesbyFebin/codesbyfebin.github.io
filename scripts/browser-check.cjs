@@ -1,0 +1,72 @@
+// Optional browser QA; uses Playwright from the execution environment.
+const {chromium}=require('playwright');
+const fs=require('fs');
+const assert=require('assert');
+(async()=>{
+ const runtime=process.env.CHROMIUM_RUNTIME ? (await import(process.env.CHROMIUM_RUNTIME)).default : null;
+ const browser=await chromium.launch({headless:true,...(runtime?{executablePath:await runtime.executablePath(),args:runtime.args}:{})});
+ const page=await browser.newPage({viewport:{width:1440,height:1000}});
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const routes=['index.html','about.html','systems.html','projects.html','blog.html','services.html','research.html','contributions.html','contact.html','specifications.html'];
+ const checks=[];
+ for(const width of [1440,390]){
+  await page.setViewportSize({width,height:950});
+  for(const route of routes){
+   const response=await page.goto('http://127.0.0.1:8080/'+route);
+   assert.equal(response.status(),200);
+   assert.equal(await page.locator('h1').count(),1);
+   const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth+1);
+   assert.equal(overflow,false,`${route} overflow at ${width}`);
+   checks.push(`${route}: ${width}px, HTTP 200, one H1, no page overflow`);
+  }
+ }
+ await page.setViewportSize({width:1440,height:1000});
+ await page.goto('http://127.0.0.1:8080/projects.html');
+ assert.equal(await page.locator('[data-project]:visible').count(),23);
+ await page.locator('#project-search').fill('rust');
+ assert.equal(await page.locator('[data-project]:visible').count(),1);
+ await page.locator('#project-category').selectOption('Infrastructure');
+ assert.equal(await page.locator('[data-project]:visible').count(),0);
+ assert(await page.locator('[data-no-results]').isVisible());
+ await page.locator('[data-reset]').click();
+ await page.locator('#project-status').selectOption('Documentation scaffold');
+ assert.equal(await page.locator('[data-project]:visible').count(),8);
+ await page.locator('[data-reset]').click();
+ await page.locator('#project-sort').selectOption('stars');
+ const stars=await page.locator('[data-project]').evaluateAll(cards=>cards.map(c=>Number(c.dataset.stars)));
+ assert(stars.every((v,i)=>i===0||stars[i-1]>=v));
+ checks.push('Project search, combined filters, empty state, reset, and numeric star sort');
+ await page.locator('[data-theme-toggle]').click();
+ assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
+ await page.reload();assert.equal(await page.locator('html').getAttribute('data-theme'),'light');
+ await page.locator('[data-theme-toggle]').click();
+ await page.goto('http://127.0.0.1:8080/contact.html');
+ await page.locator('#brief-name').fill('Review User');
+ await page.locator('#brief-message').fill('<script>test</script> Review worker recovery.');
+ await page.locator('[data-brief-form] button').click();
+ assert((await page.locator('[data-brief-output]').textContent()).includes('<script>test</script>'));
+ assert.equal(await page.locator('[data-brief-output] script').count(),0);
+ checks.push('Theme persists across reload; brief builder renders input as text without transmission');
+ await page.setViewportSize({width:390,height:950});
+ await page.goto('http://127.0.0.1:8080/index.html');
+ await page.locator('[data-menu]').click();
+ assert.equal(await page.locator('[data-menu]').getAttribute('aria-expanded'),'true');
+ await page.keyboard.press('Escape');
+ assert.equal(await page.locator('[data-menu]').getAttribute('aria-expanded'),'false');
+ checks.push('Mobile menu opens and closes with Escape');
+ fs.mkdirSync('qa',{recursive:true});
+ await page.screenshot({path:'qa/home-mobile.png',fullPage:false});
+ await page.setViewportSize({width:1440,height:1000});
+ await page.screenshot({path:'qa/home-desktop.png',fullPage:false});
+ await page.goto('http://127.0.0.1:8080/projects.html');
+ await page.screenshot({path:'qa/projects-desktop.png',fullPage:false});
+ const nojs=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:950}});
+ const plain=await nojs.newPage();await plain.goto('http://127.0.0.1:8080/projects.html');
+ assert.equal(await plain.locator('[data-project]:visible').count(),23);
+ assert(await plain.locator('nav a[href="systems.html"]').first().isVisible());
+ checks.push('No-JavaScript: all repository cards and navigation remain visible');
+ assert.deepEqual(errors,[]);
+ fs.writeFileSync('browser-report.json',JSON.stringify({checks,pageErrors:errors},null,2)+'\n');
+ console.log(JSON.stringify({checks:checks.length,pageErrors:errors,screenshots:['qa/home-desktop.png','qa/home-mobile.png','qa/projects-desktop.png']},null,2));
+ await browser.close();
+})().catch(e=>{console.error(e);process.exit(1)});
