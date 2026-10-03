@@ -35,4 +35,4 @@ This website build does not run the project repositories' runtime suites. Docume
 Compressed concept artwork was supplied in `grok-workspace.zip` and reused as decorative category imagery and clearly labeled illustrations. It is not presented as a photograph of the engineer or of a measured installation. Social preview cards are local typographic PNGs. All artwork is served from this site's assets.
 
 ## Validation result
-Static validation passed: 10 primary pages, 23 project guides, 19,617 words in primary-page main content including documentation and code, 1,001,772 deployed bytes. Chromium browser QA passed 24 checks at desktop/mobile widths with zero page script errors. This does not establish Lighthouse scores, Safari/Firefox results, search ranking, or production hosting configuration.
+Static validation passed: 10 primary pages, 23 project guides, 20,186 words in primary-page main content including documentation and code, 1,033,412 deployed bytes. Chromium browser QA passed 24 checks at desktop/mobile widths with zero page script errors. This does not establish Lighthouse scores, Safari/Firefox results, search ranking, or production hosting configuration.

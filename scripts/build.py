@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Build a standalone portfolio with Python's standard library only."""
 import json, re, html, shutil, os, posixpath
+from discovery import ANSWERS, RELATED, LABELS
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
@@ -144,9 +145,21 @@ urls=[]
 def render(key,label,file,headline,title,description,body,toc=None,project=None):
     url=BASE+('/' if file=='index.html' else '/'+file.replace('/index.html','/'))
     schema=[{'@type':'Person','@id':BASE+'/#person','name':'Febin Francis','alternateName':'CodesbyFebin','url':BASE+'/','jobTitle':'Systems Engineer','homeLocation':{'@type':'Place','name':'Kerala, India'},'sameAs':['https://github.com/CodesbyFebin','https://www.linkedin.com/in/codes-by-febin/','https://orcid.org/0009-0002-8123-1531'],'knowsAbout':['AI infrastructure','Verifiable compute','Sovereign systems','Distributed systems']},{'@type':'WebSite','@id':BASE+'/#website','name':'CodesbyFebin','url':BASE+'/','inLanguage':'en','author':{'@id':BASE+'/#person'}},{'@type':'WebPage','@id':url+'#webpage','url':url,'name':title,'description':description,'inLanguage':'en','isPartOf':{'@id':BASE+'/#website'},'about':{'@id':BASE+'/#person'}},{'@type':'BreadcrumbList','itemListElement':[{'@type':'ListItem','position':1,'name':'Home','item':BASE+'/'}]+([] if key=='home' else [{'@type':'ListItem','position':2,'name':label,'item':url}])}]
+    if project:
+        schema[3]['itemListElement']=[{'@type':'ListItem','position':1,'name':'Home','item':BASE+'/'},{'@type':'ListItem','position':2,'name':'Projects','item':BASE+'/projects.html'},{'@type':'ListItem','position':3,'name':project['name'],'item':url}]
+    if not project:
+        question,answer=ANSWERS[key]
+        schema.append({'@type':'FAQPage','@id':url+'#answers','mainEntity':[{'@type':'Question','name':question,'acceptedAnswer':{'@type':'Answer','text':answer}}]})
+        body+='<section id="answers"><h2>Direct answer</h2><h3>'+esc(question)+'</h3><p>'+esc(answer)+'</p></section>'
+        if toc:toc.append(('answers','Direct answer'))
+    related=RELATED[key]
+    if project:
+        peers=[p for p in projects if p['category']==project['category'] and p['id']!=project['id']][:3]
+        body+='<section><h2>Related repositories</h2><ul>'+''.join('<li><a href="/'+p['detail']+'">'+esc(p['name'])+'</a> — '+esc(p['status'])+'</li>' for p in peers)+'</ul></section>' if peers else ''
+    body+='<section class="related-reading"><h2>Continue exploring</h2><ul>'+''.join('<li><a href="/'+next(p[2] for p in PAGES if p[0]==k)+'">'+esc(LABELS[k])+'</a></li>' for k in related)+'</ul></section>'
     if project:schema.append({'@type':'SoftwareSourceCode','name':project['name'],'codeRepository':project['url'],'programmingLanguage':project['language'],'description':project['description'],'url':url})
     if key=='projects':schema.append({'@type':'ItemList','name':'Repository directory','numberOfItems':len(projects),'itemListElement':[{'@type':'ListItem','position':i+1,'name':p['name'],'url':BASE+'/'+p['detail'].replace('/index.html','/')} for i,p in enumerate(projects)]})
-    hero=(f'<section class="hero"><div class="wrap hero-inner"><div><div class="eyebrow">// Febin Francis · Systems Engineer</div><h1>Systems that <em>prove what happened.</em></h1><p class="lede">AI infrastructure. Verifiable compute. Sovereign systems.<br>Open-source work you can inspect, from Kerala, India.</p><div class="actions"><a class="button" href="/systems.html">Explore systems</a><a class="button secondary" href="/projects.html">Inspect source code</a></div><div class="meta"><span>Rust · Go · TypeScript · Python</span><span>IST / UTC+5:30</span></div></div>{terminal()}</div></section>' if key=='home' else f'<section class="hero hero-small"><div class="wrap"><div class="breadcrumbs"><a href="/index.html">Home</a> / {esc(label)}</div><div class="eyebrow">// {esc(label)}</div><h1>{esc(headline)}</h1><p class="lede">{esc(description)}</p></div></section>')
+    hero=(f'<section class="hero"><div class="wrap hero-inner"><div><div class="eyebrow">// Febin Francis · Systems Engineer</div><h1>Systems that <em>prove what happened.</em></h1><p class="lede">AI infrastructure. Verifiable compute. Sovereign systems.<br>Open-source work you can inspect, from Kerala, India.</p><div class="actions"><a class="button" href="/systems.html">Explore systems</a><a class="button secondary" href="/projects.html">Inspect source code</a></div><div class="meta"><span>Rust · Go · TypeScript · Python</span><span>IST / UTC+5:30</span></div></div>{terminal()}</div></section>' if key=='home' else f'<section class="hero hero-small"><div class="wrap"><div class="breadcrumbs"><a href="/index.html">Home</a> / {('<a href="/projects.html">Projects</a> / ' if project else '')}{esc(label)}</div><div class="eyebrow">// {esc(label)}</div><h1>{esc(headline)}</h1><p class="lede">{esc(description)}</p></div></section>')
     if key=='home':
         featured=[next(p for p in projects if p['repo']==r) for r in ['rust-stark-zkvm','Decentralized-','Agent-Swarm']]
         hero+='<div class="wrap"><div class="signal-strip"><div class="signal"><b>23</b><span>Source-linked repositories</span></div><div class="signal"><b>10</b><span>Connected portfolio pages</span></div><div class="signal"><b>Kerala, IN</b><span>Open-source builder</span></div><div class="signal"><b>UNKNOWN</b><span>When data is unmeasured</span></div></div><div class="section-head"><div><div class="kicker">// Selected systems</div><h2>Different layers. One principle.</h2></div><a href="/systems.html">Inspect the architecture</a></div><div class="grid">'+''.join(card(p,i) for i,p in enumerate(featured))+'</div></div>'
