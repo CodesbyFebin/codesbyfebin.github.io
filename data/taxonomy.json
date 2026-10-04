@@ -1,0 +1,27 @@
+{
+  "stark": {
+    "name": "STARK & verifiable compute",
+    "description": "Trace semantics, proof statements, commitments, and meaningful negative controls.",
+    "count": 25
+  },
+  "rust": {
+    "name": "Rust systems engineering",
+    "description": "Ownership, async boundaries, service design, and operational behavior.",
+    "count": 25
+  },
+  "self-hosting": {
+    "name": "Sovereign self-hosting",
+    "description": "Deployment, networking, backups, and recovery under your own control.",
+    "count": 25
+  },
+  "ai-infra": {
+    "name": "AI infrastructure & MCP",
+    "description": "Tool permissions, retrieval, durable workers, and evidence of execution.",
+    "count": 25
+  },
+  "grok-build": {
+    "name": "Application build guides",
+    "description": "Identity, persistence, multiplayer, games, 3D graphics, LLM clients, and interface design.",
+    "count": 7
+  }
+}

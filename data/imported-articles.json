@@ -1,0 +1,441 @@
+[
+  {
+    "slug": "configured-agent",
+    "title": "A configured agent is not an executing agent",
+    "description": "Configuring a model endpoint is an important setup step, but it does not establish that a mission ran. A mission may be queued, blocked by a missing permission, waiting for approval, or assigned to a worker that has lost its lease. A useful interface preserves those states rather than converting every successful configuration check into a green execution status.",
+    "date": "2026-10-03",
+    "minutes": 6,
+    "topics": [
+      "AI infrastructure",
+      "agents"
+    ],
+    "paragraphs": [
+      "Configuring a model endpoint is an important setup step, but it does not establish that a mission ran. A mission may be queued, blocked by a missing permission, waiting for approval, or assigned to a worker that has lost its lease. A useful interface preserves those states rather than converting every successful configuration check into a green execution status.",
+      "A model’s plan should cross a structured validation boundary before becoming persisted tasks. Tool permissions should be explicit, and a generated instruction should not be able to expand them. A worker should claim work through a durable mechanism and record the output it produced. Reconnection should replay real events instead of fabricating activity to fill a gap in the interface.",
+      "The result needs a matching verification criterion. An artifact-existence gate answers whether a file or record was produced. A build gate answers whether the program compiled under a specific configuration. A security gate answers only the checks it actually performed. Calling all three “verified” without scope makes the label less useful. AgentSwarm provides a source-linked example of these distinctions."
+    ],
+    "relatedProjects": [
+      "agent-swarm",
+      "om-personal-ai"
+    ]
+  },
+  {
+    "slug": "small-stark-vm",
+    "title": "What a small STARK VM teaches",
+    "description": "A small VM makes the relationship between instructions, trace rows, constraints, and verification easier to inspect. It also makes limitations more visible. Arithmetic and forward jumps are a narrower language than a general program with dynamic memory and loops. A proof interface cannot expand the instruction set simply by accepting an HTTP request.",
+    "date": "2026-10-03",
+    "minutes": 6,
+    "topics": [
+      "verifiable compute",
+      "STARK"
+    ],
+    "paragraphs": [
+      "A small VM makes the relationship between instructions, trace rows, constraints, and verification easier to inspect. It also makes limitations more visible. Arithmetic and forward jumps are a narrower language than a general program with dynamic memory and loops. A proof interface cannot expand the instruction set simply by accepting an HTTP request.",
+      "The statement being proved matters. If the verifier already re-executes a public program, the system has different privacy and performance properties from a private-witness computation. If an on-chain contract trusts an attester, it has a different trust boundary from a contract that verifies the proof directly. These differences should be in the explanation before they become important deployment assumptions.",
+      "Negative controls are especially valuable. Change the claimed result, swap the program, or tamper with the proof and confirm rejection. Passing a valid example alone is compatible with a broken verifier that accepts every input. The Rust VM guide and threat model connect those questions to the documented implementation."
+    ],
+    "relatedProjects": [
+      "rust-stark-zkvm"
+    ]
+  },
+  {
+    "slug": "self-hosting-boundary",
+    "title": "Self-hosting changes the responsibility boundary",
+    "description": "Owning a server creates control, but it also creates responsibility for updates, credentials, backups, monitoring, and recovery. A local successful deployment is an important first step. It is not evidence that an installation can recover from lost storage, failed certificates, node outages, or an operator mistake.",
+    "date": "2026-10-03",
+    "minutes": 6,
+    "topics": [
+      "self-hosting",
+      "infrastructure"
+    ],
+    "paragraphs": [
+      "Owning a server creates control, but it also creates responsibility for updates, credentials, backups, monitoring, and recovery. A local successful deployment is an important first step. It is not evidence that an installation can recover from lost storage, failed certificates, node outages, or an operator mistake.",
+      "The deployment path should be followed end to end. Identify the source snapshot, image build, selected host, running workload, and edge route. Keep rollback behavior distinct from a fresh deploy. Test restore from the backup rather than simply confirming that a backup file was written. Define what happens when a required service is unavailable.",
+      "Sovereignty is more useful as a collection of controls than as a slogan. Can the host refuse work? Can the operator inspect and rotate identity? Can data remain within the chosen boundary? Can an installation be rebuilt from its documented artifacts? The systems page connects these questions to the two distinct hosting repositories."
+    ],
+    "relatedProjects": [
+      "decentralized.hosting",
+      "decentralized-host"
+    ]
+  },
+  {
+    "slug": "directory-rules",
+    "title": "A directory should preserve its publication rules",
+    "description": "An AI tools directory often exposes the same record through a web page, API, feed, sitemap, and machine-readable summary. If those surfaces each have a different publication rule, an unverified record can leak into discovery even when the visible page excludes it. A single eligibility rule makes the public contract easier to inspect.",
+    "date": "2026-10-03",
+    "minutes": 5,
+    "topics": [
+      "discovery",
+      "evidence"
+    ],
+    "paragraphs": [
+      "An AI tools directory often exposes the same record through a web page, API, feed, sitemap, and machine-readable summary. If those surfaces each have a different publication rule, an unverified record can leak into discovery even when the visible page excludes it. A single eligibility rule makes the public contract easier to inspect.",
+      "The evidence attached to a record should explain the claim it supports. A provider page can establish that an offering exists without establishing its price in every region. A model card can describe intended use without establishing that an application has tested it. Unknown properties should stay unknown instead of being filled by synthetic rankings or generated review counts.",
+      "MCPserver.in documents a shared publication gate for its public surfaces. The BestAIAgent repository also describes an evidence-oriented catalog model. Their current implementations belong in the source, while this portfolio provides the discovery links. Project cards identify the repositories and their review status."
+    ],
+    "relatedProjects": [
+      "mcp-server",
+      "bestaiagent.in"
+    ]
+  },
+  {
+    "slug": "what-are-stark-proofs",
+    "title": "What are STARK proofs?",
+    "description": "A plain explanation of STARKs, AIR, FRI, and how that differs from a SNARK trusted setup. Not a benchmark of rust-stark-zkvm.",
+    "date": "2026-10-04",
+    "minutes": 3,
+    "topics": [
+      "STARK",
+      "cryptography"
+    ],
+    "paragraphs": [
+      "Merged from the Ultimate Edition package on 4 October 2026. This is an explanation, not a measurement from these repositories, not a customer result, and not a journal paper.",
+      "Introduction Scalable Transparent Arguments of Knowledge (STARKs) are a cryptographic proof system for verifiable computation that does not use a trusted setup. Unlike SNARKs that require a trusted ceremony, STARKs get their security from collision-resistant hashing.",
+      "What Are Cryptographic Proofs? A cryptographic proof is a mathematical artifact that demonstrates knowledge or computation validity without revealing the underlying information. The prover creates a proof, and the verifier checks its validity in polynomial time—while creating a fake proof requires exponential work.",
+      "STARK Architecture STARKs operate through a series of layers, each reducing the problem's complexity:",
+      "Algebraic Intermediate Representation (AIR) The computation is encoded as polynomial constraints over a field. These constraints ensure that if you follow them step-by-step, you get the correct result.",
+      "// Example: proving you know x such that x² = 16 // Constraint: witness[1] = witness[0] * witness[0] // Public: result = 16 // Prover provides witness values satisfying constraints",
+      "The FRI protocol is the polynomial-commitment step used by STARKs. It folds a large polynomial down across a logarithmic number of rounds. This note does not report a measured proof size or verification time for rust-stark-zkvm.",
+      "Merkle Tree Commitment STARKs commit to polynomial evaluations using Merkle trees (not elliptic curves like SNARKs). This provides transparent, post-quantum security based on collision-resistant hashing.",
+      "Winterfell is a Rust library for building STARKs. rust-stark-zkvm lists it as a dependency. This note does not add a proof system beyond that repository.",
+      "STARKs avoid a trusted setup and can rely on hash-based assumptions rather than elliptic-curve hardness. That is a different tradeoff from a SNARK, not a measurement of this site."
+    ],
+    "relatedProjects": [
+      "rust-stark-zkvm"
+    ]
+  },
+  {
+    "slug": "rust-ownership",
+    "title": "Rust ownership, borrowing, and lifetimes",
+    "description": "The ownership rules Rust uses to keep memory safe without a garbage collector. Teaching note, not a claim about a specific program in this portfolio.",
+    "date": "2026-10-04",
+    "minutes": 4,
+    "topics": [
+      "Rust",
+      "systems"
+    ],
+    "paragraphs": [
+      "Merged from the Ultimate Edition package on 4 October 2026. This is an explanation, not a measurement from these repositories, not a customer result, and not a journal paper.",
+      "Introduction Rust's most distinctive feature is its ownership system, a revolutionary approach to memory management that eliminates entire categories of bugs at compile time. Unlike garbage-collected languages or manual memory management, Rust uses ownership to ensure memory safety without runtime overhead. This comprehensive guide explores ownership, borrowing, and lifetimes—the three pillars of Rust's memory model.",
+      "Understanding Ownership Ownership is Rust's answer to the fundamental question: who is responsible for freeing memory? The three rules of ownership are:",
+      "Values and Memory When you create a variable in Rust, you're taking ownership of that value. The value lives in memory until the owner goes out of scope. For stack-allocated types like integers, this is straightforward. For heap-allocated types like String, ownership determines when the heap memory is freed.",
+      "fn main() { let s1 = String::from(\"hello\"); // s1 owns the string let s2 = s1; // ownership moves to s2 // println!(\"{}\", s1); // ERROR: s1 no longer owns the value println!(\"{}\", s2); // OK: s2 owns it now }",
+      "Move Semantics When you assign a value to another variable, Rust moves the value, not copies it. This prevents double-freeing memory. The original variable becomes invalid after the move. This is fundamentally different from languages like C++ where assignment usually copies.",
+      "For types that implement the Copy trait (like integers), values are copied instead of moved. This is safe because they're small and the copy cost is negligible.",
+      "Borrowing and References Borrowing allows you to use a value without taking ownership. You create a reference to the value, and the reference can be passed around or used without transferring ownership.",
+      "Immutable References An immutable reference (&T) lets you read a value but not modify it. You can create multiple immutable references to the same value:",
+      "fn main() { let s = String::from(\"hello\"); let r1 = &s; let r2 = &s; println!(\"{}, {}\", r1, r2); // Both references are valid }",
+      "Mutable References A mutable reference (&mut T) allows you to modify a value through the reference. But Rust enforces a critical rule: you can have only one mutable reference to a value at a time. This prevents data races at compile time.",
+      "fn main() { let mut s = String::from(\"hello\"); let r1 = &mut s; // let r2 = &mut s; // ERROR: cannot have two mutable references r1.push_str(\" world\"); println!(\"{}\", r1); }",
+      "Lifetimes Explained Lifetimes describe how long a reference is valid. The Rust compiler uses lifetimes to ensure that all references are always valid. In most cases, lifetimes are implicit and inferred by the compiler.",
+      "Explicit Lifetime Annotations Sometimes the compiler needs help determining lifetimes. You explicitly annotate lifetimes using 'a, 'b, etc.:",
+      "fn longest(x: &'a str, y: &'a str) -> &'a str { if x.len() > y.len() { x } else { y } }",
+      "This signature says: \"I return a reference that's valid as long as both input references are valid.\" The lifetime parameter 'a indicates this relationship.",
+      "Struct Lifetimes When a struct contains references, you must specify lifetimes for those references:",
+      "fn main() { let title = \"Rust Ownership\"; let content = \"Understanding memory safety...\"; let article = Article { title, content }; }",
+      "Prefer immutable borrows: Use &T by default, &mut T only when modification is needed",
+      "Conclusion Rust's ownership system, combined with borrowing and lifetimes, creates a uniquely powerful memory model. It prevents data races, eliminates null pointer dereferences, and ensures memory safety without garbage collection. While the learning curve is steep, mastering ownership transforms how you write concurrent, efficient, reliable code. The compiler's strict rules protect you from entire categories of bugs that plague other languages."
+    ],
+    "relatedProjects": [
+      "rust-stark-zkvm"
+    ]
+  },
+  {
+    "slug": "docker-containers",
+    "title": "Docker images, containers, and Compose",
+    "description": "What an image, a container, a network, and a volume are. Not evidence that a production deployment in this portfolio was measured.",
+    "date": "2026-10-04",
+    "minutes": 3,
+    "topics": [
+      "Docker",
+      "self-hosting"
+    ],
+    "paragraphs": [
+      "Merged from the Ultimate Edition package on 4 October 2026. This is an explanation, not a measurement from these repositories, not a customer result, and not a journal paper.",
+      "Introduction Docker revolutionized how we build, ship, and run applications. By containerizing software and its dependencies, Docker ensures that your application runs identically in development, testing, and production. This guide covers Docker's architecture, core concepts, and practical implementation patterns for modern development workflows.",
+      "What is Docker? Docker is a containerization platform that packages your application with all its dependencies into a standardized unit called a container. Unlike virtual machines, containers share the host OS kernel, making them lightweight and fast to start.",
+      "Image: A read-only template containing application code, runtime, libraries, and dependencies",
+      "Container: A running instance of an image with its own filesystem, network, and process space",
+      "Creating Your First Dockerfile A Dockerfile is a set of instructions to build an image:",
+      "Each instruction creates a layer in the image. Docker caches layers for faster rebuilds. The FROM instruction specifies the base image, and subsequent instructions build on it.",
+      "Docker Networks and Volumes Containers often need to communicate and persist data:",
+      "Networking By default, containers can't communicate. Create a network to allow container-to-container communication:",
+      "docker network create mynetwork docker run --network mynetwork --name web myapp:1.0 docker run --network mynetwork --name db postgres:13",
+      "Data Persistence Containers are ephemeral; changes to the filesystem are lost when the container stops. Use volumes for persistent storage:",
+      "Docker Compose Managing multiple containers is easier with Docker Compose. Define your entire application stack in a single YAML file:",
+      "version: '3.8' services: web: build: . ports: - \"8000:8000\" environment: DATABASE_URL: postgres://db:5432/myapp depends_on: - db db: image: postgres:13 environment: POSTGRES_DB: myapp volumes: - pgdata:/var/lib/postgresql/data volumes: pgdata:",
+      "Conclusion Docker provides a powerful abstraction for containerization, enabling consistent deployment across environments. By understanding Docker's architecture, image building, networking, and composition patterns, you gain the foundation for modern DevOps practices, microservices architectures, and scalable infrastructure. The principles learned here extend to Kubernetes and advanced container orchestration platforms."
+    ],
+    "relatedProjects": [
+      "decentralized.hosting"
+    ]
+  },
+  {
+    "slug": "raft-consensus",
+    "title": "What Raft actually guarantees",
+    "description": "Leader election, log replication, and the crash-fault safety property. Not a conformance report for Decentralized.Host.",
+    "date": "2026-10-04",
+    "minutes": 4,
+    "topics": [
+      "distributed systems",
+      "consensus"
+    ],
+    "paragraphs": [
+      "This note explains Raft. It is not a test report for Decentralized.Host. That repository's README mixes foundation text and a provider-discovery roadmap, so production qualification is not inferred here.",
+      "Raft keeps a replicated log. A cluster agrees on an ordered sequence of commands. Clients talk to a leader. The committed prefix of the log is what the cluster has accepted.",
+      "Time is split into terms. A follower that stops hearing from a leader increments the term and asks for votes. A candidate with a majority becomes leader. If votes split, that election fails and a later term tries again.",
+      "The leader appends a command and copies it to followers. An entry is committed only after a majority has stored it. A follower that does not share the previous index and term rejects the entry. The leader then overwrites that follower's uncommitted suffix instead of forking the committed prefix.",
+      "The election rule requires a candidate's log to be at least as up to date as a majority. From that, two leaders cannot commit different entries at the same index. Raft's usual model is crash faults. A node that lies is outside that model. Naming Raft does not add Byzantine fault tolerance.",
+      "A partition can leave a minority unable to commit. The side with a majority can elect a leader and continue. When the partition heals, the minority drops uncommitted entries and catches up. Agreement on a log is not the same claim as zero downtime.",
+      "Read Decentralized.Host for signed intent and local admission. Do not treat this page as evidence that its conformance vectors include a Raft lab."
+    ],
+    "relatedProjects": [
+      "decentralized-host"
+    ]
+  },
+  {
+    "slug": "cryptographic-commitments",
+    "title": "Commitments: hiding and binding",
+    "description": "What a commitment must hide and what it must bind. Hash commitments, Pedersen, and the Merkle commitments used with STARKs. No timing table.",
+    "date": "2026-10-04",
+    "minutes": 4,
+    "topics": [
+      "cryptography",
+      "STARK"
+    ],
+    "paragraphs": [
+      "A commitment publishes a stand-in for a value now and opens it later. Hiding means the stand-in does not reveal the value. Binding means it cannot be opened to a different value. A scheme can have one property and fail the other.",
+      "A hash commitment is a collision-resistant hash of the value and a nonce. It is binding if the hash resists collisions. It is hiding only when the nonce has enough entropy and the value is not easy to guess. Hashing a small integer and publishing the digest does not hide it.",
+      "A Pedersen commitment has the form v·G + r·H in a group where the discrete log between G and H is unknown. Under that assumption it can be hiding and binding, and it is additively homomorphic. That is an elliptic-curve construction. It is not what the STARK note describes.",
+      "STARKs in this portfolio's notes commit to polynomial evaluations with Merkle trees. That binds the evaluations to a hash root. It does not provide Pedersen's additive homomorphism, and it does not depend on a discrete-log assumption.",
+      "Poseidon is a hash built to be efficient inside algebraic circuits. Naming it is not an implementation. This site does not claim a Pedersen or Poseidon library, and it does not publish a comparison of proof sizes or cycle counts.",
+      "In a proof, the verifier holds the commitment while the prover opens evaluations. If the commitment does not bind the polynomial, a later opening can be swapped. rust-stark-zkvm's documented verifier re-executes public programs. Read the AIR and the proof object in that repository before treating a commitment as the thing the verifier checks."
+    ],
+    "relatedProjects": [
+      "rust-stark-zkvm"
+    ]
+  },
+  {
+    "slug": "sovereign-architecture",
+    "title": "A sovereign host is a set of controls",
+    "description": "Admission, identity, data boundary, and rebuild. Two repositories, no chaos-test log, and no uptime claim.",
+    "date": "2026-10-04",
+    "minutes": 4,
+    "topics": [
+      "self-hosting",
+      "infrastructure"
+    ],
+    "paragraphs": [
+      "On this site, a sovereign host is an operator who can refuse work, inspect identity, keep data inside a chosen boundary, and rebuild from documented artifacts. It is not a slogan and not a measured uptime.",
+      "Decentralized.Host is the Go record: signed intent, local admission, and explicit state. The README mixes that foundation with roadmap scope. This note does not promote the README to a production qualification.",
+      "The deployment mesh is a separate repository. FastAPI, PostgreSQL, Docker, Traefik, and the dhost CLI document a local path from a source snapshot to an edge route. Rollback is a different operation from a fresh deploy. Optional operator credits are devnet-only and disabled by default.",
+      "WireGuard, DNS-01 certificates, and Raft solve different problems: an encrypted overlay, certificate issuance, and crash-fault agreement on a log. Putting the names on an architecture diagram does not mean those protocols are running.",
+      "Chaos testing means changing one condition — a dead node, a dropped packet, an expired certificate — and writing down what was observed. This site has no chaos-test log to cite. An unrun test stays unknown.",
+      "Start with the self-hosting note, then read the two repositories as separate surfaces. Do not collapse them into one product."
+    ],
+    "relatedProjects": [
+      "decentralized-host",
+      "decentralized.hosting"
+    ]
+  },
+  {
+    "slug": "privacy-boundary",
+    "title": "A local model is not a privacy proof",
+    "description": "What hosting an inference endpoint changes, and what federated learning, differential privacy, and enclaves would still have to show.",
+    "date": "2026-10-04",
+    "minutes": 4,
+    "topics": [
+      "AI infrastructure",
+      "privacy"
+    ],
+    "paragraphs": [
+      "Running a model on a machine you control changes the default path of the prompt. It does not by itself show that logs, backups, crash dumps, or a tool the agent calls stay on that machine.",
+      "Federated learning, differential privacy, and secure enclaves are different mechanisms. This portfolio does not claim an implementation of any of them. A diagram of a gateway is not a privacy budget.",
+      "AgentSwarm is useful here because it separates states. A setting that says local is configured. A mission may still be queued, blocked, or sent to a worker. A privacy claim needs the same distinction: configuration is not an observation.",
+      "OM is a personal workspace for projects, notes, prompts, and missions. Its README distinguishes persisted workspace features. That is not a statement that prompts were processed inside an enclave.",
+      "If a tool can call a third-party API, the host is not the whole trust boundary. An allowlist that is not written down is an unknown, not a private system. Review the tool permissions before describing the deployment as local."
+    ],
+    "relatedProjects": [
+      "agent-swarm",
+      "om-personal-ai"
+    ]
+  },
+  {
+    "slug": "verifiable-computation",
+    "title": "Verifiable computation, in one page",
+    "description": "Prover, verifier, and statement. A map to the STARK notes, including the limit of the current public-program verifier.",
+    "date": "2026-10-04",
+    "minutes": 3,
+    "topics": [
+      "verifiable compute",
+      "STARK"
+    ],
+    "paragraphs": [
+      "Verifiable computation means a verifier checks a statement about a computation. Sometimes the goal is to avoid redoing all of the work. Sometimes the goal is to hide inputs. Those are different properties, and a system can have one without the other.",
+      "rust-stark-zkvm's documented verifier re-executes public programs. Private witnesses and general-purpose execution are outside that documented scope. A proof interface does not expand the instruction set.",
+      "The statement has to name the program, the inputs, and the claimed output. A proof for a different program is not evidence for this one. Changing the claimed result and confirming rejection is a useful negative control.",
+      "Completeness means an honest prover can convince the verifier. Soundness means a false statement is accepted only with negligible probability. Zero-knowledge means the proof leaks nothing beyond the statement. Succinctness means checking is cheaper than re-running. Passing one valid example does not establish all four.",
+      "Read the STARK note for AIR, FRI, and Merkle commitments. Read the small STARK VM note for this repository. Read the commitment note before treating a hash as hiding."
+    ],
+    "relatedProjects": [
+      "rust-stark-zkvm"
+    ]
+  },
+  {
+    "slug": "reading-this-directory",
+    "title": "How this directory decides what to print",
+    "description": "Review labels, forks, scaffolds, and why a star count on a card is a snapshot rather than a score.",
+    "date": "2026-10-04",
+    "minutes": 4,
+    "topics": [
+      "evidence",
+      "discovery"
+    ],
+    "paragraphs": [
+      "Every project card is a public repository from the 3 October 2026 review, plus a label. The label is not a quality score and not a popularity rank.",
+      "Source documented means the README and the tree agree enough to describe the project without inventing a runtime result. Scope review needed means the README mixes a foundation with a roadmap. The card leaves that mix visible instead of promoting the roadmap to a finished system.",
+      "A fork names its upstream. A documentation scaffold whose README still has placeholder metrics stays a scaffold. Sitting in this directory does not turn either one into an original system.",
+      "Star counts on the cards are that snapshot. When the browser can reach GitHub, the census on the home page is labeled live. A missing response stays unknown. Absence of an error is not evidence that a service is healthy.",
+      "A useful contribution replaces one placeholder with a command that exists in the tree and a check that fails when the artifact is wrong. A customer count, a testimonial, or a benchmark with no inputs does not belong on the card."
+    ],
+    "relatedProjects": [
+      "evidence-cookbook",
+      "mcp-server"
+    ]
+  },
+  {
+    "slug": "negative-controls",
+    "title": "A passing example is not a test",
+    "description": "The check that matters is a change that should fail: a different proof, a missing restore, or a mission the policy must refuse.",
+    "date": "2026-10-04",
+    "minutes": 3,
+    "topics": [
+      "evidence",
+      "verifiable compute"
+    ],
+    "paragraphs": [
+      "A verifier that accepts one valid proof may also accept every proof. The useful check changes something that should fail: the claimed result, the program, or a truncated proof. Rejection is the observation.",
+      "The same shape applies to a deploy. A container that starts is not a restore test. Rollback is a different operation from a fresh deploy. This site does not have a restore log for the hosting repositories, so that result stays unknown.",
+      "For an agent, configuring a model endpoint is not execution. A mission that policy should refuse has to stay refused. A green status after configuration only shows that configuration succeeded.",
+      "Put the negative control next to the claim it can falsify. A badge with no named input is not a control. rust-stark-zkvm's own review instruction is to change the claimed result or program and confirm rejection."
+    ],
+    "relatedProjects": [
+      "rust-stark-zkvm",
+      "agent-swarm"
+    ]
+  },
+  {
+    "slug": "zkp-tutorial-developers",
+    "title": "A developer’s path through a small STARK program",
+    "description": "Trace, constraints, and commitment, plus a sketched ISA. Not a measured benchmark, and not a claim that rust-stark-zkvm implements memory, recursion, or the timings in the source HTML.",
+    "date": "2026-10-04",
+    "minutes": 8,
+    "topics": [
+      "STARK",
+      "verifiable compute"
+    ],
+    "paragraphs": [
+      "This note is adapted from a tutorial draft. The draft said every code block runs and that a 65,536-cycle trace was measured at 3.4 seconds and 96 KB. Those measurements are not in the repository snapshot, so they are not repeated here. Sketches below are sketches.",
+      "rust-stark-zkvm is a small STARK machine: arithmetic, forward branches, a fixed register file, Winterfell proving, and HTTP/MCP interfaces. The documented verifier re-executes public programs. Private witnesses, a general memory argument, and recursion are outside that documented scope. Do not read this page as a second, larger machine.",
+      "A STARK-shaped system still answers three questions. What happened is an execution trace: one row per cycle, one column per piece of state. Was it legal is a set of constraints, polynomials that are zero on an honest trace. Can a verifier check without reading the whole table is a commitment, usually a Merkle root reduced by FRI.",
+      "Hold that triad. Later terms such as query count or grinding are adjustments to the commitment and the soundness error. They are not a reason to skip naming the program, the inputs, and the claimed output.",
+      "A teaching ISA can stay small on purpose. Each instruction widens the trace or raises constraint degree. The draft used eight operations — add, sub, mul, conditional jumps, load, store, and halt — over 16 registers with R0 hardwired to zero. That is a teaching shape. It is not the instruction list proven by the current rust-stark-zkvm card.",
+      "CODE\npub enum Op { Add, Sub, Mul, Jz, Jnz, Load, Store, Halt }\n\n// Sketch only. Not a crate that this site compiled.\n// A verifier should pin the program image, not \"some program\".",
+      "The useful security decision in that sketch is the program identity. A proof is about a specific program. If the verifier only checks that some AIR of the right shape accepted a proof, a different program can be substituted. Pin the program hash at the application boundary. The published zkVM card still says to read the AIR and the proof object in the repository before assuming that pin exists.",
+      "An executor is a fold: fetch, decode, write the next row. Determinism is the requirement. The prover and any re-execution must agree bit for bit, so wall clocks and hash-map iteration order do not belong in the semantics. The draft’s executor used a HashMap for memory. That is a bad place for iteration order to leak into a trace. If you build memory, give it an explicit order.",
+      "An AIR constraint for addition, written as a sentence, is: on an add cycle, the next destination register equals the current destination plus the source; on other cycles the add flag is zero and that constraint is idle. Boundary constraints can pin the first program counter and the final halt flag. Degree matters because higher-degree constraints cost more in the proof, but flattening a constraint with a helper column can also make it unsound. Write the obvious constraint first. This note has no timing table for that tradeoff.",
+      "CODE\n// Sketch of one transition, not Winterfell’s real API.\nf_add * (next(rd) - rd - rs)",
+      "Winterfell is the library rust-stark-zkvm lists. Calling a two-line prove() in a blog post is not evidence that this site ran it, and it is not the library’s actual function signature. Read the crate in the repository.",
+      "The draft printed a table: 4,096 cycles in 0.4 s, 65,536 cycles in 3.4 s and 96 KB, 262,144 cycles in 12.9 s. It did not include a command, a commit, a field, a thread count, or a machine beyond “2023-class laptop”. That is the benchmark-theater trap the same draft warns about. The numbers are omitted.",
+      "Three traps are still worth keeping, without the fake table. Nondeterminism: a timestamp or an unordered map in the semantics makes the prover and the verifier disagree. Padding: traces are often padded to a power of two, so a short program still pays for the next power. Benchmark theater: a proof size without hardware, field, security bits, and thread count is an advertisement. A fourth trap is trace bloat: debug columns become part of the public statement once a verifier pins them.",
+      "“96-bit security” is not a mood. It is a claim about the field, the number of FRI queries, and any grinding bits, taken together. A proof envelope that does not carry those parameters cannot be compared with another envelope. This page does not assert a security level for rust-stark-zkvm.",
+      "Negative control, matching the repository’s own review note: change the claimed result or the program and confirm rejection. A single accepted proof does not show that the verifier rejects anything else. Recursion cost below 2^16 rows, memory channels, and CI proof gates are not established by this note.",
+      "Next reading on this site: the STARK explanation, the one-page verifiable-computation note, and the rust-stark-zkvm project card. The source of truth is the repository, not this tutorial draft."
+    ],
+    "relatedProjects": [
+      "rust-stark-zkvm"
+    ]
+  },
+  {
+    "slug": "proof-api-boundary",
+    "title": "An HTTP route is not the proof statement",
+    "description": "A 200 from a prove endpoint means the server answered. It does not name the program, the inputs, or what the verifier would reject.",
+    "date": "2026-10-04",
+    "minutes": 4,
+    "topics": [
+      "STARK",
+      "verifiable compute"
+    ],
+    "paragraphs": [
+      "rust-stark-zkvm documents HTTP and MCP interfaces next to a small STARK machine. A route that returns success can mean the server parsed a request. It does not, by itself, mean a proof was produced for the program the caller named, or that a tampered proof would be rejected.",
+      "The statement has to travel with the response: which program, which public inputs, which claimed output. If the body omits the program identity, a later reader cannot tell a proof of this program from a proof of another one.",
+      "An MCP tool has the same shape. The tool’s description is configuration. The tool’s result is an observation only when it includes an artifact a later check can re-verify. A text reply that says verified is not that artifact.",
+      "The documented verifier re-executes public programs. That is a different property from zero-knowledge about the inputs. Read the repository before describing the API as a general proving service, and before assuming private witnesses are in scope."
+    ],
+    "relatedProjects": [
+      "rust-stark-zkvm"
+    ]
+  },
+  {
+    "slug": "readme-against-the-tree",
+    "title": "Read the README against the tree",
+    "description": "A README can describe a destination. The tree at a revision is what is present. Commands that name missing files should stay written down.",
+    "date": "2026-10-04",
+    "minutes": 3,
+    "topics": [
+      "evidence",
+      "discovery"
+    ],
+    "paragraphs": [
+      "Start at the default branch. Then read the manifest and the scripts the README tells you to run. If a command names a path that is not in the tree, record the gap. Do not assume the file exists on another branch unless you checked that branch.",
+      "A roadmap heading is a plan. Words like coming, phase 2, or will support are not features of the revision you are reading. The label scope review needed is for READMEs that mix that plan with the foundation and leave the mix unresolved.",
+      "A fork should name its upstream. If most of the README is the upstream project’s, say so. Attribution is part of the description, not a courtesy.",
+      "Cookbook repositories in this directory still contain placeholder metrics and example links. The scaffold is the artifact. Replacing one placeholder with a command that exists in the tree is a contribution. Adding another adjective is not."
+    ],
+    "relatedProjects": [
+      "evidence-cookbook",
+      "mcp-cookbook"
+    ]
+  },
+  {
+    "slug": "worker-leases",
+    "title": "Two workers and one mission",
+    "description": "What a lease is for, and the check this site has not run: two workers, one queued mission, one side effect.",
+    "date": "2026-10-04",
+    "minutes": 3,
+    "topics": [
+      "AI infrastructure",
+      "agents"
+    ],
+    "paragraphs": [
+      "AgentSwarm’s documented shape includes persisted missions, workers, and dispatch. The question that matters is what happens when two workers can see the same queued mission.",
+      "A lease is a time-bounded claim on that mission. If the claim is only a flag in one process, a restart forgets it. A second worker can run the side effect again. A retry that is not idempotent then duplicates the effect.",
+      "The model does not widen the tool allowlist by phrasing. Permission is a check at the tool, separate from the plan. Configuring a model endpoint is still not the same fact as a mission that ran.",
+      "This note does not report a concurrency result for AgentSwarm. The check is named so it can be run: start two workers against one mission and record whether one is refused. Until that observation exists, the behavior stays unknown."
+    ],
+    "relatedProjects": [
+      "agent-swarm"
+    ]
+  },
+  {
+    "slug": "rollback-versus-redeploy",
+    "title": "Rollback is not a fresh deploy",
+    "description": "Running the deploy command again creates a new placement. Returning to the previous artifact and its data is a different operation.",
+    "date": "2026-10-04",
+    "minutes": 3,
+    "topics": [
+      "self-hosting",
+      "infrastructure"
+    ],
+    "paragraphs": [
+      "The deployment mesh documents a path from a source snapshot through upload, build, scheduling, container startup, and an edge route. Its own description treats update, history, and rollback as separate operations. Running the deploy command again is a new placement.",
+      "A new placement can succeed after the previous release’s data is gone. Recovery asks whether the previous artifact and its data can be selected again, not whether a container process starts.",
+      "Decentralized.Host is a different repository: signed intent and local admission in Go. A successful mesh deploy is not evidence that the Go control plane admitted the same workload.",
+      "No restore time is cited here. The result stays unknown until someone follows the documented rollback and writes down the revision that came back."
+    ],
+    "relatedProjects": [
+      "decentralized.hosting",
+      "decentralized-host"
+    ]
+  }
+]

@@ -1,0 +1,742 @@
+[
+  {
+    "path": "/blog/stark/zkp-tutorial-developers/",
+    "title": "A developer\u2019s path through a small STARK program",
+    "description": "Trace, constraints, commitments, a small teaching ISA, program pinning, and four traps. A bounded walkthrough without unmeasured proof claims."
+  },
+  {
+    "path": "/blog/stark/what-are-stark-proofs/",
+    "title": "What Are STARK Proofs? A Plain-English Technical Overview",
+    "description": "What STARK proofs are, how traces, constraints and commitments interact, and why they need no trusted setup \u2014 a plain-English technical overview with."
+  },
+  {
+    "path": "/blog/stark/stark-vs-snark/",
+    "title": "STARK vs SNARK: Which Proof System Should You Ship?",
+    "description": "STARK vs SNARK compared on proof size, prover time, trusted setup, post-quantum safety and ecosystem maturity, with a decision table for choosing what to ship."
+  },
+  {
+    "path": "/blog/stark/build-zkvm-rust/",
+    "title": "How to Build a zkVM in Rust: ISA to Proof in Nine Steps",
+    "description": "How to build a zero-knowledge VM in Rust in nine steps: ISA design, trace emission, AIR constraints, Winterfell proving, verification keys and a proving API."
+  },
+  {
+    "path": "/blog/stark/winterfell-prover-tutorial/",
+    "title": "Winterfell Prover Tutorial: A Small STARK Design Walkthrough",
+    "description": "A Winterfell prover tutorial: define a trace, register AIR constraints, produce your first STARK proof and verify it \u2014 with illustrative Rust snippets."
+  },
+  {
+    "path": "/blog/stark/air-constraints-explained/",
+    "title": "AIR Constraints Explained: Binding Execution Traces with Polynomials",
+    "description": "AIR constraints explained: how polynomial transition and boundary constraints bind execution traces, plus degree costs and the flattening tricks that."
+  },
+  {
+    "path": "/blog/stark/fri-protocol-explained/",
+    "title": "The FRI Protocol Explained Simply: Commitments, Folds, Queries",
+    "description": "The FRI protocol explained simply: polynomial commitment, folding rounds, query sampling and soundness \u2014 what each step proves and what it costs the prover."
+  },
+  {
+    "path": "/blog/stark/execution-trace-explained/",
+    "title": "Execution Traces in Zero-Knowledge Systems: Rows, Columns, Cycles",
+    "description": "What an execution trace is in zero-knowledge systems: rows as cycles, columns as state, padding to powers of two, and how trace layout dominates prover cost."
+  },
+  {
+    "path": "/blog/stark/post-quantum-proof-systems/",
+    "title": "Post-Quantum Proof Systems: Why STARKs Survive Shor's Algorithm",
+    "description": "Post-quantum proof systems surveyed: why hash-based STARKs resist Shor's algorithm, where lattice proofs fit, and which parameters future-proof."
+  },
+  {
+    "path": "/blog/stark/verifiable-computation-examples/",
+    "title": "Verifiable Computation: Nine Real-World Examples That Ship Today",
+    "description": "Nine real-world verifiable computation examples shipping today: proof-carrying CI, private compliance predicates, oracle transforms, verifiable."
+  },
+  {
+    "path": "/blog/stark/zkvm-vs-evm/",
+    "title": "zkVM vs EVM: Execution Models, Costs, and Verification Boundaries",
+    "description": "zkVM vs EVM compared: execution models, gas versus cycle costs, verification boundaries, and when a proof-carrying VM beats on-chain execution for your."
+  },
+  {
+    "path": "/blog/stark/merkle-trees-stark/",
+    "title": "Merkle Trees in STARK Proofs: Commitment Layers Explained",
+    "description": "How Merkle trees commit STARK traces: leaf hashing, query paths, DEEP queries and why commitment security sets your proof-size floor \u2014 with worked examples."
+  },
+  {
+    "path": "/blog/stark/reed-solomon-fri/",
+    "title": "Reed-Solomon Codes in Proof Systems: The Redundancy That Makes FRI Work",
+    "description": "Reed-Solomon codes in proof systems explained: low-degree extension, redundancy bounds, and why FRI's folding checks distance rather than equality of."
+  },
+  {
+    "path": "/blog/stark/why-stark-verification-fails/",
+    "title": "Why Does My STARK Verification Fail After Proving Succeeds?",
+    "description": "Why STARK verification fails after proving succeeds: vkey mismatches, field serialization bugs, and parameter drift \u2014 with a checklist that finds the."
+  },
+  {
+    "path": "/blog/stark/debug-air-constraint-violation/",
+    "title": "How Do I Debug an AIR Constraint Violation in a Large Trace?",
+    "description": "How to debug AIR constraint violations fast: bisecting traces, flag-column assertions, first-failing-row dumps and the four patterns behind most unsound."
+  },
+  {
+    "path": "/blog/stark/can-stark-proof-be-forged/",
+    "title": "Can a STARK Proof Be Forged or Replayed Across Programs?",
+    "description": "Can a STARK proof be forged or replayed? What soundness actually guarantees, where replay risks live, and how vkey pinning plus freshness stop."
+  },
+  {
+    "path": "/blog/stark/why-are-stark-proofs-large/",
+    "title": "Why Are STARK Proofs Larger Than SNARK Proofs?",
+    "description": "Why STARK proofs are larger than SNARK proofs: query counts, grinding, field size and FRI layers \u2014 plus when the size stops mattering in real deployments."
+  },
+  {
+    "path": "/blog/stark/proving-time-laptop/",
+    "title": "What Proving Time Should I Expect on a Laptop?",
+    "description": "Realistic proving times on laptops: measured cycles-per-second by trace size, thread scaling, memory ceilings, and the settings that keep proofs under a minute."
+  },
+  {
+    "path": "/blog/stark/stark-trusted-setup-required/",
+    "title": "Do STARKs Require a Trusted Setup?",
+    "description": "Do STARKs need a trusted setup? No \u2014 why hash-based soundness removes the ceremony, what randomness remains, and which proof systems still require one."
+  },
+  {
+    "path": "/blog/stark/what-field-does-winterfell-use/",
+    "title": "What Field Does Winterfell Use by Default, and Can I Change It?",
+    "description": "Which fields Winterfell supports by default, how field choice sets security bits and arithmetic speed, and how to switch fields without breaking your AIR."
+  },
+  {
+    "path": "/blog/stark/max-cycles-zkvm-prove/",
+    "title": "How Many Cycles Can a zkVM Prove Before Memory Blows Up?",
+    "description": "How many cycles a zkVM can prove before memory blows up: measured ceilings by trace width, streaming tricks, segmenting strategies and recursion escape hatches."
+  },
+  {
+    "path": "/blog/stark/visualize-execution-trace/",
+    "title": "How Can I Visualize an Execution Trace to Find Hot Columns?",
+    "description": "How to visualize execution traces: heatmaps of column activity, cycle hotspots, flag duty cycles, and the WASM tooling that turns traces into readable pictures."
+  },
+  {
+    "path": "/blog/stark/why-empty-execution-trace/",
+    "title": "Why Is My Execution Trace Empty or Shorter Than Expected?",
+    "description": "Why your execution trace is empty or too short: halt-path bugs, input loading mistakes, cycle accounting errors and the assertions that catch each at."
+  },
+  {
+    "path": "/blog/stark/recursive-stark-proofs/",
+    "title": "When Do Recursive STARK Proofs Actually Save Money?",
+    "description": "When recursive STARK proofs save money: aggregation thresholds, accumulator overhead at small widths, and the break-even measurements behind every."
+  },
+  {
+    "path": "/blog/stark/benchmark-a-prover/",
+    "title": "How Should I Benchmark a Prover Honestly?",
+    "description": "How to benchmark a prover honestly: hardware manifests, warm caches, thread pins, security-bit reporting and the five numbers every credible benchmark."
+  },
+  {
+    "path": "/blog/rust/rust-systems-programming-guide/",
+    "title": "Rust for Systems Programming: A Field Guide from Scripter to Systems Engineer",
+    "description": "Rust for systems programming: ownership as design tool, error strategy by boundary, concurrency patterns and profiling \u2014 the path from scripter to."
+  },
+  {
+    "path": "/blog/rust/rust-embedded-development/",
+    "title": "Learn Rust for Embedded Development: no_std Paths That Don't Hurt",
+    "description": "Learn Rust for embedded development: no_std crates, panic strategies, linker scripts, probe workflows and the subset of idioms that survive without an."
+  },
+  {
+    "path": "/blog/rust/axum-web-server-tutorial/",
+    "title": "Axum Web Server Tutorial: Routes, State, and Graceful Shutdown",
+    "description": "An axum web server tutorial: routers, extractors, shared state, middleware, graceful shutdown and testing handlers without binding a port in every test."
+  },
+  {
+    "path": "/blog/rust/tokio-async-tutorial/",
+    "title": "Tokio Async Rust Tutorial: Tasks, Channels, and Backpressure",
+    "description": "A tokio async Rust tutorial: tasks versus threads, channels and backpressure, timeouts, cancellation safety and the debugging tools for stuck runtimes."
+  },
+  {
+    "path": "/blog/rust/cargo-release-optimization/",
+    "title": "Cargo Release Profile Optimization: lto, codegen-units, and pgo",
+    "description": "Cargo release profile optimization: lto, codegen-units, panic=abort, strip, PGO and BOLT \u2014 measured gains and the flags that silently hurt debuggability."
+  },
+  {
+    "path": "/blog/rust/thiserror-vs-anyhow/",
+    "title": "thiserror vs anyhow: Choosing Error Handling by Crate Boundary",
+    "description": "thiserror vs anyhow explained by crate boundary: typed errors for libraries, contextual errors for binaries, and conversion patterns that keep both happy."
+  },
+  {
+    "path": "/blog/rust/rust-cli-clap-tutorial/",
+    "title": "Build a CLI App in Rust with clap: From Flags to Subcommands",
+    "description": "Build a CLI app in Rust with clap: derive API, subcommands, validation, shell completions, config layering and exit codes that scripts can trust."
+  },
+  {
+    "path": "/blog/rust/rust-to-wasm-guide/",
+    "title": "Compile Rust to WebAssembly: wasm-bindgen Workflow That Ships",
+    "description": "Compile Rust to WebAssembly: wasm-bindgen setup, size optimization, JS interop, threading limits and shipping a wasm module that loads in under a second."
+  },
+  {
+    "path": "/blog/rust/traits-vs-generics/",
+    "title": "Rust Traits vs Generics: Dispatch Costs and API Design",
+    "description": "Rust traits vs generics: static versus dynamic dispatch costs, monomorphization bloat, object safety rules and how to design APIs that stay fast and flexible."
+  },
+  {
+    "path": "/blog/rust/when-to-use-unsafe/",
+    "title": "When to Use unsafe in Rust: A Reviewer's Checklist",
+    "description": "When to use unsafe in Rust: FFI, raw pointers and layout tricks \u2014 with a reviewer's checklist, SAFETY comment standards and miri tests that keep you honest."
+  },
+  {
+    "path": "/blog/rust/axum-rest-api-serde/",
+    "title": "REST API in Rust with Axum and Serde: Validation Done Right",
+    "description": "REST API in Rust with axum and serde: request validation, error envelopes, versioning, pagination and content negotiation done the idiomatic way."
+  },
+  {
+    "path": "/blog/rust/rust-memory-layout/",
+    "title": "Rust Struct Memory Layout and Padding: See What the Compiler Sees",
+    "description": "Rust struct memory layout and padding: field reordering, repr(C), alignment math and the tools that show exactly what the compiler built for you."
+  },
+  {
+    "path": "/blog/rust/cargo-release-slower-than-expected/",
+    "title": "Why Is My Cargo Release Build Slower Than Expected?",
+    "description": "Why cargo release builds run slower than expected: LTO storms, codegen-units myths, proc-macro rebuilds, disk thrash and the profile flags that actually matter."
+  },
+  {
+    "path": "/blog/rust/fix-rust-e0505/",
+    "title": "How Do I Fix Rust Error E0505 Without Cloning Everything?",
+    "description": "How to fix Rust error E0505 (value moved while borrowed) without cloning everything: reorderings, scopes, Cow, and the ownership redraw that ends the fight."
+  },
+  {
+    "path": "/blog/rust/rc-vs-arc-rust/",
+    "title": "Rc vs Arc in Rust: When Does Atomic Refcounting Cost Me?",
+    "description": "Rc vs Arc in Rust: atomic refcount costs measured, Send and Sync implications, Weak cycles, and the rule for choosing per-thread versus shared ownership."
+  },
+  {
+    "path": "/blog/rust/share-state-tokio-tasks/",
+    "title": "How Should I Share State Between Tokio Tasks Safely?",
+    "description": "How to share state between tokio tasks: Mutex vs RwLock vs channels vs atomics, contention benchmarks, and the designs that avoid lock-backed bottlenecks."
+  },
+  {
+    "path": "/blog/rust/rust-high-memory-usage/",
+    "title": "Why Is My Rust Program's Memory Usage Higher Than Expected?",
+    "description": "Why Rust memory usage exceeds expectations: allocator arenas, Vec overcapacity, monomorphization duplicates and the profiling stack that finds the real owner."
+  },
+  {
+    "path": "/blog/rust/profile-rust-code/",
+    "title": "How Do I Profile Rust Code Without Changing Its Behavior?",
+    "description": "How to profile Rust code without changing its behavior: perf, samply, flamegraphs, criterion baselines and the pitfalls of profiling optimized builds."
+  },
+  {
+    "path": "/blog/rust/tokio-main-attribute-explained/",
+    "title": "What Exactly Does the tokio::main Attribute Do?",
+    "description": "What #[tokio::main] actually does: macro expansion, runtime flavors, worker threads, and when to construct the runtime manually for embedded or test use."
+  },
+  {
+    "path": "/blog/rust/structure-large-rust-project/",
+    "title": "How Should I Structure a Large Rust Project (Workspaces, Crates)?",
+    "description": "How to structure a large Rust project: workspace layout, crate boundaries, feature flags, internal prelude crates and the CI rules that keep compile times sane."
+  },
+  {
+    "path": "/blog/rust/cross-compile-rust-arm/",
+    "title": "How Do I Cross-Compile Rust to ARM Linux Targets Reliably?",
+    "description": "How to cross-compile Rust to ARM Linux reliably: target selection, linkers, zigbuild versus cross, C dependency traps and reproducible release artifacts."
+  },
+  {
+    "path": "/blog/rust/rust-good-for-web-backends/",
+    "title": "Is Rust Good for Web Backends in 2026? An Honest Cost Breakdown",
+    "description": "Is Rust good for web backends in 2026? An honest cost breakdown: compile times, hiring, ecosystem gaps versus throughput, correctness and operating cost."
+  },
+  {
+    "path": "/blog/rust/axum-handler-errors/",
+    "title": "How Do I Return Clean Errors From Axum Handlers?",
+    "description": "How to return clean errors from axum handlers: IntoResponse impls, typed error enums, status mapping, logging hooks and consistent JSON error envelopes."
+  },
+  {
+    "path": "/blog/rust/read-rust-compiler-suggestions/",
+    "title": "How Do I Read Rust Compiler Suggestions Without Fighting Them?",
+    "description": "How to read Rust compiler suggestions productively: error anatomy, borrow-checker messages, when to apply fixes versus redesign, and teaching tricks for."
+  },
+  {
+    "path": "/blog/rust/reduce-rust-binary-size/",
+    "title": "How Can I Reduce Rust Binary Size for Embedded Targets?",
+    "description": "How to reduce Rust binary size: strip, lto, opt-level=s, no_std subsets, panic formats and the measurement loop that takes a 6 MB CLI to under 400 KB."
+  },
+  {
+    "path": "/blog/self-hosting/exit-the-cloud-guide/",
+    "title": "Exit the Cloud: A Sovereign Self-Hosting Guide with Real Numbers",
+    "description": "Exit the cloud with a sovereign self-hosting plan: real cost sheets, migration order, exit-portability standards and the numbers that decide what stays."
+  },
+  {
+    "path": "/blog/self-hosting/self-hosted-cloud-storage/",
+    "title": "Self-Hosted Cloud Storage Setup: Nextcloud vs Seafile vs DIY",
+    "description": "Self-hosted cloud storage setup compared: Nextcloud vs Seafile vs a ZFS-and-Syncthing DIY, with sync clients, sharing links and backup hooks that survive."
+  },
+  {
+    "path": "/blog/self-hosting/wireguard-mesh-tutorial/",
+    "title": "WireGuard Mesh Network Tutorial: Full-Mesh Keys the Sane Way",
+    "description": "A WireGuard mesh network tutorial: full-mesh key management, AllowedIPs planning, roaming clients, MTU traps and the automation that keeps configs from."
+  },
+  {
+    "path": "/blog/self-hosting/dns01-certificates-guide/",
+    "title": "DNS-01 Challenge Certificates Guide: Wildcards Behind NAT",
+    "description": "DNS-01 challenge certificates guide: wildcard TLS behind NAT, API token scoping per provider, propagation waits and renewal timers that never wake you up."
+  },
+  {
+    "path": "/blog/self-hosting/reverse-proxy-auto-tls/",
+    "title": "Reverse Proxy with Automated TLS: Caddy vs Nginx+ACME",
+    "description": "Reverse proxy with automated TLS: Caddy on-demand HTTPS versus Nginx plus certbot or acme.sh, HTTP/3, headers and the migration order that avoids downtime."
+  },
+  {
+    "path": "/blog/self-hosting/self-hosted-saas-alternatives/",
+    "title": "Self-Hosted Alternatives to SaaS Tools: 31 Swaps That Stick",
+    "description": "Thirty-one self-hosted alternatives to SaaS tools that people actually keep using: notes, mail, photos, CRM, analytics and office \u2014 with honest swap costs."
+  },
+  {
+    "path": "/blog/self-hosting/zfs-snapshots-backups/",
+    "title": "ZFS Snapshots and Backups Explained: Send, Receive, Scrub",
+    "description": "ZFS snapshots and backups explained: dataset design, snapshot schedules, incremental send and receive, scrubbing and the restore drills that prove the."
+  },
+  {
+    "path": "/blog/self-hosting/restic-automation-guide/",
+    "title": "Restic Backup Automation Guide: Timers, Pruning, Restore Drills",
+    "description": "Restic backup automation: systemd timers, repository layout, prune policies, bandwidth caps, health checks and quarterly restore verification you will."
+  },
+  {
+    "path": "/blog/self-hosting/homelab-to-production/",
+    "title": "Homelab to Production: The 41-Point Checklist I Actually Use",
+    "description": "A homelab-to-production checklist of 41 points: power, networking, observability, change management, backups, security baselines and the docs future-you needs."
+  },
+  {
+    "path": "/blog/self-hosting/self-hosted-password-manager/",
+    "title": "Self-Hosted Password Manager Setup: Vaultwarden Done Safely",
+    "description": "Self-hosted password manager setup with Vaultwarden: hardened deployment, WebAuthn, encrypted exports, client choices and the backup path for your keyring."
+  },
+  {
+    "path": "/blog/self-hosting/nixos-vs-debian-homeserver/",
+    "title": "NixOS vs Debian for Home Servers: Reproducibility vs Boring",
+    "description": "NixOS vs Debian for home servers: reproducibility and rollbacks versus stability and hiring familiarity, with real rebuild times and rescue-disk stories."
+  },
+  {
+    "path": "/blog/self-hosting/self-hosting-privacy-benefits/",
+    "title": "Privacy Benefits of Self-Hosting: What Actually Changes",
+    "description": "What actually changes for privacy when you self-host: telemetry elimination, data locality, warrant realities, metadata leaks you keep, and the threat."
+  },
+  {
+    "path": "/blog/self-hosting/mini-pc-server-projects/",
+    "title": "Mini PC Home Server Projects: 12 Builds Ranked by Watt",
+    "description": "Twelve mini PC home server projects ranked by watt: from DNS and VPN to mesh node and backup target, with measured idle power and noise per build."
+  },
+  {
+    "path": "/blog/self-hosting/test-restic-restores-frequency/",
+    "title": "How Often Should I Test Restic Restores, and How?",
+    "description": "How often to test restic restores: a risk-based schedule, automated partial-restore checks in CI, and the quarterly full-drill procedure that keeps."
+  },
+  {
+    "path": "/blog/self-hosting/wireguard-handshake-failing-nat/",
+    "title": "Why Is My WireGuard Handshake Failing Behind Double NAT?",
+    "description": "Why WireGuard handshakes fail behind double NAT: endpoint fixation, keepalives, CGNAT symmetry and the relay patterns that restore connectivity without."
+  },
+  {
+    "path": "/blog/self-hosting/host-website-no-static-ip/",
+    "title": "How Can I Host a Website Without a Static IP?",
+    "description": "How to host a website without a static IP: dynamic DNS, Cloudflare Tunnel and Tailscale Funnel compared, with TLS, caching and the DNS caveats of each route."
+  },
+  {
+    "path": "/blog/self-hosting/home-server-ram-requirements/",
+    "title": "How Much RAM Does a Home Server Really Need?",
+    "description": "How much RAM a home server needs per workload: ZFS ARC hunger, container baselines, cache math and the monitoring that tells you when to stop upgrading."
+  },
+  {
+    "path": "/blog/self-hosting/self-hosting-worth-it-2025/",
+    "title": "Is Self-Hosting Worth It in 2026? The Honest Cost Sheet",
+    "description": "Is self-hosting worth it in 2026? A full cost sheet: hardware, power, time and risk versus SaaS subscriptions \u2014 and the non-price reasons people stay anyway."
+  },
+  {
+    "path": "/blog/self-hosting/auto-renew-certs-behind-nat/",
+    "title": "How Do I Auto-Renew Certificates Behind Carrier-Grade NAT?",
+    "description": "How to auto-renew certificates behind carrier-grade NAT: DNS-01 automation, provider APIs, staging tests and the monitoring that catches a failed renewal early."
+  },
+  {
+    "path": "/blog/self-hosting/home-server-power-loss/",
+    "title": "What Happens to My Home Server During a Power Loss?",
+    "description": "What happens to a home server during power loss: filesystem journaling, ZFS intent logs, UPS sizing, shutdown automation and post-outage verification steps."
+  },
+  {
+    "path": "/blog/self-hosting/backup-self-hosted-server-offsite/",
+    "title": "How Do I Back Up a Self-Hosted Server Offsite Cheaply?",
+    "description": "How to back up a self-hosted server offsite cheaply: restic to B2 or a Storage Box, encryption, bandwidth shaping and the restore test that proves it all works."
+  },
+  {
+    "path": "/blog/self-hosting/expose-self-hosted-app-safely/",
+    "title": "How Can I Expose a Self-Hosted App Safely Without a VPN?",
+    "description": "How to expose a self-hosted app safely without a full VPN: single-service tunnels, auth proxies, rate limits, audit logs and the ports you should never open."
+  },
+  {
+    "path": "/blog/self-hosting/monitor-home-server-free/",
+    "title": "How Do I Monitor a Home Server With Free Tools Only?",
+    "description": "How to monitor a home server with free tools only: node_exporter plus Prometheus plus Grafana, SMART and UPS alerts, and the five dashboards worth building."
+  },
+  {
+    "path": "/blog/self-hosting/mesh-on-mini-pcs/",
+    "title": "Can I Run a Federation Mesh on Mini PCs?",
+    "description": "Can you run a federation mesh on mini PCs? Measured quorum performance, power costs, storage heartbeat loads and the node counts where ARM boards struggle."
+  },
+  {
+    "path": "/blog/self-hosting/migrate-self-hosted-app-hardware/",
+    "title": "How Do I Migrate a Self-Hosted App to New Hardware Without Downtime?",
+    "description": "How to migrate a self-hosted app to new hardware without downtime: blue/green DNS, state sync windows, cutover checklists and the rollback plan you test first."
+  },
+  {
+    "path": "/blog/ai-infra/mcp-tutorial/",
+    "title": "Model Context Protocol Tutorial: Tools, Transports, and Safety Gates",
+    "description": "A Model Context Protocol tutorial: build a working MCP server with typed tool schemas, safe transports, capability negotiation and deny-by-default gates."
+  },
+  {
+    "path": "/blog/ai-infra/build-mcp-server/",
+    "title": "How to Build an MCP Server: From Tool Schema to Sandboxed Executor",
+    "description": "How to build an MCP server from scratch: typed tool schemas, stdio and HTTP transports, sandboxed executors, cancellation semantics and verification-key."
+  },
+  {
+    "path": "/blog/ai-infra/self-hosted-llm-inference/",
+    "title": "Self-Hosted LLM Inference Guide: vLLM, Quotas, and Cost per Token",
+    "description": "A self-hosted LLM inference guide: vLLM and llama.cpp deployment, continuous batching, KV-cache sizing, quotas and cost-per-token accounting that."
+  },
+  {
+    "path": "/blog/ai-infra/openai-compatible-gateway/",
+    "title": "OpenAI-Compatible Local API Gateway: Routing, Caching, Auditing",
+    "description": "Build an OpenAI-compatible local API gateway: routing across models, streaming, response caching, auth, audit logs and drop-in client migration without."
+  },
+  {
+    "path": "/blog/ai-infra/run-llm-locally-privacy/",
+    "title": "Run LLMs Locally for Privacy: Threat Model and Practical Setup",
+    "description": "Run LLMs locally for privacy: what leaves your machine today, a threat model for assisted coding, and a practical local stack with honest capability limits."
+  },
+  {
+    "path": "/blog/ai-infra/quantized-models-explained/",
+    "title": "Quantized LLM Models Explained: GGUF, AWQ, and Real Accuracy Costs",
+    "description": "Quantized LLM models explained: GGUF versus AWQ versus GPTQ, what 4-bit actually loses on reasoning and coding benchmarks, and how to test quality first."
+  },
+  {
+    "path": "/blog/ai-infra/ai-agent-security/",
+    "title": "AI Agent Security Best Practices: Capabilities, Journals, Proofs",
+    "description": "AI agent security best practices: capability gates, deny-by-default networks, append-only audit journals, signed receipts and the review loop that keeps."
+  },
+  {
+    "path": "/blog/ai-infra/agent-tool-calling-safety/",
+    "title": "AI Agent Tool-Calling Safety: Gates That Survive Clever Prompts",
+    "description": "AI agent tool-calling safety: schema constraints, input size negotiation, approval gates, sandboxed executors and the prompt-injection tests your gates."
+  },
+  {
+    "path": "/blog/ai-infra/local-rag-pipeline/",
+    "title": "Local RAG Pipeline Setup: Chunking, Indexes, and Honest Evaluation",
+    "description": "A local RAG pipeline setup: chunking strategy, embedding choices, index sizing, retrieval evaluation with real queries and the failure modes that fake."
+  },
+  {
+    "path": "/blog/ai-infra/self-hosted-vector-db/",
+    "title": "Self-Hosted Vector Database Comparison: Qdrant vs Chroma vs pgvector",
+    "description": "Self-hosted vector database comparison: Qdrant vs Chroma vs pgvector on recall, memory, ops burden and backup story \u2014 with the small-dataset verdict teams need."
+  },
+  {
+    "path": "/blog/ai-infra/llm-inference-cpu/",
+    "title": "LLM Inference on CPU Hardware: What Actually Runs, How Fast",
+    "description": "LLM inference on CPU hardware: what runs at usable speeds, token rates by core count and quantization, and the workloads where CPU-only is the right call."
+  },
+  {
+    "path": "/blog/ai-infra/self-hosted-vs-cloud-ai-cost/",
+    "title": "Self-Hosted vs Cloud AI: A 12-Month Cost Comparison with Break-Even Math",
+    "description": "Self-hosted versus cloud AI cost over 12 months: hardware depreciation, power, ops time versus per-token pricing, with break-even formulas and worked examples."
+  },
+  {
+    "path": "/blog/ai-infra/vram-for-7b-model/",
+    "title": "How Much VRAM Do I Need for a 7B Model at Q4, Q8, and FP16?",
+    "description": "Exact VRAM math for 7B models at Q4, Q8 and FP16 including KV-cache headroom, plus the settings that fit a 7B model into 6 GB and 8 GB cards."
+  },
+  {
+    "path": "/blog/ai-infra/run-llm-8gb-ram/",
+    "title": "Can I Run an LLM on 8GB of RAM (No GPU)?",
+    "description": "Can you run an LLM on 8 GB of RAM without a GPU? Yes for 3B-7B at Q4: expected token rates, swap traps, context limits and settings that keep it responsive."
+  },
+  {
+    "path": "/blog/ai-infra/local-llm-slow-fix/",
+    "title": "Why Is My Local LLM Slow, and How Do I Fix It?",
+    "description": "Why your local LLM is slow and how to fix it: VRAM versus RAM residency, thread counts, KV-cache quantization, context bloat and flags that pinpoint the cause."
+  },
+  {
+    "path": "/blog/ai-infra/safe-paste-code-into-llm/",
+    "title": "Is It Safe to Paste My Code Into an LLM? A Practical Rule Set",
+    "description": "Is it safe to paste code into an LLM? A practical rule set: secret scrubbing, repo-level policies, local models for sensitive cores and what ToS actually."
+  },
+  {
+    "path": "/blog/ai-infra/stop-agent-deleting-files/",
+    "title": "How Do I Stop an AI Agent From Deleting Files?",
+    "description": "How to stop an AI agent deleting files: read-only mounts, path-scoped policies, confirmation gates, snapshot-before-run workflows and journal alerts on deny."
+  },
+  {
+    "path": "/blog/ai-infra/what-is-mcp-for/",
+    "title": "What Is MCP For, in Plain Terms?",
+    "description": "What MCP is for in plain terms: a standard plug for tools and context so agents can call your systems safely \u2014 with one worked example from schema to sandbox."
+  },
+  {
+    "path": "/blog/ai-infra/add-tools-to-agent-safely/",
+    "title": "How Do I Add Tools to an AI Agent Safely?",
+    "description": "How to add tools to an AI agent safely: capability reviews, schema minimization, sandboxed executors, staged rollouts and the kill switch you test on day one."
+  },
+  {
+    "path": "/blog/ai-infra/log-every-agent-action/",
+    "title": "Should I Log Every Agent Action? What Goes in the Journal?",
+    "description": "Should you log every agent action? What belongs in an append-only journal, retention math, privacy scrubbing and how receipts make logs proof-grade."
+  },
+  {
+    "path": "/blog/ai-infra/local-models-for-coding/",
+    "title": "Which Local Models Are Actually Good for Coding?",
+    "description": "Which local models are actually good for coding: benchmark snapshots by size and quantization, tool-call reliability, and the pairs that fit 8 and 16 GB boxes."
+  },
+  {
+    "path": "/blog/ai-infra/q4-vs-q8-quantization/",
+    "title": "Q4 vs Q8 Quantization: What Do I Actually Lose?",
+    "description": "Q4 vs Q8 quantization: measured quality deltas on reasoning, coding and summarization, VRAM savings, and the task types where 4-bit visibly hurts output."
+  },
+  {
+    "path": "/blog/ai-infra/local-llm-hallucinates-more/",
+    "title": "Does a Local LLM Hallucinate More Than a Cloud One?",
+    "description": "Do local LLMs hallucinate more than cloud ones? What changes with size and quantization, how to measure hallucination rate on your corpus, and mitigation."
+  },
+  {
+    "path": "/blog/ai-infra/cache-llm-responses/",
+    "title": "How Should I Cache LLM Responses Without Stale Answers?",
+    "description": "How to cache LLM responses without serving stale answers: semantic keys, TTLs by content type, invalidation hooks and the audit trail that makes caching safe."
+  },
+  {
+    "path": "/blog/ai-infra/agents-verify-own-actions/",
+    "title": "Can AI Agents Verify Their Own Actions With Proofs?",
+    "description": "Can AI agents verify their own actions? Proof-carrying receipts, policy-annotated journals, verifier pinning and the current limits of self-attestation."
+  },
+  {
+    "path": "/blog/grok-build/building-secure-authentication-oauth-identity/",
+    "title": "Authentication and identity boundaries in a full-stack app",
+    "description": "Separate session loading, signed-out state, route guards, and server authorization. A guide adapted from the supplied Grok authentication documentation."
+  },
+  {
+    "path": "/blog/grok-build/serverless-postgresql-database-design-scale/",
+    "title": "PostgreSQL persistence and local preview boundaries",
+    "description": "Understand the supplied Neon and PGLite integration, server-only access, migrations, ownership checks, and deployment persistence."
+  },
+  {
+    "path": "/blog/grok-build/webrtc-peer-to-peer-multiplayer/",
+    "title": "WebRTC data channels and the trust boundary of peer-to-peer play",
+    "description": "A practical design guide to signaling, mesh growth, peer authority, privacy, connection failures, and lifecycle cleanup."
+  },
+  {
+    "path": "/blog/grok-build/browser-game-loop-and-state/",
+    "title": "Browser game loops: timing, input, and explicit state",
+    "description": "Turn a game prototype into a inspectable interaction loop with bounded timing, focus handling, state transitions, and restart behavior."
+  },
+  {
+    "path": "/blog/grok-build/threejs-react-scene-lifecycle/",
+    "title": "Three.js scene lifecycle in a React application",
+    "description": "Manage rendering, sizing, resources, and teardown when embedding a Three.js scene inside a component-based application."
+  },
+  {
+    "path": "/blog/grok-build/grok-api-server-side-client/",
+    "title": "A server-side LLM client with explicit cost and failure boundaries",
+    "description": "Keep model credentials on the server, validate requests, bound generation, and preserve unavailable and partial-response states."
+  },
+  {
+    "path": "/blog/grok-build/design-system-tokens-accessible-ui/",
+    "title": "A small design system: tokens, states, and accessible composition",
+    "description": "Build a consistent interface from reusable tokens and explicit interaction states, with responsive reading and keyboard access."
+  },
+  {
+    "path": "/blog/stark/",
+    "title": "STARK & verifiable compute",
+    "description": "Trace semantics, proof statements, commitments, and meaningful negative controls."
+  },
+  {
+    "path": "/blog/rust/",
+    "title": "Rust systems engineering",
+    "description": "Ownership, async boundaries, service design, and operational behavior."
+  },
+  {
+    "path": "/blog/self-hosting/",
+    "title": "Sovereign self-hosting",
+    "description": "Deployment, networking, backups, and recovery under your own control."
+  },
+  {
+    "path": "/blog/ai-infra/",
+    "title": "AI infrastructure & MCP",
+    "description": "Tool permissions, retrieval, durable workers, and evidence of execution."
+  },
+  {
+    "path": "/blog/grok-build/",
+    "title": "Application build guides",
+    "description": "Identity, persistence, multiplayer, games, 3D graphics, LLM clients, and interface design."
+  },
+  {
+    "path": "/blog/",
+    "title": "Engineering field notes",
+    "description": "107 source-linked notes on STARKs, Rust, self-hosting and AI infrastructure. Search by topic and follow connected learning paths."
+  },
+  {
+    "path": "/projects/",
+    "title": "Projects and source records",
+    "description": "Explore source-linked projects from the supplied repository snapshot: verifiable compute, AI agents, sovereign infrastructure, and developer tools."
+  },
+  {
+    "path": "/projects/rust-stark-zkvm/",
+    "title": "rust-stark-zkvm",
+    "description": "Small STARK VM with arithmetic, forward branches, a fixed register file, Winterfell proving, and HTTP/MCP interfaces. The current verifier re-executes."
+  },
+  {
+    "path": "/projects/decentralized-host/",
+    "title": "Decentralized.Host",
+    "description": "Go control-plane work centered on signed intent, local admission, explicit state, and sovereign hosts. The current README mixes foundation descriptions."
+  },
+  {
+    "path": "/projects/decentralized.hosting/",
+    "title": "Deployment mesh",
+    "description": "FastAPI, PostgreSQL, Docker, Traefik, and the dhost CLI form a documented local deployment mesh. Source snapshots can be uploaded for a server-side."
+  },
+  {
+    "path": "/projects/xfree/",
+    "title": "XFree website",
+    "description": "The current XFree marketing repository documents a Next.js discovery website. It explicitly replaces the older xfree repository for that site. XFree."
+  },
+  {
+    "path": "/projects/xfree-app/",
+    "title": "XFree Studio",
+    "description": "Separate XFree application repository. The README is brief, so feature and stack claims should be checked in the implementation. This card identifies the."
+  },
+  {
+    "path": "/projects/agent-swarm/",
+    "title": "AgentSwarm",
+    "description": "Mission/API/model/event/artifact MVP with persisted state, workers, organization boundaries, and Redis/PostgreSQL dispatch. The documented completion."
+  },
+  {
+    "path": "/projects/om-personal-ai/",
+    "title": "OM \u00b7 Personal AI",
+    "description": "Personal AI workspace with project, note, prompt, finding, mission, and service-configuration surfaces. The README distinguishes persisted workspace."
+  },
+  {
+    "path": "/projects/bestaiagent.in/",
+    "title": "BestAIAgent directory",
+    "description": "Fork repository describing an evidence-first catalog for agents, models, frameworks, providers, and MCP infrastructure. GitHub identifies this repository."
+  },
+  {
+    "path": "/projects/mcp-server/",
+    "title": "MCPserver.in",
+    "description": "Public MCP directory and separate registry-ingestion surface. The README documents a shared publication gate, evidence records, sitemap eligibility, and."
+  },
+  {
+    "path": "/projects/android-flashing-tool/",
+    "title": "Android Flashing Tool",
+    "description": "Android firmware toolkit repository with documentation for device operations and verification workflows. This portfolio confirms the source exists; it."
+  },
+  {
+    "path": "/projects/indian-mcp-server/",
+    "title": "MCPServer OS",
+    "description": "Repository describing an evidence-first MCP control plane, tenant boundaries, deployment state, and India-oriented technical-control profiles.."
+  },
+  {
+    "path": "/projects/github-mcpserver--ci-cd-engine/",
+    "title": "MCP CI/CD engine",
+    "description": "Repository describing synchronization, evidence collection, and discovery routes for MCP metadata. The README includes broad feature and marketing."
+  },
+  {
+    "path": "/projects/open-swarm-ai/",
+    "title": "Open Swarm AI",
+    "description": "Multi-agent repository with a README describing its intended structure. It is included as an inspectable source surface, without assuming a fully."
+  },
+  {
+    "path": "/projects/worker-agent/",
+    "title": "Worker Agent.Cloud",
+    "description": "Fork describing a content-agent control-plane direction. The README makes broad automation claims and references upstream surfaces. This card preserves."
+  },
+  {
+    "path": "/projects/awesome-zkvm/",
+    "title": "awesome-zkvm reference",
+    "description": "Fork of an upstream zkVM resource list. It is a research/discovery reference rather than an original proof-system implementation. Upstream authorship and."
+  },
+  {
+    "path": "/projects/evidence-cookbook/",
+    "title": "Evidence cookbook",
+    "description": "Documentation scaffold for evidence-driven development. Its current README contains generic examples, placeholder metrics, and placeholder resource."
+  },
+  {
+    "path": "/projects/mcp-cookbook/",
+    "title": "MCP cookbook",
+    "description": "Documentation scaffold for MCP learning material. The current README uses generic tutorial and code placeholders. Repository existence is verified, but."
+  },
+  {
+    "path": "/projects/agent-skills-cookbook/",
+    "title": "Agent skills cookbook",
+    "description": "Scaffold for reusable agent-workflow documentation. Current template content is not evidence of tested skills, production automation, or verified tool."
+  },
+  {
+    "path": "/projects/kubernetes-ai-cookbook/",
+    "title": "Kubernetes AI cookbook",
+    "description": "Documentation scaffold about Kubernetes and AI workloads. Generic setup and benchmark placeholders in the current README should not be interpreted as a."
+  },
+  {
+    "path": "/projects/self-hosted-cloud-cookbook/",
+    "title": "Self-hosted cloud cookbook",
+    "description": "Documentation scaffold for self-hosting guidance. Its current generic README does not establish a completed operator runbook or a qualified deployment."
+  },
+  {
+    "path": "/projects/ai-security-cookbook/",
+    "title": "AI security cookbook",
+    "description": "Scaffold for AI security learning material. Generic code and resource placeholders remain in the README. The portfolio does not describe it as an audited."
+  },
+  {
+    "path": "/projects/ai-observability-cookbook/",
+    "title": "AI observability cookbook",
+    "description": "Documentation scaffold for AI observability topics. Current placeholder metrics and examples do not establish real telemetry integrations, measured."
+  },
+  {
+    "path": "/projects/verifiable-ai-cookbook/",
+    "title": "Verifiable AI cookbook",
+    "description": "Scaffold for verifiable-AI explanations and examples. The current generic README does not establish private model inference, proof-backed AI outputs, or."
+  },
+  {
+    "path": "/",
+    "title": "Febin Francis \u2014 systems engineer and open-source builder",
+    "description": "Febin Francis builds AI infrastructure, verifiable compute, and sovereign systems. Explore source-linked projects and practical engineering field notes."
+  },
+  {
+    "path": "/about/",
+    "title": "About Febin Francis",
+    "description": "Systems engineering from Kerala, India. I build around three questions: what was intended, what actually ran, and what evidence survives. My focus."
+  },
+  {
+    "path": "/systems/",
+    "title": "Systems and architecture",
+    "description": "Control planes, worker runtimes, and proof boundaries. A control plane expresses intent and governs permissions. A runtime produces observed effects. An."
+  },
+  {
+    "path": "/research/",
+    "title": "Research notes",
+    "description": "Questions that connect verifiable compute and agent infrastructure. These notes are engineering investigations rather than journal publications. The."
+  },
+  {
+    "path": "/specifications/",
+    "title": "Specifications and contracts",
+    "description": "Define what a system is allowed to claim. A useful contract names inputs, outputs, limits, permissions, and completion criteria. It states what happens."
+  },
+  {
+    "path": "/contributions/",
+    "title": "Open-source contributions",
+    "description": "Inspect repositories rather than invented event histories. The supplied sources contain project records and technical writing. They do not substantiate."
+  },
+  {
+    "path": "/github/",
+    "title": "GitHub and source identity",
+    "description": "The source is part of the explanation. Use the GitHub profile to inspect repositories, histories, and contribution records. Star counts and activity are."
+  },
+  {
+    "path": "/services/",
+    "title": "Working together",
+    "description": "Systems architecture, AI infrastructure, and technical review. My work focuses on clear interfaces, observable execution, and reviewable technical."
+  },
+  {
+    "path": "/contact/",
+    "title": "Contact Febin Francis",
+    "description": "Start with the system and the outcome you need. Use my public profiles to start a conversation. Include the repository or system, current behavior,."
+  },
+  {
+    "path": "/methodology/",
+    "title": "Editorial method and evidence scope",
+    "description": "Source-linked explanations with explicit limits. This portfolio merges 100 supplied workspace article drafts with seven new guides adapted from the."
+  },
+  {
+    "path": "/privacy/",
+    "title": "Privacy",
+    "description": "A static site with browser-local preferences. The generated site has no analytics, tracking pixels, authentication, comments backend, or contact form.."
+  }
+]

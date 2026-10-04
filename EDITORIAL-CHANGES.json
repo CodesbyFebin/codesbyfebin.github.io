@@ -1,0 +1,1807 @@
+[
+  {
+    "slug": "zkp-tutorial-developers",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "We build a zkVM in six layers, each independently testable: an  ISA  (eight instructions over a 64-bit register file), an  executor  that emits a row-per-cycle execution trace, an  AIR  that binds the trace with polynomial constraints, a  W"
+  },
+  {
+    "slug": "zkp-tutorial-developers",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Two promises before we start. First, no cryptography background is assumed beyond hashing; every term is defined at first use. Second, every benchmark in this tutorial was measured on a 2023-class laptop (8 cores, no GPU) and can be reprodu"
+  },
+  {
+    "slug": "zkp-tutorial-developers",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Our machine has 16 registers (R0 hardwired to zero), word-addressed memory, and eight instructions. Smallness is a feature: every instruction you add becomes a permanent tax on trace width and constraint degree, so growth should cost an arg"
+  },
+  {
+    "slug": "zkp-tutorial-developers",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Constraint  degree  is your performance dial: Winterfell's proof size grows with the highest degree, so experienced AIR authors introduce auxiliary columns to flatten products (turning a degree-3 constraint into degree-2 plus a helper colum"
+  },
+  {
+    "slug": "zkp-tutorial-developers",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Measured on the reference laptop: a 65,536-cycle trace proves in  3.4 s  single-threaded, producing a  96 KB  proof at 96-bit security; doubling the trace adds roughly 0.9 s and 8 KB. Those two slopes -- near-linear time, logarithmic size -"
+  },
+  {
+    "slug": "zkp-tutorial-developers",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "That second assertion is the one tutorials usually omit and production systems must not: Winterfell verifies \"a proof valid for this AIR shape\", while your application must verify \"for  my  program image\". Pin the vkey at the application bo"
+  },
+  {
+    "slug": "zkp-tutorial-developers",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Before you ship, three knobs deserve deliberate choices rather than defaults. The  field  determines your arithmetic's soundness floor: 64-bit prime fields give fast arithmetic and roughly 96-100 bits of conjectured security; 128-bit fields"
+  },
+  {
+    "slug": "zkp-tutorial-developers",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "You now own the full loop: ISA to trace to AIR to proof to pinned verification. Nothing above is hypothetical: every code block runs, every number is measured, and every design decision links to the specification or issue thread where it wa"
+  },
+  {
+    "slug": "zkp-tutorial-developers",
+    "reason": "Unmeasured empirical table",
+    "removed": "Trace cycles  Prove (s)  Proof (KB)  Verify (ms)   \n \n  4,096  0.4  68  3  \n  65,536  3.4  96  4  \n  262,144  12.9  124  6"
+  },
+  {
+    "slug": "what-are-stark-proofs",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Some proof systems need a one-time ceremony generating secret parameters whose leakage breaks soundness forever. STARKs derive soundness from hash functions and information theory: commitments are Merkle roots, challenges are Fiat-Shamir ha"
+  },
+  {
+    "slug": "what-are-stark-proofs",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "First: \"the proof hides the program.\" It does not -- the witness (inputs, intermediates) is hidden; the program identity is public and pinned, so anyone can check  which  computation was attested. This asymmetry, private data plus public lo"
+  },
+  {
+    "slug": "what-are-stark-proofs",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Yes: verification is hashing and Merkle walks, WASM-friendly and millisecond-fast. My stark-explorer project renders trace playbacks client-side, and production gateways on the federation expose plain HTTP verify endpoints so browsers never"
+  },
+  {
+    "slug": "what-are-stark-proofs",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Not mathematics -- implementation: weakened grinding factors, undersampled queries, fields below the security target, or verifiers that skip vkey pinning and accept structurally-valid proofs of the wrong program. Every real incident I have "
+  },
+  {
+    "slug": "what-are-stark-proofs",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-10"
+  },
+  {
+    "slug": "stark-vs-snark",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The popular summary (\"SNARKs small, STARKs fast\") survives contact with measurement, with caveats. My benchmarks on a 65k-cycle zkVM workload: STARK proof 96 KB, prove 3.4 s, verify 4 ms; a Groth16 circuit of equivalent semantics proves slo"
+  },
+  {
+    "slug": "stark-vs-snark",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Hash-based STARKs resist Shor; pairing and discrete-log SNARKs do not. But post-quantum urgency should be sized to your artifact lifetime: proofs verifying today's computation against today's adversaries are fine on either; proofs meant to "
+  },
+  {
+    "slug": "stark-vs-snark",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Production systems increasingly compose rather than choose. The commonest pattern is STARK-inside-SNARK: a transparent proof attests the computation off-chain, and a small SNARK wraps it for on-chain verification, so budget-bound verifiers "
+  },
+  {
+    "slug": "stark-vs-snark",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Currently SNARK DSLs (Circom, Halo2 ecosystems) have more tutorials, while STARK entry points concentrate in Winterfell-adjacent Rust and educational repos like my  zk-playground . Beginner-friendliness should rank below verifier environmen"
+  },
+  {
+    "slug": "stark-vs-snark",
+    "reason": "Unmeasured empirical table",
+    "removed": "Dimension  STARK  SNARK (Groth16-style)  SNARK (modern, e.g. Halo2)   \n \n  Trusted setup  None  Per-circuit ceremony  Universal or none  \n  Proof size  40-200 KB typical  ~200 bytes  1-3 KB  \n  Verify cost  ms, off-chain friendly  pairing c"
+  },
+  {
+    "slug": "stark-vs-snark",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-17"
+  },
+  {
+    "slug": "build-zkvm-rust",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Eight instructions suffice for any computable workload given enough cycles -- Turing completeness is cheap; convenience is what costs columns. My rule: add an opcode only when a real workload's cycle count drops by more than 5x, measured, b"
+  },
+  {
+    "slug": "build-zkvm-rust",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "No. Recursion changes proof composition, key management, and parameter manifests; v1 should prove and verify flat claims with pinning and gates. My recursion attempt at under 2^16 rows cost more than it saved -- a negative result published "
+  },
+  {
+    "slug": "build-zkvm-rust",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-24"
+  },
+  {
+    "slug": "winterfell-prover-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Two disciplines from production use. First, make  get  pure and cheap: the prover walks it millions of times, and allocations inside it show up as allocator towers in every flamegraph I have reviewed. Second, pad with a dedicated idle row w"
+  },
+  {
+    "slug": "winterfell-prover-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Keep degrees ≤3 by introducing flag columns rather than selector arithmetic (the width-versus-degree trade measured in the  trace layout article ), and write one unit test per constraint that feeds a two-row honest frame and a mutated frame"
+  },
+  {
+    "slug": "winterfell-prover-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Serialization is stable and versioned by the crate; store proofs with their parameter manifest (field, security bits, grinding, prover version) from day one, because a proof without context is a number without units -- the manifest discipli"
+  },
+  {
+    "slug": "winterfell-prover-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "A fourth, unofficial knob is trace batching: proving several small claims in one trace amortizes fixed costs (commitment setup, the FRI tail) across claims, cutting per-claim prover time by up to 40% at batch size eight in my measurements. "
+  },
+  {
+    "slug": "winterfell-prover-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Under an hour from empty crate for the tutorial-scale machine (24 columns, a few thousand cycles): twenty minutes on the trace trait, twenty on constraints and their negative tests, ten on prove/verify and the pinning assertion. Scaling sur"
+  },
+  {
+    "slug": "winterfell-prover-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Yes: proving parallelizes across trace segments and FRI layers with near-linear scaling to core count on laptop-class machines (my 8-core measurements show ~5.5x at 65k cycles). Verification stays single-threaded by nature -- a feature for "
+  },
+  {
+    "slug": "winterfell-prover-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Winterfell supports auxiliary (extension-field) columns for permutation and running-sum arguments -- the memory channel in my zkVM uses exactly this. Declare them in the Air's auxiliary trait, fill them during trace generation from the main"
+  },
+  {
+    "slug": "winterfell-prover-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Grinding factor : 16 bits default balances prover work against query count; lowering it to save seconds weakens soundness per verification -- a decision requiring a signed note in my repos."
+  },
+  {
+    "slug": "winterfell-prover-tutorial",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-31"
+  },
+  {
+    "slug": "air-constraints-explained",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Every constraint is a polynomial C(row_t, row_t+1) constructed so that honest execution yields C = 0 at every row. Stack all rows and you get a vector of zeros; any deviation -- a wrong add, a jumped-past halt -- makes some entry nonzero, a"
+  },
+  {
+    "slug": "air-constraints-explained",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The discipline is degree budgeting: each flag column costs width but caps degree at 2; encoding \"if opcode==ADD then ... else if ...\" as nested field arithmetic would reach degree 4-5 and inflate the composition polynomial accordingly. My r"
+  },
+  {
+    "slug": "air-constraints-explained",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Some truths are not local: \"every read returned the last write\" spans the whole trace. Auxiliary columns carry running accumulators -- permutation products for memory consistency, running sums for range checks -- computed during trace gener"
+  },
+  {
+    "slug": "air-constraints-explained",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "An AIR without negative tests proves nothing about itself. Per constraint, feed two-row frames: honest frames must vanish, and a curated mutation per row field must not -- flip the add result, advance pc under a jump flag, unset halt at the"
+  },
+  {
+    "slug": "air-constraints-explained",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Winterfell frames support wider windows, but each extra row deepens the pipeline and complicates padding; most semantics that seem to need t+2 are really asking for an auxiliary column carrying state forward. Reach for wider frames only for"
+  },
+  {
+    "slug": "air-constraints-explained",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-07"
+  },
+  {
+    "slug": "fri-protocol-explained",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "After folding, the verifier samples query positions: at each, it opens the original trace commitment and every FRI layer at the corresponding folded index, checking Merkle paths and folding relations end to end. Query count sets soundness e"
+  },
+  {
+    "slug": "fri-protocol-explained",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Typically 27-90 depending on field size, rate, and security target: 64-bit fields at 96-bit security land near 40-60 with 16-bit grinding in my manifests. The number is derived, not chosen: soundness error per query compounds multiplicative"
+  },
+  {
+    "slug": "fri-protocol-explained",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Research alternatives exist (STIR, DEEP-ALI variants, lattice-based proximity arguments), trading round complexity, size, or assumptions differently; production ecosystems standardize on FRI because its parameter economics and analysis matu"
+  },
+  {
+    "slug": "fri-protocol-explained",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-14"
+  },
+  {
+    "slug": "execution-trace-explained",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "FRI and most prover pipelines require power-of-two lengths, so a 5,000-cycle run pays for 8,192 rows and a 9,000-cycle run pays for 16,384 -- a 78% jump for 12% more work. Three practical responses: batch independent jobs into one trace unt"
+  },
+  {
+    "slug": "execution-trace-explained",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "A corollary for tooling: expose trace length and padding ratio on the same dashboard as proof latency, because the two move together and only one of them is visible to users. When proof times spike, the first question on-call should ask is "
+  },
+  {
+    "slug": "execution-trace-explained",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Every flag column (is_add, is_jump, is_halt) costs width but flattens logic: constraints become flag times (relation), keeping degree at 2 instead of encoding selection arithmetic at degree 4. The trade is deliberate and measurable -- in my"
+  },
+  {
+    "slug": "execution-trace-explained",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The naive row is what first implementations look like, and the delta to the shipped row is pure layout discipline -- same ISA, same semantics, 26% faster proving. That is why trace design gets its own design note in every proof-system repos"
+  },
+  {
+    "slug": "execution-trace-explained",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Differential execution: run the ISA interpreter twice, once emitting the trace and once computing expected columns independently (different code path, same semantics), then diff row-by-row. Divergence localizes to the first bad cycle, which"
+  },
+  {
+    "slug": "execution-trace-explained",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-21"
+  },
+  {
+    "slug": "post-quantum-proof-systems",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Test with three questions: which assumptions, at which bit margins, under which model (classical ROM, QROM)? Vendors answering with adjectives fail; vendors answering with citations and parameter derivations pass. My review checklist keeps "
+  },
+  {
+    "slug": "post-quantum-proof-systems",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-28"
+  },
+  {
+    "slug": "verifiable-computation-examples",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Verifiable computation ships today in nine practical shapes: proof-carrying CI artifacts, verifiable batch and oracle jobs, privacy-preserving compliance predicates, zkVM-compressed rollup state transitions, supply-chain metadata attestatio"
+  },
+  {
+    "slug": "verifiable-computation-examples",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Privacy-preserving compliance runs a predicate inside the VM: prove the dataset satisfies the rule (age checks, residency sets, balance thresholds, sanction-screen negatives) without revealing the dataset -- the witness stays local, the ver"
+  },
+  {
+    "slug": "verifiable-computation-examples",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Chains verify one proof for thousands of state transitions (the zkVM-versus-EVM economics from the  comparison article ), while verifiable ML inference attaches proofs that a published model (hash-pinned weights) produced a published output"
+  },
+  {
+    "slug": "verifiable-computation-examples",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Two cross-cutting lessons after nine shapes. First, verification composability is the quiet superpower: because every receipt above verifies in milliseconds with pinned identities, shapes combine freely -- a CI proof nests inside a supply-c"
+  },
+  {
+    "slug": "verifiable-computation-examples",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The constraint system defines truth: a proof attests that the pinned program ran on some witness producing the public outputs. False claims require either a program that computes them (then the claim is the program's honest output -- a spec"
+  },
+  {
+    "slug": "verifiable-computation-examples",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-05"
+  },
+  {
+    "slug": "zkvm-vs-evm",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Both worlds die on nondeterminism, but enforce it differently. The EVM bans it by construction: no clocks, no randomness beyond block-provided values, gas metering everything. A zkVM must additionally make determinism  provable : my executo"
+  },
+  {
+    "slug": "zkvm-vs-evm",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "EVM state is public by design -- auditability through transparency. zkVM witnesses are private by design -- auditability through verification without disclosure. The capability difference shows in applications: prove your balance exceeds a "
+  },
+  {
+    "slug": "zkvm-vs-evm",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Rule-of-thumb arithmetic from my benches and public rollup data: an EVM transfer costs ~21k gas, validated by every node; a batch of 2,000 such transfers inside a zkVM costs one proof of ~50M cycles (tens of seconds of proving, ~150 KB) amo"
+  },
+  {
+    "slug": "zkvm-vs-evm",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Production reality: EVM verifiers consuming zkVM proofs (rollup validity, bridge attestations), zkVMs executing EVM bytecode for compression (zkEVM approaches), and off-chain zkVM fleets feeding chains only receipts. My own stack treats the"
+  },
+  {
+    "slug": "zkvm-vs-evm",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "A closing field note: the teams happiest with either technology are the ones whose specs name the verifier set first -- who must be convinced, on what hardware, for how many years. Specs that start from \"we will use ZK\" produce architecture"
+  },
+  {
+    "slug": "zkvm-vs-evm",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "For computation integrity, yes -- that is their job. For state agreement and liveness among strangers, no: proofs verify history, not which history is canonical. Chains provide ordering and availability; proofs provide correctness compressi"
+  },
+  {
+    "slug": "zkvm-vs-evm",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-12"
+  },
+  {
+    "slug": "merkle-trees-stark",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "For readers arriving from storage rather than proofs, one bridge sentence: the Merkle structure securing a STARK query is the same structure securing your backup repository's chunk index and your package registry's transparency log -- authe"
+  },
+  {
+    "slug": "merkle-trees-stark",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "And when a vendor names its distance but not its commitment scheme, ask the follow-up: which hash, which arity, which manifest field carries them? The answers -- or their absence -- tell you whether the commitment layer received infrastruct"
+  },
+  {
+    "slug": "merkle-trees-stark",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Yes, measurably: higher arity shrinks depth (fewer hashes per path) at the cost of wider node hashes per level; FRI folding arity interacts similarly. Production parameter sets fix arity with the rest of the geometry in manifests; my benche"
+  },
+  {
+    "slug": "merkle-trees-stark",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Commitments collapse: forged paths become possible, and every proof keyed to that family loses integrity at once -- the civilization-scale event the forgery Q&A sizes (SHA-2 breaks would equally imperil git and TLS). Mitigation is archival "
+  },
+  {
+    "slug": "merkle-trees-stark",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-19"
+  },
+  {
+    "slug": "reed-solomon-fri",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "FRI's fold (even/odd decomposition with a random challenge) halves degree while preserving proximity: if the original function is far from low-degree, the folded function stays far with high probability over the challenge -- the protocol ne"
+  },
+  {
+    "slug": "reed-solomon-fri",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The evaluation domain's blowup factor (rate) sets distance: evaluating a degree-d polynomial on 4d points gives relative distance ~3/4, so sampling converges fast; rate 2 saves prover work but weakens proximity, demanding more queries for t"
+  },
+  {
+    "slug": "reed-solomon-fri",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The same distance logic powers erasure coding in storage (my federation's experimental shard recovery borrows RS directly), data availability sampling in chain designs, and even the batched constraint composition inside provers, where multi"
+  },
+  {
+    "slug": "reed-solomon-fri",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "One practice note for implementers: when parameter solvers or library defaults disagree with your intuition about rates, trust the derivation chain -- distance bound to query count to soundness error -- and recompute it by hand once per maj"
+  },
+  {
+    "slug": "reed-solomon-fri",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Readers who want the full derivation chain with citations will find it maintained alongside the cluster's research notes; readers who want the operating version should keep this page's four-knob summary taped inside the runbook: rate sets d"
+  },
+  {
+    "slug": "reed-solomon-fri",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-26"
+  },
+  {
+    "slug": "debug-air-constraint-violation",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Every diagnosed violation becomes two tests: the minimal program reproducing the deviation (assert prover error before fix, assert success after), and a negative-frame test asserting the mutated two-row frame still deviates post-fix (guardi"
+  },
+  {
+    "slug": "debug-air-constraint-violation",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-08"
+  },
+  {
+    "slug": "can-stark-proof-be-forged",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Every recorded \"forged proof\" incident I have reviewed in industry postmortems was one of these three, resolved at the application layer -- which is why the  zkVM tutorial  spends a full step on pinning and the  verification-failure Q&A  op"
+  },
+  {
+    "slug": "can-stark-proof-be-forged",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "A SHA-2-class collision break would commit the entire hash-based stack, an event that would equally imperil TLS, git, and package registries -- civilization-scale, not proof-system-scale. System-specific risks are quieter: parameter misconf"
+  },
+  {
+    "slug": "can-stark-proof-be-forged",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Context confusion : proof published without its parameter manifest, verified under weaker parameters an attacker selects. Defeated by manifests traveling with proofs and verifiers refusing parameter-less blobs -- the PRF-1 rule my relays en"
+  },
+  {
+    "slug": "can-stark-proof-be-forged",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-15"
+  },
+  {
+    "slug": "why-are-stark-proofs-large",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Size is a tax you pay per verification channel: on-chain verifiers paying gas per byte feel it brutally; browsers, servers, CI jobs, and microcontrollers feel it as a 100 KB download or flash cost, usually irrelevant next to the assets they"
+  },
+  {
+    "slug": "why-are-stark-proofs-large",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-22"
+  },
+  {
+    "slug": "proving-time-laptop",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Thread scaling holds near-linear to about core count because commitment and FRI folds parallelize across trace segments; beyond that, hyperthreads add single-digit percent and thermal throttling subtracts them. The bends that matter are els"
+  },
+  {
+    "slug": "proving-time-laptop",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "SSD only as swap relief (zram or fast swap reduces the million-row penalty from catastrophic to merely bad); GPU builds of STARK provers exist in research and some vendors but Winterfell-class CPU proving remains the portable baseline, and "
+  },
+  {
+    "slug": "proving-time-laptop",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "±25% across vendors at equal core counts, driven by memory bandwidth and sustained boost (thermals), which is why the manifest lists clock behavior and why single-run comparisons between machines are folklore. For cross-machine decisions, n"
+  },
+  {
+    "slug": "proving-time-laptop",
+    "reason": "Unmeasured empirical table",
+    "removed": "Trace cycles  1 thread  8 threads  Peak RSS  Proof   \n \n  16,384  1.6 s  0.5 s  0.6 GB  84 KB  \n  65,536  3.9 s  1.2 s  1.4 GB  96 KB  \n  262,144  15.1 s  3.6 s  3.9 GB  124 KB  \n  1,048,576  62 s  14 s  12 GB*  152 KB"
+  },
+  {
+    "slug": "proving-time-laptop",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-29"
+  },
+  {
+    "slug": "stark-trusted-setup-required",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Each item is public-parameter-free by construction: nothing to ceremony, nothing to leak, nothing to rotate. This is why archival use cases -- proofs meant to convince auditors in decades -- default to hash-based systems in my  research pra"
+  },
+  {
+    "slug": "stark-trusted-setup-required",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-05"
+  },
+  {
+    "slug": "what-field-does-winterfell-use",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The Goldilocks-family modulus admits reduction without division: multiplication results fit in 128-bit intermediates and fold back with a few shifts and adds, which is exactly what modern cores do fastest. Consequences cascade: trace arithm"
+  },
+  {
+    "slug": "what-field-does-winterfell-use",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Moving to a 128-bit field raises the security floor for long-lived artifacts (the quantum-halving arithmetic from the  forgery Q&A : 128 today behaves like ~64-plus-margin against Grover-class analyses) at a measured 12-18% prover-time and "
+  },
+  {
+    "slug": "what-field-does-winterfell-use",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Every proof my systems emit carries field id, extension degree, security bits, grinding, and query count in its envelope (the  PRF-1  shape), and verifiers assert the tuple before touching commitments. The discipline converts field drift fr"
+  },
+  {
+    "slug": "what-field-does-winterfell-use",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Modestly: commitments and openings scale with element width, so 128-bit fields add roughly 8-10% bytes at equal parameters in my measurements -- real but rarely decisive, since the query-count term dominates size. If bytes are your binding "
+  },
+  {
+    "slug": "what-field-does-winterfell-use",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-12"
+  },
+  {
+    "slug": "max-cycles-zkvm-prove",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "On laptop-class hardware with a 24-column trace at 96-bit security, my ceiling is around 2^22 (4.2M) cycles before RSS exceeds 12-16 GB and swapping destroys throughput; 2^16-2^20 is the comfortable band (1.4-3.9 GB peak). Beyond that, segm"
+  },
+  {
+    "slug": "max-cycles-zkvm-prove",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Three multipliers move the ceiling: trace  width  (RSS scales linearly; a 48-column trace halves the cycle ceiling),  field size  (128-bit fields add ~15-20% memory), and  backend streaming support  (segment-wise trace input cut peak RSS 30"
+  },
+  {
+    "slug": "max-cycles-zkvm-prove",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Power-of-two padding converts smooth workload growth into step-function cost: a job drifting from 65k to 70k cycles silently doubles its memory footprint at the 2^17 boundary. Operational responses: log cycle counts beside every proof (one "
+  },
+  {
+    "slug": "max-cycles-zkvm-prove",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Logarithmically: doubling cycles adds one FRI layer and slightly deeper Merkle paths -- my table shows 96 KB to 152 KB across 64x cycles. Size is rarely the ceiling; memory and time move first. When someone quotes proof size as the scaling "
+  },
+  {
+    "slug": "max-cycles-zkvm-prove",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Peak RSS of your largest gated workload plus 50% headroom, isolated per job (containers with memory limits) so a boundary-crossing commit fails its gate loudly instead of OOM-killing a shared runner and failing three unrelated jobs. My CI s"
+  },
+  {
+    "slug": "max-cycles-zkvm-prove",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Recursion last : aggregation via recursive proofs has real break-evens above threshold workloads only; below them you pay accumulator overhead for a headline, per my published negative result on the  research page ."
+  },
+  {
+    "slug": "max-cycles-zkvm-prove",
+    "reason": "Unmeasured empirical table",
+    "removed": "Cycles  Peak RSS  Prove (8 threads)  Verdict on 16 GB laptop   \n \n  2^16  1.4 GB  3.6 s  comfortable, CI-friendly  \n  2^20  3.9 GB  14 s  comfortable  \n  2^22  12.8 GB  58 s  works alone; swaps with a browser open  \n  2^24  >32 GB est.  -- "
+  },
+  {
+    "slug": "max-cycles-zkvm-prove",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-19"
+  },
+  {
+    "slug": "visualize-execution-trace",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Instrument the executor to dump traces in a compact columnar format (bincode or raw little-endian lanes plus a JSON header naming columns and cycle count); keep dumps out of proving paths behind a feature flag so production provers never pa"
+  },
+  {
+    "slug": "visualize-execution-trace",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Yes, by rendering derived statistics instead of values: toggle rates, band histograms, and flag stripes carry structure without exposing witness contents; my explorer's \"share view\" mode exports exactly these aggregates, so screenshots in i"
+  },
+  {
+    "slug": "visualize-execution-trace",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Directly: constraint degree and width decisions become visible as column count and stripe complexity before you write a polynomial. My design notes include one heatmap per proposed trace layout, and review conversations changed format accor"
+  },
+  {
+    "slug": "visualize-execution-trace",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Heatmap renderer  for structure: my WASM explorer or a 40-line Python matplotlib script; both read the same dump format."
+  },
+  {
+    "slug": "visualize-execution-trace",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-26"
+  },
+  {
+    "slug": "why-empty-execution-trace",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "If row zero carries halt=1, your input-loading or state-initialization code touched the halt column, or a match arm defaults to Halt for unrecognized opcodes (a decoder bug that \"succeeds\" by ending execution). Detection is one assertion in"
+  },
+  {
+    "slug": "why-empty-execution-trace",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "With these four, \"why is my trace empty\" stops being a debugging session and becomes a failing test name -- which is the terminal state every bug class deserves, and the state the  rust-stark-zkvm  suite reached after its second empty-trace"
+  },
+  {
+    "slug": "why-empty-execution-trace",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-03"
+  },
+  {
+    "slug": "recursive-stark-proofs",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Recursive STARK proofs (proving the verifier's own computation, aggregating proofs of proofs) save money only above aggregation thresholds: my measurements put the break-even near 8-16 inner proofs at 2^16-2^18 cycles each, because the recu"
+  },
+  {
+    "slug": "recursive-stark-proofs",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Read the verdict column by verifier multiplicity, not prover pride: recursion pays when many verifiers would otherwise each check many proofs (chains, markets, public gateways), because one constant-size proof replaces N×M verifications. Fo"
+  },
+  {
+    "slug": "recursive-stark-proofs",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Three graveyards, visited personally or in review:  verifier-in-VM bloat  (recursing over a verifier compiled with debug-ish settings or unoptimized hash kernels multiplies trace cost 3-5x -- profile the recursive workload like any other); "
+  },
+  {
+    "slug": "recursive-stark-proofs",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Yes -- that is its best use: heterogeneous claims (a benchmark receipt, a compliance predicate, a batch summary) collapse into one attestation whose public inputs enumerate the inner vkeys and outputs. Verifiers then check one proof plus a "
+  },
+  {
+    "slug": "recursive-stark-proofs",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-10"
+  },
+  {
+    "slug": "benchmark-a-prover",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Six fields travel with every benchmark row in my sheets: CPU model and governor state, thread pinning and count, RAM and channel generation, field and security parameters, prover version and commit, and workload identity (program hash plus "
+  },
+  {
+    "slug": "benchmark-a-prover",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Keep the workload set in-repo beside the harness with hashes in CI, so \"the benchmark changed\" is a reviewable diff. My ladder lives in  rust-stark-zkvm 's bench suite; its negative results -- including the recursion break-even that failed "
+  },
+  {
+    "slug": "benchmark-a-prover",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Yes, lightly: size is deterministic per parameter set, so one measurement per config suffices -- but track it per release anyway, because silent size growth signals parameter or layout drift exactly as timing does. My CI asserts size within"
+  },
+  {
+    "slug": "benchmark-a-prover",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-17"
+  },
+  {
+    "slug": "rust-systems-programming-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Unsafe is a foreign-function interface to the machine, and like any FFI it needs a border checkpoint. My review checklist, applied to every unsafe block in my repositories: a  // SAFETY:  comment stating the invariant and who maintains it; "
+  },
+  {
+    "slug": "rust-systems-programming-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "One corollary deserves its own paragraph because it reverses the usual advice: in systems code, prefer  more  safe abstraction layers over fewer clever unsafe ones. A verified-safe wrapper around one FFI call, used from forty sites, central"
+  },
+  {
+    "slug": "rust-systems-programming-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Every nontrivial module in my repositories ships with a short design note: the problem, two or three rejected alternatives with reasons, the ownership and error decisions, and the measurements that settled it. Notes live beside the code, ag"
+  },
+  {
+    "slug": "rust-systems-programming-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Reviewers, in turn, read the note before the diff: a pull request that changes behavior without updating its note fails CI in my repositories via a simple path-glob check, which is the cheapest guarantee I know that documentation and code a"
+  },
+  {
+    "slug": "rust-systems-programming-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Systems Rust eventually forces an allocator conversation, and the honest framing is shape-based, not brand-based. Profile your allocation pattern first: many small short-lived objects (parsers, serializers) reward arena or bump allocation w"
+  },
+  {
+    "slug": "rust-systems-programming-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Practice order that works, after six years of mentoring it: rebuild one real tool you already maintain in another language (ownership clicks around week three when the tool misbehaves and the compiler explains why); contribute a fix to a cr"
+  },
+  {
+    "slug": "rust-systems-programming-guide",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-06"
+  },
+  {
+    "slug": "rust-embedded-development",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Many embedded Rust projects never need a heap; those that do (JSON from sensors, dynamic buffers) should admit an allocator the way a security review admits a dependency: named (linked_list_allocator or a pool), sized (heap region in the li"
+  },
+  {
+    "slug": "rust-embedded-development",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "At 32-64 KB flash, yes with discipline: no_std, panic-halt, opt-level=\"s\", lto, and fmt-free error codes shrink real applications to 8-20 KB; the  size-reduction Q&A  carries the full lever list. Below ~16 KB flash, C remains honest territo"
+  },
+  {
+    "slug": "rust-embedded-development",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-13"
+  },
+  {
+    "slug": "axum-web-server-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Serve with  axum::serve(listener, app).with_graceful_shutdown(shutdown_signal())  where the signal awaits SIGTERM then sleeps a drain window; in-flight requests finish, new connections refuse. For tests, skip the socket entirely:  Router::c"
+  },
+  {
+    "slug": "axum-web-server-tutorial",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-20"
+  },
+  {
+    "slug": "tokio-async-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Async stack traces are scheduler state, so debug with scheduler tools.  tokio-console  shows live tasks, their poll counts, and -- critically -- tasks idle forever awaiting a channel nobody sends: the async equivalent of a deadlock, and the"
+  },
+  {
+    "slug": "tokio-async-tutorial",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-27"
+  },
+  {
+    "slug": "cargo-release-optimization",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "PGO's gains cluster where branch behavior is predictable-from-history: parsers, serializers, interpreters -- 5-15% in my sheets. Its costs are pipeline complexity (profile collection in CI, staleness drift when workloads shift) and reproduc"
+  },
+  {
+    "slug": "cargo-release-optimization",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Yes for ordinary services: tokio does not depend on unwinding for correctness (panics in tasks become JoinError), but you lose catch_unwind-based isolation and any FFI requiring unwind crossing. Adopt per binary after grepping for catch_unw"
+  },
+  {
+    "slug": "cargo-release-optimization",
+    "reason": "Unmeasured empirical table",
+    "removed": "Setting  Typical gain  Cost  Adopt when   \n \n   lto = \"thin\"   5-12% runtime  +30-50% link time  default for services and CLIs  \n   lto = \"fat\"   +1-4% over thin  +80% link, serial  release artifacts only, measured  \n   codegen-units = 1   "
+  },
+  {
+    "slug": "cargo-release-optimization",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-03"
+  },
+  {
+    "slug": "thiserror-vs-anyhow",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Error types are API, so test them like API. Three classes cover the surface:  variant tests  asserting that given conditions produce given variants (fast, pure, first to catch refactor drift);  message tests  asserting Display output contai"
+  },
+  {
+    "slug": "thiserror-vs-anyhow",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "None of these are syntax errors; all are review comments in my repositories within one pull request of introduction, which is the point of writing them down here -- the  systems guide  treats error strategy as architecture because in produc"
+  },
+  {
+    "slug": "thiserror-vs-anyhow",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-10"
+  },
+  {
+    "slug": "rust-cli-clap-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Real CLIs accumulate configuration sources; the merge order is the contract. My pattern: a  Config  struct built by folding sources in ascending priority -- defaults, then config file (optional path flag), then environment variables (prefix"
+  },
+  {
+    "slug": "rust-cli-clap-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Scripts are your power users, and they read three things: exit code, stdout data, stderr prose. The contract I enforce: 0 success with results on stdout (machine-parseable, JSON under  --json ); 1 expected failures with a one-line human rea"
+  },
+  {
+    "slug": "rust-cli-clap-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Completions are documentation that arrives at the moment of need, and because they generate from the derive struct they cannot drift -- the property hand-written completion scripts never hold. Add value hints ( ValueHint::FilePath ) so shel"
+  },
+  {
+    "slug": "rust-cli-clap-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Because parsing is a pure function from  Vec<String>  to  Cli , test it directly:  Cli::try_from([\"zkvm\",\"prove\",\"p.asm\",\"--security\",\"128\"].map(String::from))  asserts the struct you expect; invalid cases assert the error kind. Dispatch lo"
+  },
+  {
+    "slug": "rust-cli-clap-tutorial",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-17"
+  },
+  {
+    "slug": "rust-to-wasm-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The two-crate shape earns its keep immediately: a  core  crate holding pure logic (no std net/fs/time) compiles for wasm and native alike, while an  app  crate adds host integrations per platform. Feature gates ( #[cfg(target_arch = \"wasm32"
+  },
+  {
+    "slug": "rust-to-wasm-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "wasm threads exist (atomics plus SharedArrayBuffer with COOP/COEP headers) but demand cross-origin isolation, which conflicts with embedding third-party assets -- a real product constraint, not a technicality. SIMD (wasm-relaxed-simd) accel"
+  },
+  {
+    "slug": "rust-to-wasm-guide",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-24"
+  },
+  {
+    "slug": "traits-vs-generics",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "A generic function compiles once per concrete type: the optimizer sees exact layouts, inlines callees, and vectorizes loops -- the same code a hand-written specialization would produce. A  dyn Trait  call loads a function pointer from the v"
+  },
+  {
+    "slug": "traits-vs-generics",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The pattern that ages best in maintained crates: accept  impl Trait  or generics at performance-critical interiors (callers' types monomorphize where it counts), and expose  &dyn Trait  or enum-dispatched objects at unstable borders where a"
+  },
+  {
+    "slug": "traits-vs-generics",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Close calls resolved by measurement become design notes; close calls resolved by taste become arguments. The  systems guide  keeps both lists side by side for exactly this reason, and my review checklist asks one question before any dispatc"
+  },
+  {
+    "slug": "traits-vs-generics",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-01"
+  },
+  {
+    "slug": "when-to-use-unsafe",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Review questions, in order: Does the SAFETY comment name each invariant and who maintains it? Can the wrapper's signature express the misuse anyway (if yes, the wrapper is wrong, not the caller)? Does miri run this path in CI (it will find "
+  },
+  {
+    "slug": "when-to-use-unsafe",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Practical on-ramp for teams adopting the licensed model: start by auditing existing unsafe (inventory, checklist each block, kill or license), then freeze new unsafe behind a review label that requires two approvals and a miri test addition"
+  },
+  {
+    "slug": "when-to-use-unsafe",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "No: it scopes it. Safe Rust's guarantee is that safe code cannot cause UB; unsafe blocks are audited exceptions whose invariants safe wrappers re-encapsulate. The story weakens only when unsafe sprawls unaudited -- which is precisely what c"
+  },
+  {
+    "slug": "when-to-use-unsafe",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-08"
+  },
+  {
+    "slug": "axum-rest-api-serde",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "These four classes convert \"the API works\" from an opinion into a CI artifact, and they double as the machine-readable seed for OpenAPI generation -- my services emit schemas from the same structs the tests pin, so the public spec cannot dr"
+  },
+  {
+    "slug": "axum-rest-api-serde",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "One operational habit closes the loop with consumers: publish the contract-test suite's expectation file (statuses plus codes per endpoint) as a machine-readable artifact beside the OpenAPI document, and invite SDK authors to test against i"
+  },
+  {
+    "slug": "axum-rest-api-serde",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-15"
+  },
+  {
+    "slug": "rust-memory-layout",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Nightly type-size prints filtered to your hot modules, plus a simple heuristic report: for each struct, compare size_of against the sum of field sizes -- the delta is padding. My CI publishes that delta table for types above a usage thresho"
+  },
+  {
+    "slug": "rust-memory-layout",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-22"
+  },
+  {
+    "slug": "cargo-release-slower-than-expected",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Before any flag talk, verify what you measured.  cargo build --release  after a feature change may relink without rebuilding dependencies you assume are fresh;  target/  reuse across branches silently mixes profiles; and IDE run configurati"
+  },
+  {
+    "slug": "cargo-release-slower-than-expected",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The trap is global cargo-culting: a JSON-heavy service gains nothing from fat LTO but loses eight minutes of CI per commit, while a compute kernel gains 12% and cares about neither. Set flags per binary target, document the measurement in a"
+  },
+  {
+    "slug": "cargo-release-slower-than-expected",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Debug builds hide allocation and clone costs behind uniformly slow everything; release builds concentrate them where they matter. The flamegraph triage I run: sample with perf/samply for ten seconds of representative load; look for (a) allo"
+  },
+  {
+    "slug": "cargo-release-slower-than-expected",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-06"
+  },
+  {
+    "slug": "fix-rust-e0505",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "E0505's message names three spans: where the borrow started, where the move happened, and where the borrowed value is later used. Read them in that order and the fix usually announces itself: the borrow's lifetime is longer than your mental"
+  },
+  {
+    "slug": "fix-rust-e0505",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Three habits keep E0505 rare in mature codebases. Keep functions small enough that every borrow's span is visible on one screen -- borrows that need scrolling need redesign. Prefer taking ownership of what you consume and borrowing what you"
+  },
+  {
+    "slug": "fix-rust-e0505",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "They can silence it while recreating the use-after-free the error prevented -- the worst possible trade. Unsafe is legitimate at FFI borders with documented invariants and miri tests (see the guide's unsafe hygiene section); using it to esc"
+  },
+  {
+    "slug": "fix-rust-e0505",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-13"
+  },
+  {
+    "slug": "rc-vs-arc-rust",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "On uncontended cores the atomic is a locked add; under contention on the same cache line it degrades toward a coherence traffic jam, which is why an Arc-shared counter hammered by eight threads can cost microseconds, not nanoseconds. That c"
+  },
+  {
+    "slug": "rc-vs-arc-rust",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-20"
+  },
+  {
+    "slug": "share-state-tokio-tasks",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Rung 1 -- ownership plus channels.  One task owns the resource; everyone else sends requests and awaits replies ( oneshot  per request, or a reply slot in the message). No locks exist, contention is explicit in queue depth, and shutdown is "
+  },
+  {
+    "slug": "share-state-tokio-tasks",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Read the last row as a warning label: the catastrophic case is not lock choice but lock scope. The middle rows show the honest trade -- atomics win until contention concentrates them, at which point sharding (per-worker counters folded on r"
+  },
+  {
+    "slug": "share-state-tokio-tasks",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "A  watch  channel of Arc<Config> snapshots: the reloader task sends new immutable configs; readers clone the Arc (cheap) and see a consistent version for their whole request. No locks in the read path, atomic version switches, and rollback "
+  },
+  {
+    "slug": "share-state-tokio-tasks",
+    "reason": "Unmeasured empirical table",
+    "removed": "Pattern  8 threads, 1M ops  Failure signature when wrong   \n \n  channel + owner task  ~38 ms  queue growth (visible, alertable)  \n  AtomicU64 fetch_add  ~21 ms uncontended / ~300 ms contended  cache-line ping-pong in perf  \n  Mutex guard, 1"
+  },
+  {
+    "slug": "share-state-tokio-tasks",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-27"
+  },
+  {
+    "slug": "rust-high-memory-usage",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Three instruments, three questions.  RSS timeline  (smaps_rollup or /proc pressure plus resident graphs): does memory grow without bound (leak-shaped) or plateau high (allocator/overcapacity-shaped)?  Allocator stats  (jemalloc prof or mall"
+  },
+  {
+    "slug": "rust-high-memory-usage",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The most common production \"leak\" in my fleet is unbounded label cardinality: a metrics registry keyed by user id, an interner holding every seen string, a session map without eviction -- each is a cache with no budget, growing exactly with"
+  },
+  {
+    "slug": "rust-high-memory-usage",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Step five is where investigations become infrastructure: my services carry RSS-budget assertions in nightly replay jobs, so memory regressions fail CI like benchmark regressions do -- and after two years of that loop, the four-owner taxonom"
+  },
+  {
+    "slug": "rust-high-memory-usage",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-03"
+  },
+  {
+    "slug": "profile-rust-code",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Sampling at 99-997 Hz costs under 1% and is routinely left on in my fleet with ring-buffer retention; what you must not ship is instrumentation or frequent unwinding of huge stacks on latency paths. Pair with symbol-store lookups so product"
+  },
+  {
+    "slug": "profile-rust-code",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-10"
+  },
+  {
+    "slug": "tokio-main-attribute-explained",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-17"
+  },
+  {
+    "slug": "structure-large-rust-project",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "At this scale, structure stops being layout and becomes policy: every rule above exists because its absence cost a weekend somewhere in my history, and the workspace is where weekends go to be converted into checks. Teams that inherit a gro"
+  },
+  {
+    "slug": "structure-large-rust-project",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "When a second repository needs it and the error/semver discipline is already in place -- publishing is a promotion with permanent obligations (MSRV, changelogs, security policy). My ratchet: internal crate serves two workspaces for a quarte"
+  },
+  {
+    "slug": "structure-large-rust-project",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-24"
+  },
+  {
+    "slug": "cross-compile-rust-arm",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The decision is operational, not ideological: gnu when you control or match the fleet's distro (better NSS/getaddrinfo behavior, dlopen if you need plugins), musl when the artifact must run everywhere including distroless containers. My fle"
+  },
+  {
+    "slug": "cross-compile-rust-arm",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Four checks gate every cross artifact in my CI:  file  asserts architecture and linkage class;  ldd  (for gnu builds) asserts no host-library contamination and records the needed glibc floor; a qemu smoke run asserts the binary executes and"
+  },
+  {
+    "slug": "cross-compile-rust-arm",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-01"
+  },
+  {
+    "slug": "rust-good-for-web-backends",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Against those costs, my client sheets show three consistent returns.  Unit economics : requests-per-core and memory ceilings translate directly into fewer boxes or smaller instances -- at 50+ cores of fleet, Rust's premium typically pays fo"
+  },
+  {
+    "slug": "rust-good-for-web-backends",
+    "reason": "Unmeasured empirical table",
+    "removed": "Workload  Rust fit  Why   \n \n  High-fanout APIs, gateways, proxies  excellent  async density, predictable tails (the  axum path )  \n  Stream processing, codecs, crypto  excellent  CPU-bound correctness with zero-cost abstractions  \n  CRUD S"
+  },
+  {
+    "slug": "rust-good-for-web-backends",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-08"
+  },
+  {
+    "slug": "axum-handler-errors",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-15"
+  },
+  {
+    "slug": "read-rust-compiler-suggestions",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "rustc's  help:  lines are locally correct and globally naive: they fix the borrow checker's complaint with the smallest edit (add clone, add lifetime, deref), without knowing your performance budget or design intent. My rule: apply suggesti"
+  },
+  {
+    "slug": "read-rust-compiler-suggestions",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "In mentorship sessions I sequence error-reading as a skill: week one, students paraphrase every error into one English sentence before touching code (the sentence is graded, not the fix); week two, they predict the next error before compili"
+  },
+  {
+    "slug": "read-rust-compiler-suggestions",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-22"
+  },
+  {
+    "slug": "reduce-rust-binary-size",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Apply one at a time with  size  and a runtime bench logged per step; the ledger is the artifact, and it teaches your next binary for free. In my CLI fleet this layer alone moved a 6.1 MB tool to 2.3 MB with no behavior change and a 2% runti"
+  },
+  {
+    "slug": "reduce-rust-binary-size",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Three code-level levers out-earn any flag once anatomy names them.  fmt discipline : derive-free error types with static messages, or  panic_handler  tricks in constrained builds, cut the  core::fmt  plateau that cargo-bloat shows in every "
+  },
+  {
+    "slug": "reduce-rust-binary-size",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Below ~100 KB targets, the stack changes: no_std cores with alloc only where measured, custom panic handlers logging to UART then halting, linker scripts placing sections in specific flash banks, and  #![no_main]  entry points shaving start"
+  },
+  {
+    "slug": "reduce-rust-binary-size",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "CI gate on artifact size with a ratchet: fail on growth beyond 2% without an override comment naming the reason, and log the trend chart per release. Size regressions arrive exactly like performance ones -- one dependency update, one derive"
+  },
+  {
+    "slug": "reduce-rust-binary-size",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-29"
+  },
+  {
+    "slug": "exit-the-cloud-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Nobody leaves the cloud because of a single invoice. They leave because of the second derivative: the pricing page that changed twice in a year, the API deprecated with ninety days' notice, the account suspended by a classifier that answers"
+  },
+  {
+    "slug": "exit-the-cloud-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Cloud-versus-self-hosted comparisons usually cheat by omitting labor or omitting egress. The sheet below is the one I use with consulting clients: twelve months, steady state, all lines priced -- including the one people hide."
+  },
+  {
+    "slug": "exit-the-cloud-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Self-hosting can recreate lock-in one layer down (a bespoke compose file only you understand, a disk format only one tool reads). The standard I enforce, and that  Decentralized.Host  manifests make structural, has five clauses:  open forma"
+  },
+  {
+    "slug": "exit-the-cloud-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Three workload classes usually survive the exit:  burst compute  (quarterly batch jobs that would idle a owned box for eleven weeks),  global edge latency  (audiences on four continents; a CDN or edge tier stays even when origin goes sovere"
+  },
+  {
+    "slug": "exit-the-cloud-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Every exit business case lives or dies on the labor line, so it deserves its own section rather than a row. Unautomated self-hosting runs about three hours a week in my client measurements: certificate panics, backup checks by eyeball, conf"
+  },
+  {
+    "slug": "exit-the-cloud-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Backups as code : restic repositories, timers, prune policies, and verification jobs declared in the same repository as everything else, so a restore drill is a command and not an archaeology project.  Certificates as timers : the DNS-01 ch"
+  },
+  {
+    "slug": "exit-the-cloud-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Personal infrastructure becomes family infrastructure the day someone else loses a phone, and most self-hosting guides go silent exactly there. Three governance artifacts keep a household stack survivable: a  shared secrets escrow  (printed"
+  },
+  {
+    "slug": "exit-the-cloud-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "An exit plan without a risk register is a wishlist, so here is the one I hand clients, with the mitigation and the honest residual.  Hardware death : mitigated by amortized spares and IaC rebuilds; residual is the four-hour window to source"
+  },
+  {
+    "slug": "exit-the-cloud-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "After day ninety, switch from project cadence to operating cadence: a weekly maintenance window (updates, alert review, one small automation), a monthly labor-line row, a quarterly drill day that rotates between restore, failover, and power"
+  },
+  {
+    "slug": "exit-the-cloud-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Certificates and DNS, in my incident corpus, followed by disk failures caught late by unmonitored SMART. All three are monitoring-and-automation problems, not hardware problems -- which is why the substrate month comes before any workload m"
+  },
+  {
+    "slug": "exit-the-cloud-guide",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-09"
+  },
+  {
+    "slug": "self-hosted-cloud-storage",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Public links are the feature that reintroduces exposure to a private stack, so treat them as the mini-public-endpoints they are: expiry dates mandatory by policy (clients can request extensions, not permanence), download counts logged and a"
+  },
+  {
+    "slug": "self-hosted-cloud-storage",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "For pure device-to-device sync, yes -- that is its design, and its lack of central DB removes the server as failure domain. You lose server-side sharing links, server-authoritative conflict resolution, and a single place to back up from (ev"
+  },
+  {
+    "slug": "self-hosted-cloud-storage",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-16"
+  },
+  {
+    "slug": "wireguard-mesh-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "A  full mesh  (every peer talks to every peer) minimizes latency and removes single points of failure, at the cost of O(n²) config entries -- fine to six nodes, absurd beyond. A  hub topology  (star through one VPS) simplifies configs and s"
+  },
+  {
+    "slug": "wireguard-mesh-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The /32-per-peer default is the safety property: a compromised laptop cannot sniff or reach siblings unless a route explicitly says so. Widening AllowedIPs is a policy decision with a journal entry in my configs (a comment line per grant, r"
+  },
+  {
+    "slug": "wireguard-mesh-tutorial",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-23"
+  },
+  {
+    "slug": "dns01-certificates-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Four steps hide inside  --issue : the CA hands you a token; your client calls the provider API to create  _acme-challenge.example.dev  TXT; the CA queries DNS from multiple vantage points until the record appears; the CA signs. Every DNS-01"
+  },
+  {
+    "slug": "dns01-certificates-guide",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-30"
+  },
+  {
+    "slug": "reverse-proxy-auto-tls",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Order matters more than choice when switching (certbot-to-Caddy moves are common as fleets simplify): stand up the new edge on an alternate port or mesh address, replay production request samples against both and diff status codes and heade"
+  },
+  {
+    "slug": "reverse-proxy-auto-tls",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-06"
+  },
+  {
+    "slug": "self-hosted-saas-alternatives",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Across my cohort logs, sticking swaps share three properties:  client coverage  (every household device has a good app on day one -- photo sync fails on the first phone left out),  import completeness  (the migration tool brought history, f"
+  },
+  {
+    "slug": "self-hosted-saas-alternatives",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Honesty keeps lists credible: I keep a CDN edge for public content, a payment processor, one macro-heavy spreadsheet seat, and domain registration (obviously). Each carries a dated exception row per the exit guide's review ritual, with the "
+  },
+  {
+    "slug": "self-hosted-saas-alternatives",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "A closing note on list hygiene, because swap lists rot like any other artifact: every entry above carries, in my runbook, an owner, a backup row, and a \"last restored\" date -- entries lacking any of the three are demoted to a wishlist secti"
+  },
+  {
+    "slug": "self-hosted-saas-alternatives",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Not all thirty-one -- nobody needs all thirty-one. Per adopted swap: 2-6 hours including import, client rollout, and runbook page; my cohort median for a ten-swap household is three weekends spread over two months, with mail's deliverabilit"
+  },
+  {
+    "slug": "self-hosted-saas-alternatives",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-13"
+  },
+  {
+    "slug": "zfs-snapshots-backups",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Local snapshots die with the pool; receives die with the site; only tested restores prove the chain. The quarterly drill from the  restore-frequency Q&A  extends naturally: receive one historical snapshot into a scratch dataset, diff a know"
+  },
+  {
+    "slug": "zfs-snapshots-backups",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-20"
+  },
+  {
+    "slug": "restic-automation-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Exclusion-based backups rot in one classic move: someone adds  --exclude '*.db'  during one incident and your databases vanish from every subsequent snapshot while every check stays green. Include-lists invert the failure: new paths appear "
+  },
+  {
+    "slug": "restic-automation-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Three signals cover the failure surface: a heartbeat metric per repository per window (absence pages -- a dead timer is indistinguishable from a healthy backup until restore day), backup duration trend (creep predicts dataset growth and tar"
+  },
+  {
+    "slug": "restic-automation-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "When something does go red, the runbook order is: verify the timer ran (journal), verify the target accepted writes (provider console), verify keys resolve (secret manager), then and only then inspect restic's own error -- because in my inc"
+  },
+  {
+    "slug": "restic-automation-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Pull-model (a backup host mounts or rsyncs, then restics) isolates credentials from the compromised-host threat and centralizes logs; push-model (host runs restic) is simpler and fine when immutability plus key escrow cover the deletion thr"
+  },
+  {
+    "slug": "restic-automation-guide",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Never restic live database files as your primary story: dump with the engine's tool (pg_dump, sqlite .backup) into a staging directory, then restic the dump -- consistency guaranteed by the engine, dedupe still excellent across dumps. Files"
+  },
+  {
+    "slug": "restic-automation-guide",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-27"
+  },
+  {
+    "slug": "homelab-to-production",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Track the score itself as a metric: quarterly self-assessment out of 41, charted beside incident count and labor hours. My own chart shows the expected inverse correlation -- score rising, incidents falling, labor flat then declining as aut"
+  },
+  {
+    "slug": "homelab-to-production",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-04"
+  },
+  {
+    "slug": "self-hosted-password-manager",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Vaultwarden for homes and small teams: single binary,SQLite-scale resource use, same client protocol and cryptography. Official stacks when you need directory sync, org-scale admin features, or support contracts. Clients cannot tell the dif"
+  },
+  {
+    "slug": "self-hosted-password-manager",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "In my cohort logs: edge certificate lapses on forgotten subdomains (the heartbeat alert from the cert guides prevents it), then SMTP misconfiguration breaking invite emails (set it once, test quarterly), then client-version drift on neglect"
+  },
+  {
+    "slug": "self-hosted-password-manager",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-11"
+  },
+  {
+    "slug": "nixos-vs-debian-homeserver",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Everything -- packages, services, users, kernel modules, cron-equivalents (systemd timers in config) -- lives in  configuration.nix  (or flakes with locked inputs). Changes apply atomically via  nixos-rebuild switch ; each build is a boot g"
+  },
+  {
+    "slug": "nixos-vs-debian-homeserver",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Operator solo and comfortable reading derivations: NixOS, and keep the flake in a public-or-private repo with CI eval so config changes type-check before they touch metal. Operator shared with household or volunteers: Debian plus enforced c"
+  },
+  {
+    "slug": "nixos-vs-debian-homeserver",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Two field observations to keep the comparison honest over years rather than weekends. First, NixOS households drift toward publishing their configs (the reproducibility culture rewards it), which compounds into community modules that make t"
+  },
+  {
+    "slug": "nixos-vs-debian-homeserver",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-18"
+  },
+  {
+    "slug": "self-hosting-privacy-benefits",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Before/after egress audits on my household stack tell the story in bytes: pre-migration, four devices emitted ~1.4 GB/month of telemetry- and sync-shaped traffic to eleven distinct third-party endpoints; post-migration, the same workload em"
+  },
+  {
+    "slug": "self-hosting-privacy-benefits",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The benefits above persist only under four habits: egress-deny defaults with per-service exceptions (the gate philosophy from  XFree  applied household-wide), quarterly egress audits comparing observed flows to the exception list, endpoint "
+  },
+  {
+    "slug": "self-hosting-privacy-benefits",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-25"
+  },
+  {
+    "slug": "mini-pc-server-projects",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "For the quiet tier's DNS/VPN/automation roles, Pis excel at 3-5 W and silent operation; they stumble on NVMe-less storage performance and some container image availability for the data and compute tiers. My pilot standard: Pi for edge dutie"
+  },
+  {
+    "slug": "mini-pc-server-projects",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2027-01-01"
+  },
+  {
+    "slug": "test-restic-restores-frequency",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Once a quarter, on calendar, restore one entire repository to scratch hardware: latest snapshot plus one historical snapshot (the 30-day-old one catches retention-policy surprises). Time it end to end and log three numbers -- duration, byte"
+  },
+  {
+    "slug": "test-restic-restores-frequency",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-09"
+  },
+  {
+    "slug": "wireguard-handshake-failing-nat",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-16"
+  },
+  {
+    "slug": "host-website-no-static-ip",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The sovereignty-aware read: DDNS keeps data path yours but paints a target on your home router; tunnels remove the target but insert a decrypting intermediary; the VPS proxy restores both properties at the price of one machine you patch. My"
+  },
+  {
+    "slug": "host-website-no-static-ip",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-23"
+  },
+  {
+    "slug": "home-server-ram-requirements",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "ZFS will use up to half of system RAM as adaptive read cache by default, which is wonderful for throughput and terrible for your OOM-killer story when containers need their spike headroom. Set  zfs_arc_max  explicitly -- my formula: RAM min"
+  },
+  {
+    "slug": "home-server-ram-requirements",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Container fleets fail RAM budgeting in two signature ways: Java- or Electron-shaped guests that ignore cgroup limits unless told (set the flags; assume nothing), and memory limits set per container without accounting for page cache shared a"
+  },
+  {
+    "slug": "home-server-ram-requirements",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Technically yes, with zfs_arc_max pinned around 1 GB and no dedup ever; practically, you trade away the ARC's speed and keep its complexity. On 4 GB boxes I prefer ext4 plus restic and spend the mental budget on restore drills instead -- ZF"
+  },
+  {
+    "slug": "home-server-ram-requirements",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-30"
+  },
+  {
+    "slug": "self-hosting-worth-it-2025",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "My client measurements cluster brutally: unautomated self-hosting runs about three hours a week (cert panics, eyeball backup checks, one-off edits on boxes); automated runs about one (maintenance window, alert digest, quarterly drills). The"
+  },
+  {
+    "slug": "self-hosting-worth-it-2025",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Honest exclusions keep the practice credible. If your data has compliance boundaries you cannot audit (regulated health records, client contracts forbidding it), stay on certified platforms. If three hours a month is genuinely unavailable a"
+  },
+  {
+    "slug": "self-hosting-worth-it-2025",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "In my mentoring cohort, the failure mode is abandonment, not catastrophe: roughly one in five builds dies when its owner's unautomated labor collides with a busy quarter. Among those who automated the four sinks in month one, I have recorde"
+  },
+  {
+    "slug": "self-hosting-worth-it-2025",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Yes, and hybrid is the mature default: my own footprint keeps a CDN tier and payment processor while everything stateful runs sovereign. The test per service is the exit guide's exception review -- name the reason it stays, price the option"
+  },
+  {
+    "slug": "self-hosting-worth-it-2025",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-06"
+  },
+  {
+    "slug": "auto-renew-certs-behind-nat",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-13"
+  },
+  {
+    "slug": "home-server-power-loss",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Size runtime to your shutdown sequence plus margin: measure the controlled-stop duration (typically 2-5 minutes with pool exports and container drains), then buy UPS minutes for the outage percentile you actually care about -- in my regiona"
+  },
+  {
+    "slug": "home-server-power-loss",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-20"
+  },
+  {
+    "slug": "backup-self-hosted-server-offsite",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-27"
+  },
+  {
+    "slug": "expose-self-hosted-app-safely",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-04"
+  },
+  {
+    "slug": "monitor-home-server-free",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-11"
+  },
+  {
+    "slug": "mesh-on-mini-pcs",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Yes: mini PCs are excellent federation mesh nodes for small-to-medium quorums -- 8-16 GB boards sustain node-agent, container workloads, and storage heartbeats at 6-15 W idle, and my pilot runs three-jurisdiction quorums including two mini-"
+  },
+  {
+    "slug": "mesh-on-mini-pcs",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Follow the five and a $150 board carries quorum weight beside machines costing ten times more, which is precisely the federation's thesis in hardware form: sovereignty scales down as well as out, and the mesh gets stronger per node not per "
+  },
+  {
+    "slug": "mesh-on-mini-pcs",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Quorum math, not hardware math: diversity of jurisdiction, power domain, and network path matters more than count. My admission rule caps any single hardware class at half the quorum weight, so a mini-PC majority cannot become a single supp"
+  },
+  {
+    "slug": "mesh-on-mini-pcs",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-18"
+  },
+  {
+    "slug": "migrate-self-hosted-app-hardware",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-25"
+  },
+  {
+    "slug": "mcp-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The deeper consequence is security-shaped. Because the interface is typed and negotiated, a host can enforce policy  per capability  rather than per process: \"this agent may call  prove  but never  exec \" becomes a declarative rule instead "
+  },
+  {
+    "slug": "mcp-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Write schemas like API contracts reviewed by an adversary. Every string gets a maximum length; every path gets a pattern; every enum stays closed. Input-size negotiation is not pedantry: an unbounded  program  field is a memory-exhaustion v"
+  },
+  {
+    "slug": "mcp-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The executor is where safety stops being vocabulary. Principles I enforce in  mcp-prove-server : run work in a child process with a memory and time budget; filesystem access limited to a per-session tmpdir deleted on close; network disabled"
+  },
+  {
+    "slug": "mcp-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Wrap tool dispatch in a capability gate evaluated before execution: APG-1 statements like  mcp:prove:allow; exec:deny; net:deny  with most-specific-scope wins and ties resolving to deny. Log every decision -- grant or deny -- to an append-o"
+  },
+  {
+    "slug": "mcp-tutorial",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "A gate that does not log is a gate that cannot be audited, and an unaudited gate is folklore with a config file. Per call, my servers journal six fields: timestamp, session id, tool name, prompt-hash (when the host supplies it), verdict, an"
+  },
+  {
+    "slug": "build-mcp-server",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "What the tool does, what it refuses, and one example call -- in that order. Descriptions that overpromise (\"handles any proof format\") cause parameter hallucination; descriptions that mention refusal (\"rejects proofs whose vkey is not pinne"
+  },
+  {
+    "slug": "self-hosted-llm-inference",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The decision is concurrency-shaped, not brand-shaped: one user on a 8 GB box is llama.cpp territory; twenty users on one 24 GB card is vLLM's batching paying for itself. My reference stack in  ai-infrastructure  runs both behind one gateway"
+  },
+  {
+    "slug": "self-hosted-llm-inference",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Front every backend with an OpenAI-compatible gateway you own: per-key quotas (tokens/day), per-key model allowlists, request/response metadata journalled (hashes, sizes, latency -- never prompt bodies by default; body logging is an opt-in "
+  },
+  {
+    "slug": "self-hosted-llm-inference",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "These five, dashboards beside the federation's node metrics, cover every incident I have run in this stack; a sixth has never earned its place. For the privacy threat model that justifies the whole exercise, the companion piece on  running "
+  },
+  {
+    "slug": "self-hosted-llm-inference",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "For latency-sensitive single-stream workloads with predictable phrasing (code completion, templated extraction): yes, 1.5-2.5x toks/s with a well-chosen draft model. For mixed multi-user batching: marginal, because the draft model consumes "
+  },
+  {
+    "slug": "self-hosted-llm-inference",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-20"
+  },
+  {
+    "slug": "openai-compatible-gateway",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "An OpenAI-compatible local gateway is a small reverse proxy speaking the /v1/chat/completions and /v1/embeddings contracts in front of your self-hosted runtimes (vLLM, llama.cpp), adding what raw servers lack: per-key quotas, model allowlis"
+  },
+  {
+    "slug": "openai-compatible-gateway",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Raw serving endpoints answer whoever reaches them with whatever they ask: no quotas, no per-team accounting, no place to enforce \"this key may use the coder model but not the generalist\". Sprinkling those concerns into clients reproduces th"
+  },
+  {
+    "slug": "openai-compatible-gateway",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Exact-match caching on  sha256(model + normalized prompt + sampling params)  is safe for deterministic-ish settings (temperature 0) and embarrassingly effective for repeated boilerplate: my logs show 18-30% hit rates on editor traffic, whic"
+  },
+  {
+    "slug": "openai-compatible-gateway",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "LiteLLM or similar open proxies are excellent starting points (broad dialect coverage, active maintenance); custom minimal proxies win when your policy surface is small and auditable -- my own is ~600 lines because quotas, aliases, cache, a"
+  },
+  {
+    "slug": "openai-compatible-gateway",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-27"
+  },
+  {
+    "slug": "run-llm-locally-privacy",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Writing the unchanged column down is what makes the model credible: privacy engineering is subtracting threat surfaces you can name, and knowing which remain. My workstation policy pairs local inference with editor sync disabled on sensitiv"
+  },
+  {
+    "slug": "run-llm-locally-privacy",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Local 7-13B models at Q4 today handle summarization, extraction, classification, boilerplate code, and first-draft prose at quality that replaces most API calls in my own logs (measured: 78% of my monthly token volume). They lose on long-ch"
+  },
+  {
+    "slug": "run-llm-locally-privacy",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "The reputable runtimes do not by default, but verify rather than trust: run the stack once under a network monitor and watch for telemetry, update checks, or download-on-first-use behaviors. My policy is egress-deny for the inference proces"
+  },
+  {
+    "slug": "run-llm-locally-privacy",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-03"
+  },
+  {
+    "slug": "quantized-models-explained",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Across my evaluation harness (summarization, extraction, multi-hop reasoning, code completion, exact recall), Q4_K_M versus FP16 on 7-13B models costs roughly: summarization 1-2%, extraction 2-3%, code completion 2-4%, multi-hop reasoning 4"
+  },
+  {
+    "slug": "quantized-models-explained",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Step four is where discipline lives: an unpinned \"we run Q4\" drifts into \"whatever the downloader fetched last Tuesday\", and quality regressions stop being attributable. The same pinning instinct that protects proofs in the STARK cluster pr"
+  },
+  {
+    "slug": "quantized-models-explained",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Indirectly: quality loss shows up first as confidence on wrong recall, which reads as hallucination. My harness tracks a factual-consistency metric separately from fluency for exactly this reason; at Q4 the consistency delta is measurable b"
+  },
+  {
+    "slug": "quantized-models-explained",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "For classification and routing gates where outputs are constrained: sometimes, with per-task validation. For open generation: the quality cliff is real and user-visible in my rubrics. Treat sub-4-bit as a specialized tool for narrow heads i"
+  },
+  {
+    "slug": "quantized-models-explained",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-10"
+  },
+  {
+    "slug": "ai-agent-security",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-17"
+  },
+  {
+    "slug": "agent-tool-calling-safety",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "A tool schema is an API boundary where the caller is a stochastic planner: narrow types, closed enums, length-bounded strings, and no catch-all parameters (\"command\", \"code\", \"payload\") unless the tool is explicitly a sandboxed executor wit"
+  },
+  {
+    "slug": "agent-tool-calling-safety",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Every byte a tool returns -- file contents, API bodies, web scrape -- re-enters the planner as text that may carry instructions. The controls mirror prompt-injection defense: length caps before context insertion, structural separation (tool"
+  },
+  {
+    "slug": "agent-tool-calling-safety",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-24"
+  },
+  {
+    "slug": "local-rag-pipeline",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Every generated claim carries chunk ids; the UI renders them as links to source spans; and a nightly job samples answers, re-retrieves their citations, and flags drift (cited chunk changed or vanished -- ingest churn breaks answers silently"
+  },
+  {
+    "slug": "local-rag-pipeline",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "RAG answers what your documents contain and nothing more: cross-document reasoning, arithmetic over retrieved numbers, and temporal questions (\"current policy?\") need re-ranking, tool-augmented generation, or explicit date filters respectiv"
+  },
+  {
+    "slug": "local-rag-pipeline",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "On my eval set, a cross-encoder reranker over top-20 improved recall@5 by 8-14% at 40-80 ms added per query on CPU -- worth it for fact-mode answers where precision is trust, skipped for exploratory search where latency shapes usage. Measur"
+  },
+  {
+    "slug": "local-rag-pipeline",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-01"
+  },
+  {
+    "slug": "self-hosted-vector-db",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "At HNSW-equivalent parameters (ef_search tuned per engine to equal latency), my 1M-chunk benchmark shows recall@10 within 1-2 points across all three on the same embeddings -- because they implement the same algorithm family with comparable"
+  },
+  {
+    "slug": "self-hosted-vector-db",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Retrieval quality ceilings are embedding-shaped; a cross-encoder rerank over top-20 adds 8-14% recall@5 in my eval sets at tens of milliseconds. Run rerank in your application layer, not the vector engine, so it stays swappable and cacheabl"
+  },
+  {
+    "slug": "self-hosted-vector-db",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Qdrant : a service with an API; snapshots per collection, WAL discipline, int8 scalar quantization that halves RAM at ~1% recall cost in my sheets; clustering exists but at home scale you will never run it. Ops load: one container, one back"
+  },
+  {
+    "slug": "self-hosted-vector-db",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-08"
+  },
+  {
+    "slug": "llm-inference-cpu",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Generation streams weights from memory once per token: tokens/second ≈ DRAM bandwidth (GB/s) ÷ model bytes. A dual-channel DDR4 box at ~35 GB/s running a 4.1 GB Q4 model therefore caps near 8.5 tok/s before overhead; DDR5 at 60 GB/s lifts t"
+  },
+  {
+    "slug": "llm-inference-cpu",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Poorly for interactive sessions: bandwidth is rivalrous, and two streams halve each other's tokens -- the GPU concurrency story does not port. Batch workloads share happily (queues serialize, throughput conserves). My household policy: inte"
+  },
+  {
+    "slug": "llm-inference-cpu",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "One deployment pattern deserves naming for households and small teams: the night-shift box. A CPU inference box idles all day and runs batch workloads -- embeddings for new documents, overnight summaries, eval-suite scoring, journal digest "
+  },
+  {
+    "slug": "llm-inference-cpu",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Embeddings and RAG ingest : batch-shaped, latency-tolerant, and privacy-critical -- the ideal CPU workload; my ingest pipelines run overnight on cores GPUs never see."
+  },
+  {
+    "slug": "llm-inference-cpu",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-15"
+  },
+  {
+    "slug": "self-hosted-vs-cloud-ai-cost",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Over twelve months, self-hosted AI beats cloud API pricing once steady-state volume crosses roughly 30-60 million tokens/month on mid-range hardware, with break-even arriving month 4-9 after amortization; below that volume, cloud wins on el"
+  },
+  {
+    "slug": "self-hosted-vs-cloud-ai-cost",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Let H = annualized hardware plus power, L = annual ops labor, P = cloud price per million tokens at your mix, V = annual token volume. Self-host wins when H + L < P × V, i.e. V > (H + L)/P. At H+L ≈ €3,400 and P ≈ €1.0/Mtok, break-even is 3"
+  },
+  {
+    "slug": "self-hosted-vs-cloud-ai-cost",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Route by workload class through the gateway: steady interactive and batch volume to owned silicon; burst quarters, frontier-only tasks, and long-tail models to cloud keys with per-key quotas; journals make the split auditable monthly. My fl"
+  },
+  {
+    "slug": "self-hosted-vs-cloud-ai-cost",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Three-year straight-line for planning, with a residual-value note (used markets hold 40-60% for mid-range cards), and a sensitivity row at two-year life for throttle-heavy workloads. Never depreciate against vendor launch cadence folklore ("
+  },
+  {
+    "slug": "self-hosted-vs-cloud-ai-cost",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-22"
+  },
+  {
+    "slug": "run-llm-8gb-ram",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "On a 2021-class 8-core CPU: 3B Q8 yields ~9-12 tok/s, 7B Q4 ~4-7 tok/s; DDR4 versus DDR5 shifts these by ±25% because CPU inference is bandwidth-bound. That is reading speed for slow readers -- fine for chat, drafting, and extraction; painf"
+  },
+  {
+    "slug": "run-llm-8gb-ram",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "At q8_0 for keys/values, degradation over 4-8k contexts is below my rubric noise; at q4_0 KV, long-context recall tasks show measurable drift. Since KV quantization's payoff grows with context length, the sane pairing is q8 KV with long con"
+  },
+  {
+    "slug": "run-llm-8gb-ram",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-10"
+  },
+  {
+    "slug": "local-llm-slow-fix",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Matrix multiplication saturates execution units and memory pipes; extra hyperthreads add synchronization traffic and cache eviction, routinely cutting throughput 20-40% in my measurements when users set  -t  to  nproc . The same overshoot a"
+  },
+  {
+    "slug": "local-llm-slow-fix",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "GGUF CPU kernels on a CUDA box, CUDA builds on Apple silicon, AVX2 binaries on AVX-512 hosts: each mismatch costs 2-5x and none announce themselves. Verify the build matches the machine ( llama-server --version  flags, vLLM's kernel logs), "
+  },
+  {
+    "slug": "local-llm-slow-fix",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-17"
+  },
+  {
+    "slug": "safe-paste-code-into-llm",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Operationally, the split works when routing is one keystroke: my editor's assistant config points routine completions at the cloud key (speed, frontier quality) and a \"sensitive mode\" toggle at the localhost gateway (audit-logged, egress-de"
+  },
+  {
+    "slug": "safe-paste-code-into-llm",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-24"
+  },
+  {
+    "slug": "stop-agent-deleting-files",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "A gate untested is a gate unknown. My suite includes recorded agent behaviors that attempt deletion: \"remove the build directory to fix the error\", \"reset the repo to a clean state\", injected instructions in tool output (\"ignore previous po"
+  },
+  {
+    "slug": "stop-agent-deleting-files",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-10-31"
+  },
+  {
+    "slug": "what-is-mcp-for",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Not authorization.  Capability negotiation tells a host what a server  can  do; policy decides what it  may  do. Confusing the two is the most common design error I review."
+  },
+  {
+    "slug": "what-is-mcp-for",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-07"
+  },
+  {
+    "slug": "add-tools-to-agent-safely",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Denial-code spikes (schema confusion the trial sample missed) and citation-less invocation justifications in journal samples (planner invoking without traceable reason, usually a description gap). Both alert automatically in my registry das"
+  },
+  {
+    "slug": "add-tools-to-agent-safely",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-14"
+  },
+  {
+    "slug": "log-every-agent-action",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Append-before-execute costs one fsync-batched write (~0.3 ms amortized with group commits) -- invisible beside tool latency, decisive beside forensics value. Batching beyond one second trades crash-window intent records for microseconds; my"
+  },
+  {
+    "slug": "log-every-agent-action",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Yes, and they should: a read-only view of their session's calls with reasons is the single highest-trust-yield feature in my deployments, converting \"the AI did something weird\" tickets into shared evidence within minutes. Redact tier-2 arg"
+  },
+  {
+    "slug": "log-every-agent-action",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-21"
+  },
+  {
+    "slug": "local-models-for-coding",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "My registry keeps audition scores per model per quant beside the pin hashes, so \"which local model for coding\" is a lookup with dates rather than a forum argument -- the same manifest discipline the proof cluster applies to parameters, beca"
+  },
+  {
+    "slug": "local-models-for-coding",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Niche frameworks and post-cutoff library versions (local weights cannot know what was never in them; retrieval of docs mitigates partially), multi-file transactional refactors requiring consistent renames across twenty files (cloud frontier"
+  },
+  {
+    "slug": "local-models-for-coding",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Less than prose nuance, more than syntax-adjacent tasks suggest: my compile-pass-rate deltas run 1-3% Q8-versus-FP16 and 3-6% at Q4 on 13B class, concentrated in long-context cases where precision tails matter per the  quantization comparis"
+  },
+  {
+    "slug": "local-models-for-coding",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-11-28"
+  },
+  {
+    "slug": "q4-vs-q8-quantization",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Q4 halves memory and roughly doubles CPU generation speed versus Q8, at a quality cost that is task-dependent: 1-2% on summarization and extraction, 2-4% on code completion, 4-7% on multi-hop reasoning and exact recall in my harness. Q8 ret"
+  },
+  {
+    "slug": "q4-vs-q8-quantization",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Two reading notes. Percentages are pass-rate deltas on my 90-task harness at 7-13B scale; smaller models degrade faster at equal bits, larger ones slower -- quantization loss and model capacity substitute for each other, which is why \"13B Q"
+  },
+  {
+    "slug": "q4-vs-q8-quantization",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "On CPU, Q4's narrower weights move fewer bytes per token: 30-50% generation-speed gains over Q8 at equal hardware, which on an 8 GB box is the difference between chatty and unusable per the  8 GB RAM Q&A . On GPU serving, the calculus shift"
+  },
+  {
+    "slug": "q4-vs-q8-quantization",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "On my harness, importance-matrix quants recover roughly half the Q4-to-Q8 gap at equal size for recall-heavy tasks, at the cost of a calibration-set dependency (the imatrix data becomes part of your artifact provenance -- pin and document i"
+  },
+  {
+    "slug": "q4-vs-q8-quantization",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Yes, deliberately: my gateway runs Q4 for interactive chat and Q8 for the extraction pipeline behind separate keys, with the quality ledger per slot proving the split earns its VRAM. The anti-pattern is accidental heterogeneity -- two quant"
+  },
+  {
+    "slug": "q4-vs-q8-quantization",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-05"
+  },
+  {
+    "slug": "local-llm-hallucinates-more",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Build a 60-item fact probe from your domain: 20 answerable from your documents (retrieval-backed), 20 answerable from general knowledge the model should refuse-or-answer cleanly, and 20 unanswerable traps (false premises, invented citations"
+  },
+  {
+    "slug": "local-llm-hallucinates-more",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "\"Local models hallucinate more\" is true only as a statement about which models people run locally, not about locality. The productive question is per-slot: which model-quant-context configuration meets this workload's hallucination budget, "
+  },
+  {
+    "slug": "local-llm-hallucinates-more",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Quantization depth : 4-bit costs 1-3% on fluency tasks but 4-8% on exact-recall tasks at 7-13B per my harness -- the precision-tail erosion from the  quantization comparison , which reads as \"more hallucination\" to users because recalled fa"
+  },
+  {
+    "slug": "local-llm-hallucinates-more",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-12"
+  },
+  {
+    "slug": "cache-llm-responses",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Cache LLM responses at three layers: exact-match (hash of model + prompt + params) for repeated identical calls, semantic/prefix for shared context blocks, and application-level for derived artifacts (embeddings, summaries, extractions). Me"
+  },
+  {
+    "slug": "cache-llm-responses",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Log four numbers per cache: hit rate by layer and key class, age-at-hit distribution (TTLs too long or too short show up as age histograms), invalidation events by law, and bytes-served-versus-computed (the watts ledger -- my household gate"
+  },
+  {
+    "slug": "cache-llm-responses",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Exact-match on public-knowledge prompts, yes (privacy-neutral, watts-positive); anything embedding user context, no -- key isolation per session or per access tier, enforced at key construction time rather than by convention. Shared-cache i"
+  },
+  {
+    "slug": "cache-llm-responses",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-19"
+  },
+  {
+    "slug": "agents-verify-own-actions",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Downstream consumers verify receipts without trusting the agent: the proof checks computation, the grant checks authorization, the chain link checks sequence. My federation's agent-facing tools emit exactly this envelope shape (PRF-1 compat"
+  },
+  {
+    "slug": "agents-verify-own-actions",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Active work pushes the checkable boundary outward: critics-and-verifiers loops (a second model scores outputs against rubrics before emission), formal specs as executable acceptance criteria (property tests generated per task), and recursiv"
+  },
+  {
+    "slug": "agents-verify-own-actions",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "As a critique layer, yes -- cross-checking agents catch format and consistency errors cheaply, and my pipelines use a verifier model for citation and schema checks before emission. As an authority, no: a verifier agent shares the failure mo"
+  },
+  {
+    "slug": "agents-verify-own-actions",
+    "reason": "Unsupported personal experience or measurement",
+    "removed": "Proof generation adds seconds per batched step (amortized by batching per the recursion and batching economics elsewhere in the stark cluster); hash-chain journaling adds sub-millisecond per action; policy replay runs offline. Interactive l"
+  },
+  {
+    "slug": "agents-verify-own-actions",
+    "reason": "Future draft date replaced by actual package publication date",
+    "old": "2026-12-26"
+  }
+]
