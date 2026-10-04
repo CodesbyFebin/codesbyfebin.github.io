@@ -1,0 +1,71 @@
+{
+  "primaryPages": 10,
+  "projectGuides": 23,
+  "primaryMainWords": 20186,
+  "deployedBytes": 1033412,
+  "cssBytes": 12387,
+  "pageMetrics": [
+    {
+      "path": "index.html",
+      "mainWords": 1058,
+      "titleChars": 53,
+      "descriptionChars": 140
+    },
+    {
+      "path": "about.html",
+      "mainWords": 895,
+      "titleChars": 53,
+      "descriptionChars": 142
+    },
+    {
+      "path": "systems.html",
+      "mainWords": 6820,
+      "titleChars": 52,
+      "descriptionChars": 141
+    },
+    {
+      "path": "projects.html",
+      "mainWords": 1960,
+      "titleChars": 54,
+      "descriptionChars": 144
+    },
+    {
+      "path": "blog.html",
+      "mainWords": 1000,
+      "titleChars": 54,
+      "descriptionChars": 141
+    },
+    {
+      "path": "services.html",
+      "mainWords": 840,
+      "titleChars": 52,
+      "descriptionChars": 139
+    },
+    {
+      "path": "research.html",
+      "mainWords": 832,
+      "titleChars": 50,
+      "descriptionChars": 145
+    },
+    {
+      "path": "contributions.html",
+      "mainWords": 861,
+      "titleChars": 48,
+      "descriptionChars": 146
+    },
+    {
+      "path": "contact.html",
+      "mainWords": 755,
+      "titleChars": 52,
+      "descriptionChars": 142
+    },
+    {
+      "path": "specifications.html",
+      "mainWords": 5165,
+      "titleChars": 54,
+      "descriptionChars": 142
+    }
+  ],
+  "failures": [],
+  "method": "Words in main HTML, excluding scripts and styles. Includes source documentation, code, tables, headings, and visible callouts. Excludes navigation/footer and project-guide pages."
+}

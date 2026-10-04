@@ -1,32 +1,40 @@
-# Febin Francis / CodesbyFebin
+# CodesbyFebin
 
-> Systems Engineer focused on AI infrastructure, verifiable compute, sovereign systems, AI agents, MCP, local LLMs, zero-knowledge systems and distributed infrastructure.
+> Febin Francis · Systems Engineer · Kerala, India. AI infrastructure, verifiable compute, sovereign systems.
 
-Portfolio: https://codesbyfebin.github.io/
-GitHub: https://github.com/CodesbyFebin
-LinkedIn: https://www.linkedin.com/in/codes-by-febin/
-ORCID: https://orcid.org/0009-0002-8123-1531
+- [AI Infrastructure & Verifiable Compute | CodesbyFebin](https://codesbyfebin.github.io/): Explore Febin Francis’s source-backed portfolio of AI infrastructure, verifiable compute, and self-hosted systems, built from Kerala, India.
+- [About Febin Francis · Systems Engineer | CodesbyFebin](https://codesbyfebin.github.io/about.html): Meet Febin Francis, CodesbyFebin: a systems engineer in Kerala, India focused on AI infrastructure, verifiable compute, and sovereign systems.
+- [AI, STARK & Self-Hosted Systems Guide | CodesbyFebin](https://codesbyfebin.github.io/systems.html): Inspect the architecture and boundaries of CodesbyFebin’s STARK VM, hosting systems, AgentSwarm, OM workspace, and browser developer tooling.
+- [Open-Source Projects & Repository Guide | CodesbyFebin](https://codesbyfebin.github.io/projects.html): Browse 23 source-linked repositories across AI, self-hosting, cryptography, and developer tools, with dated metadata and explicit review status.
+- [AI Infrastructure & Systems Engineering | CodesbyFebin](https://codesbyfebin.github.io/blog.html): Read original engineering notes on agent execution, STARK proofs, self-hosting, and evidence-backed discovery, with links to project sources.
+- [AI Infrastructure Consulting & Collaboration | Febin](https://codesbyfebin.github.io/services.html): Explore collaboration on AI infrastructure, systems architecture, self-hosting, and verifiable compute with Febin Francis in Kerala, India.
+- [Verifiable Compute & AI Research Interests | Febin](https://codesbyfebin.github.io/research.html): Explore Febin Francis’s research interests in execution integrity, small proof systems, sovereign control planes, and governed AI infrastructure.
+- [Open-Source Contributions & Review Guide | Febin](https://codesbyfebin.github.io/contributions.html): Find practical contribution paths for CodesbyFebin projects: reproducible issues, focused patches, honest documentation, and source-backed review.
+- [Contact Febin Francis · Kerala, India | CodesbyFebin](https://codesbyfebin.github.io/contact.html): Connect with Febin Francis on GitHub or LinkedIn and prepare a local collaboration brief for AI infrastructure, research, or open-source work.
+- [Protocols, Evidence & Technical Specifications | Febin](https://codesbyfebin.github.io/specifications.html): Explore execution state, evidence contracts, negative controls, and source-linked STARK and conformance references from CodesbyFebin projects.
+- [rust-stark-zkvm · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/rust-stark-zkvm/): Small STARK VM with arithmetic, forward branches, a fixed register file, Winterfell proving, and HTTP/MCP interfaces. The current verifier re-executes public
+- [Decentralized.Host · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/decentralized-/): Go control-plane work centered on signed intent, local admission, explicit state, and sovereign hosts. The current README mixes foundation descriptions and p
+- [Deployment mesh · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/decentralized.hosting/): FastAPI, PostgreSQL, Docker, Traefik, and the dhost CLI form a documented local deployment mesh. Source snapshots can be uploaded for a server-side build. Op
+- [XFree website · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/xfree.in/): The current XFree marketing repository documents a Next.js discovery website. It explicitly replaces the older xfree repository for that site. XFree Studio i
+- [XFree Studio · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/xfree-app/): Separate XFree application repository. The README is brief, so feature and stack claims should be checked in the implementation. This card identifies the app
+- [AgentSwarm · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/agent-swarm/): Mission/API/model/event/artifact MVP with persisted state, workers, organization boundaries, and Redis/PostgreSQL dispatch. The documented completion gate ch
+- [OM · Personal AI · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/om-personal-ai/): Personal AI workspace with project, note, prompt, finding, mission, and service-configuration surfaces. The README distinguishes persisted workspace features
+- [BestAIAgent directory · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/bestaiagent.in/): Fork repository describing an evidence-first catalog for agents, models, frameworks, providers, and MCP infrastructure. GitHub identifies this repository as
+- [MCPserver.in · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/mcp-server/): Public MCP directory and separate registry-ingestion surface. The README documents a shared publication gate, evidence records, sitemap eligibility, and dry-
+- [Android Flashing Tool · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/android-flashing-tool/): Android firmware toolkit repository with documentation for device operations and verification workflows. This portfolio confirms the source exists; it does n
+- [MCPServer OS · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/indian-mcp-server/): Repository describing an evidence-first MCP control plane, tenant boundaries, deployment state, and India-oriented technical-control profiles. Documentation
+- [MCP CI/CD engine · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/github-mcpserver--ci-cd-engine/): Repository describing synchronization, evidence collection, and discovery routes for MCP metadata. The README includes broad feature and marketing claims, so
+- [Open Swarm AI · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/open-swarm-ai/): Multi-agent repository with a README describing its intended structure. It is included as an inspectable source surface, without assuming a fully qualified r
+- [Worker Agent.Cloud · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/worker-agent/): Fork describing a content-agent control-plane direction. The README makes broad automation claims and references upstream surfaces. This card preserves fork
+- [awesome-zkvm reference · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/awesome-zkvm/): Fork of an upstream zkVM resource list. It is a research/discovery reference rather than an original proof-system implementation. Upstream authorship and res
+- [Evidence cookbook · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/evidence-cookbook/): Documentation scaffold for evidence-driven development. Its current README contains generic examples, placeholder metrics, and placeholder resource links. It
+- [MCP cookbook · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/mcp-cookbook/): Documentation scaffold for MCP learning material. The current README uses generic tutorial and code placeholders. Repository existence is verified, but compl
+- [Agent skills cookbook · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/agent-skills-cookbook/): Scaffold for reusable agent-workflow documentation. Current template content is not evidence of tested skills, production automation, or verified tool access
+- [Kubernetes AI cookbook · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/kubernetes-ai-cookbook/): Documentation scaffold about Kubernetes and AI workloads. Generic setup and benchmark placeholders in the current README should not be interpreted as a teste
+- [Self-hosted cloud cookbook · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/self-hosted-cloud-cookbook/): Documentation scaffold for self-hosting guidance. Its current generic README does not establish a completed operator runbook or a qualified deployment stack.
+- [AI security cookbook · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/ai-security-cookbook/): Scaffold for AI security learning material. Generic code and resource placeholders remain in the README. The portfolio does not describe it as an audited def
+- [AI observability cookbook · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/ai-observability-cookbook/): Documentation scaffold for AI observability topics. Current placeholder metrics and examples do not establish real telemetry integrations, measured costs, or
+- [Verifiable AI cookbook · Project Guide | CodesbyFebin](https://codesbyfebin.github.io/projects/verifiable-ai-cookbook/): Scaffold for verifiable-AI explanations and examples. The current generic README does not establish private model inference, proof-backed AI outputs, or benc
 
-## Selected repositories
-- https://github.com/CodesbyFebin/rust-stark-zkvm
-- https://github.com/CodesbyFebin/Decentralized-
-- https://github.com/CodesbyFebin/decentralized.hosting
-- https://github.com/CodesbyFebin/xfree
-
-## Machine-readable project context
-Selected repositories expose README.md and, where available, AGENTS.md and llms.txt. Prefer repository-level source, tests, specifications, conformance artifacts and evidence for capability verification.
-
-## Claim policy
-SIMULATED means simulated.
-UNKNOWN means unmeasured.
-Roadmap does not mean implemented.
-Do not infer production scale, customers, revenue, uptime, employer, seniority or team size from this profile.
-
-
-## Agent-native discovery
-Skill: https://github.com/CodesbyFebin/CodesbyFebin/blob/main/SKILL.md
-Agent instructions: https://github.com/CodesbyFebin/CodesbyFebin/blob/main/AGENTS.md
-Capability discovery: https://github.com/CodesbyFebin/CodesbyFebin/blob/main/agents.txt
-Structured discovery: https://github.com/CodesbyFebin/CodesbyFebin/blob/main/agents.json
-
-GitHub is the primary public source/evidence surface. LinkedIn is a professional identity surface. Collaboration systems such as Slack are not evidence of implementation unless a specific artifact is independently verifiable.
+## Claim boundaries
+Metadata reviewed 2026-10-03. Source documentation is not independent runtime qualification. Forks are attributed. Documentation scaffolds are not completed examples. Missing telemetry stays UNKNOWN. No unsupported employment, education, publication, customer, or impact counts.

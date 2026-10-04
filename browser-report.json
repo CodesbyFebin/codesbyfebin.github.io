@@ -1,0 +1,29 @@
+{
+  "checks": [
+    "index.html: 1440px, HTTP 200, one H1, no page overflow",
+    "about.html: 1440px, HTTP 200, one H1, no page overflow",
+    "systems.html: 1440px, HTTP 200, one H1, no page overflow",
+    "projects.html: 1440px, HTTP 200, one H1, no page overflow",
+    "blog.html: 1440px, HTTP 200, one H1, no page overflow",
+    "services.html: 1440px, HTTP 200, one H1, no page overflow",
+    "research.html: 1440px, HTTP 200, one H1, no page overflow",
+    "contributions.html: 1440px, HTTP 200, one H1, no page overflow",
+    "contact.html: 1440px, HTTP 200, one H1, no page overflow",
+    "specifications.html: 1440px, HTTP 200, one H1, no page overflow",
+    "index.html: 390px, HTTP 200, one H1, no page overflow",
+    "about.html: 390px, HTTP 200, one H1, no page overflow",
+    "systems.html: 390px, HTTP 200, one H1, no page overflow",
+    "projects.html: 390px, HTTP 200, one H1, no page overflow",
+    "blog.html: 390px, HTTP 200, one H1, no page overflow",
+    "services.html: 390px, HTTP 200, one H1, no page overflow",
+    "research.html: 390px, HTTP 200, one H1, no page overflow",
+    "contributions.html: 390px, HTTP 200, one H1, no page overflow",
+    "contact.html: 390px, HTTP 200, one H1, no page overflow",
+    "specifications.html: 390px, HTTP 200, one H1, no page overflow",
+    "Project search, combined filters, empty state, reset, and numeric star sort",
+    "Theme persists across reload; brief builder renders input as text without transmission",
+    "Mobile menu opens and closes with Escape",
+    "No-JavaScript: all repository cards and navigation remain visible"
+  ],
+  "pageErrors": []
+}

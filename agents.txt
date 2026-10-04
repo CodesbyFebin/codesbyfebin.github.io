@@ -1,9 +1,7 @@
-# CodesbyFebin agent capability discovery
-# Human profile: https://github.com/CodesbyFebin
-# Machine context: https://github.com/CodesbyFebin/CodesbyFebin/blob/main/AGENTS.md
-# LLM discovery: https://github.com/CodesbyFebin/CodesbyFebin/blob/main/llms.txt
-# Skill: https://github.com/CodesbyFebin/CodesbyFebin/blob/main/SKILL.md
+# CodesbyFebin discovery
+Website: https://codesbyfebin.github.io/
+LLM discovery: https://codesbyfebin.github.io/llms.txt
+Repository dataset: https://codesbyfebin.github.io/data/projects.json
+Structured discovery: https://codesbyfebin.github.io/agents.json
 
-# This profile publishes discovery metadata only.
-# Individual project MCP endpoints and executable capabilities must be discovered
-# from the corresponding project repository and must not be inferred here.
+Discovery metadata only. No executable agent capabilities or MCP endpoints are implied.
