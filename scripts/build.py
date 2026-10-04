@@ -219,8 +219,8 @@ redirect('portfolio.html','projects.html');redirect('docs/index.html','../index.
 dist=ROOT/'dist'
 if dist.exists():shutil.rmtree(dist)
 dist.mkdir()
-for item in ['assets','projects','data','docs']:
+for item in ['assets','projects','data','docs','blog','feeds']:
     shutil.copytree(ROOT/item,dist/item,ignore=shutil.ignore_patterns('*.ts','_config.yml','repository-snapshots.json','technical-sources.json'))
-for file in [x['path'] for x in urls if '/' not in x['path']]+['404.html','portfolio.html','sitemap.xml','sitemap.json','robots.txt','manifest.json','llms.txt','agents.json','agents.txt','.nojekyll']:
+for file in [x['path'] for x in urls if '/' not in x['path']]+['404.html','portfolio.html','sitemap.xml','sitemap.json','robots.txt','manifest.json','llms.txt','agents.json','agents.txt','.nojekyll','feed.xml']:
     shutil.copy2(ROOT/file,dist/file)
 print(f'Built {len(PAGES)} portfolio pages + {len(projects)} project guides. Static output: {dist}')
