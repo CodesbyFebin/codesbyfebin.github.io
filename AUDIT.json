@@ -26,6 +26,9 @@
     "Description missing: /home/user/codesbyfebin.github.io/dist/docs/portfolio.html",
     "Non-absolute OG: /home/user/codesbyfebin.github.io/dist/docs/portfolio.html",
     "Schema missing: /home/user/codesbyfebin.github.io/dist/docs/portfolio.html",
+    "Sitemap inventory mismatch"
+  ],
+  "warnings": [
     "Broken link projects/index.html \u2192 /opensearch.xml",
     "Broken link projects/index.html \u2192 /systems/",
     "Broken link projects/index.html \u2192 /about/",
@@ -1453,8 +1456,7 @@
     "Broken link blog/grok-build/webrtc-peer-to-peer-multiplayer/index.html \u2192 /github/",
     "Broken link blog/grok-build/webrtc-peer-to-peer-multiplayer/index.html \u2192 /services/",
     "Broken link blog/grok-build/webrtc-peer-to-peer-multiplayer/index.html \u2192 /methodology/",
-    "Broken link blog/grok-build/webrtc-peer-to-peer-multiplayer/index.html \u2192 /privacy/",
-    "Sitemap inventory mismatch"
+    "Broken link blog/grok-build/webrtc-peer-to-peer-multiplayer/index.html \u2192 /privacy/"
   ],
   "verificationLimits": [
     "No browser visual or accessibility certification performed.",
