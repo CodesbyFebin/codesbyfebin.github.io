@@ -1,0 +1,834 @@
+[
+  {
+    "slug": "rust-stark-zkvm",
+    "name": "rust-stark-zkvm",
+    "category": "Verifiable Compute",
+    "language": "Rust",
+    "url": "https://github.com/CodesbyFebin/rust-stark-zkvm",
+    "summary": "Small STARK VM with arithmetic, forward branches, a fixed register file, Winterfell proving, and HTTP/MCP interfaces. The current verifier re-executes public programs; private witnesses and general-purpose execution are outside the documented scope.",
+    "paragraphs": [
+      "Small STARK VM with arithmetic, forward branches, a fixed register file, Winterfell proving, and HTTP/MCP interfaces. The current verifier re-executes public programs; private witnesses and general-purpose execution are outside the documented scope.",
+      "Review instruction semantics, AIR constraints, proof binding, and tamper tests together. A useful first experiment changes the claimed result or program and confirms rejection. Keep the attested on-chain demo distinct from a fully on-chain STARK verifier."
+    ],
+    "highlights": [
+      "Source documented",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 1 stars, 0 forks",
+      "Updated 2026-09-29"
+    ],
+    "stack": [
+      "Rust"
+    ],
+    "status": "active",
+    "label": "Source documented",
+    "stars": 1,
+    "forks": 0,
+    "updated": "2026-09-29",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "awesome-zkvm"
+    ],
+    "articles": [
+      "small-stark-vm",
+      "zkp-tutorial-developers",
+      "what-are-stark-proofs",
+      "cryptographic-commitments",
+      "verifiable-computation",
+      "proof-api-boundary"
+    ]
+  },
+  {
+    "slug": "decentralized-host",
+    "name": "Decentralized.Host",
+    "category": "Sovereign Infrastructure",
+    "language": "Go",
+    "url": "https://github.com/CodesbyFebin/Decentralized-",
+    "summary": "Go control-plane work centered on signed intent, local admission, explicit state, and sovereign hosts. The current README mixes foundation descriptions and provider-discovery roadmap scope; production qualification is not inferred here.",
+    "paragraphs": [
+      "Go control-plane work centered on signed intent, local admission, explicit state, and sovereign hosts. The current README mixes foundation descriptions and provider-discovery roadmap scope; production qualification is not inferred here.",
+      "Start with local policy and source-bound evidence. Check how desired placement differs from host admission and fresh workload observations. Read the conformance vectors before assuming compatibility, and examine the relevant runtime evidence before relying on a qualification claim."
+    ],
+    "highlights": [
+      "Scope review needed",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-10-03"
+    ],
+    "stack": [
+      "Go"
+    ],
+    "status": "field",
+    "label": "Scope review needed",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-10-03",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "decentralized.hosting"
+    ],
+    "articles": [
+      "self-hosting-boundary",
+      "raft-consensus",
+      "sovereign-architecture"
+    ]
+  },
+  {
+    "slug": "decentralized.hosting",
+    "name": "Deployment mesh",
+    "category": "Sovereign Infrastructure",
+    "language": "Python",
+    "url": "https://github.com/CodesbyFebin/decentralized.hosting",
+    "summary": "FastAPI, PostgreSQL, Docker, Traefik, and the dhost CLI form a documented local deployment mesh. Source snapshots can be uploaded for a server-side build. Optional operator credits are devnet-only and disabled by default.",
+    "paragraphs": [
+      "FastAPI, PostgreSQL, Docker, Traefik, and the dhost CLI form a documented local deployment mesh. Source snapshots can be uploaded for a server-side build. Optional operator credits are devnet-only and disabled by default.",
+      "Follow one source snapshot through upload, build, scheduling, container startup, and edge routing. Exercise update, history, and rollback as separate operations. Inspect Docker host access and the documented trust boundary before admitting workloads from other people."
+    ],
+    "highlights": [
+      "Source documented",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-09-29"
+    ],
+    "stack": [
+      "Python"
+    ],
+    "status": "active",
+    "label": "Source documented",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-09-29",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "decentralized-host"
+    ],
+    "articles": [
+      "self-hosting-boundary",
+      "sovereign-architecture",
+      "docker-containers",
+      "rollback-versus-redeploy"
+    ]
+  },
+  {
+    "slug": "xfree",
+    "name": "XFree website",
+    "category": "Developer Tools",
+    "language": "TypeScript",
+    "url": "https://github.com/CodesbyFebin/xfree.in",
+    "summary": "The current XFree marketing repository documents a Next.js discovery website. It explicitly replaces the older xfree repository for that site. XFree Studio is a separate application and should be evaluated through its own source.",
+    "paragraphs": [
+      "The current XFree marketing repository documents a Next.js discovery website. It explicitly replaces the older xfree repository for that site. XFree Studio is a separate application and should be evaluated through its own source.",
+      "Review real tools and routes rather than inferred cryptographic features. Check the relationship between canonical pages, translations, sitemap eligibility, and the application. A marketing page describing a capability is not evidence that its runtime operation succeeded."
+    ],
+    "highlights": [
+      "Source documented",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-09-29"
+    ],
+    "stack": [
+      "TypeScript"
+    ],
+    "status": "active",
+    "label": "Source documented",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-09-29",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "xfree-app",
+      "bestaiagent.in",
+      "mcp-server"
+    ],
+    "articles": []
+  },
+  {
+    "slug": "xfree-app",
+    "name": "XFree Studio",
+    "category": "Developer Tools",
+    "language": "TypeScript",
+    "url": "https://github.com/CodesbyFebin/xfree-app",
+    "summary": "Separate XFree application repository. The README is brief, so feature and stack claims should be checked in the implementation. This card identifies the application source without importing the marketing website\u2019s claims as runtime evidence.",
+    "paragraphs": [
+      "Separate XFree application repository. The README is brief, so feature and stack claims should be checked in the implementation. This card identifies the application source without importing the marketing website\u2019s claims as runtime evidence.",
+      "Inspect the dependency manifest, route structure, and client/server boundary. Follow a representative tool from input to output and determine whether data stays in the browser or reaches a backend. Record the behavior of the tool actually tested."
+    ],
+    "highlights": [
+      "Source documented",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-09-22"
+    ],
+    "stack": [
+      "TypeScript"
+    ],
+    "status": "active",
+    "label": "Source documented",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-09-22",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "xfree",
+      "bestaiagent.in",
+      "mcp-server"
+    ],
+    "articles": []
+  },
+  {
+    "slug": "agent-swarm",
+    "name": "AgentSwarm",
+    "category": "Agentic Systems",
+    "language": "TypeScript",
+    "url": "https://github.com/CodesbyFebin/Agent-Swarm",
+    "summary": "Mission/API/model/event/artifact MVP with persisted state, workers, organization boundaries, and Redis/PostgreSQL dispatch. The documented completion gate checks artifact existence; richer verification and production hardening remain separate work.",
+    "paragraphs": [
+      "Mission/API/model/event/artifact MVP with persisted state, workers, organization boundaries, and Redis/PostgreSQL dispatch. The documented completion gate checks artifact existence; richer verification and production hardening remain separate work.",
+      "Review database claims, worker leases, bounded retries, approval handling, and event replay. Run provider-unavailable and queue-outage paths alongside the happy path. An artifact-existence gate should not be described as proof that the generated work is correct."
+    ],
+    "highlights": [
+      "Source documented",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 1 forks",
+      "Updated 2026-09-02"
+    ],
+    "stack": [
+      "TypeScript"
+    ],
+    "status": "active",
+    "label": "Source documented",
+    "stars": 0,
+    "forks": 1,
+    "updated": "2026-09-02",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "om-personal-ai",
+      "indian-mcp-server",
+      "open-swarm-ai"
+    ],
+    "articles": [
+      "configured-agent",
+      "privacy-boundary",
+      "worker-leases"
+    ]
+  },
+  {
+    "slug": "om-personal-ai",
+    "name": "OM \u00b7 Personal AI",
+    "category": "Agentic Systems",
+    "language": "TypeScript",
+    "url": "https://github.com/CodesbyFebin/-Om-Personal-Ai",
+    "summary": "Personal AI workspace with project, note, prompt, finding, mission, and service-configuration surfaces. The README distinguishes persisted workspace features from models, memory, storage, and execution services requiring external setup.",
+    "paragraphs": [
+      "Personal AI workspace with project, note, prompt, finding, mission, and service-configuration surfaces. The README distinguishes persisted workspace features from models, memory, storage, and execution services requiring external setup.",
+      "Inspect durable workspace behavior first, then service readiness. A configured Ollama endpoint is different from a measured inference. An owned sandbox worker is required for autonomous execution; its existence cannot be inferred from mission and approval interfaces."
+    ],
+    "highlights": [
+      "Source documented",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-08-13"
+    ],
+    "stack": [
+      "TypeScript"
+    ],
+    "status": "active",
+    "label": "Source documented",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-08-13",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "agent-swarm",
+      "indian-mcp-server",
+      "open-swarm-ai"
+    ],
+    "articles": [
+      "configured-agent",
+      "privacy-boundary"
+    ]
+  },
+  {
+    "slug": "bestaiagent.in",
+    "name": "BestAIAgent directory",
+    "category": "Developer Tools",
+    "language": "TypeScript",
+    "url": "https://github.com/CodesbyFebin/bestaiagent.in",
+    "summary": "Fork repository describing an evidence-first catalog for agents, models, frameworks, providers, and MCP infrastructure. GitHub identifies this repository as a fork; upstream implementation authorship and specific local changes should be reviewed separately.",
+    "paragraphs": [
+      "Fork repository describing an evidence-first catalog for agents, models, frameworks, providers, and MCP infrastructure. GitHub identifies this repository as a fork; upstream implementation authorship and specific local changes should be reviewed separately.",
+      "Inspect the catalog/evidence publication model and compare the fork with its parent. Do not infer benchmark validity, review counts, or original authorship from a directory listing. Source snapshots and eligibility rules are more useful than a synthetic popularity score."
+    ],
+    "highlights": [
+      "Fork",
+      "Fork. Upstream: https://github.com/Cyberteckmaster/bestaiagent.in",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-08-23"
+    ],
+    "stack": [
+      "TypeScript"
+    ],
+    "status": "reference",
+    "label": "Fork",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-08-23",
+    "fork": true,
+    "upstream": "https://github.com/Cyberteckmaster/bestaiagent.in",
+    "checkedAt": "2026-10-03",
+    "related": [
+      "xfree",
+      "xfree-app",
+      "mcp-server"
+    ],
+    "articles": [
+      "directory-rules"
+    ]
+  },
+  {
+    "slug": "mcp-server",
+    "name": "MCPserver.in",
+    "category": "Developer Tools",
+    "language": "JavaScript / Python",
+    "url": "https://github.com/CodesbyFebin/MCP-SERVER",
+    "summary": "Public MCP directory and separate registry-ingestion surface. The README documents a shared publication gate, evidence records, sitemap eligibility, and dry-run ingestion by default. Database writes require an explicit live mode.",
+    "paragraphs": [
+      "Public MCP directory and separate registry-ingestion surface. The README documents a shared publication gate, evidence records, sitemap eligibility, and dry-run ingestion by default. Database writes require an explicit live mode.",
+      "Follow one record through the shared indexability function, detail page, sitemap, and machine-readable feeds. Confirm unverified records stay out of public discovery where required. Review ingestion separately from the static site deployment."
+    ],
+    "highlights": [
+      "Source documented",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-09-03"
+    ],
+    "stack": [
+      "JavaScript",
+      "Python"
+    ],
+    "status": "active",
+    "label": "Source documented",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-09-03",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "xfree",
+      "xfree-app",
+      "bestaiagent.in"
+    ],
+    "articles": [
+      "directory-rules"
+    ]
+  },
+  {
+    "slug": "android-flashing-tool",
+    "name": "Android Flashing Tool",
+    "category": "Developer Tools",
+    "language": "Python",
+    "url": "https://github.com/CodesbyFebin/Android-Flashing-Tool",
+    "summary": "Android firmware toolkit repository with documentation for device operations and verification workflows. This portfolio confirms the source exists; it does not reproduce hardware qualification or guarantee support for a particular device.",
+    "paragraphs": [
+      "Android firmware toolkit repository with documentation for device operations and verification workflows. This portfolio confirms the source exists; it does not reproduce hardware qualification or guarantee support for a particular device.",
+      "Inspect the actual operation path and device prerequisites before changing firmware. Distinguish browser interface controls from the local backend that accesses a device. A source review is not evidence that a particular flashing procedure was tested on your hardware."
+    ],
+    "highlights": [
+      "Scope review needed",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-10-02"
+    ],
+    "stack": [
+      "Python"
+    ],
+    "status": "field",
+    "label": "Scope review needed",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-10-02",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "xfree",
+      "xfree-app",
+      "bestaiagent.in"
+    ],
+    "articles": []
+  },
+  {
+    "slug": "indian-mcp-server",
+    "name": "MCPServer OS",
+    "category": "Agentic Systems",
+    "language": "TypeScript / Python",
+    "url": "https://github.com/CodesbyFebin/Indian-MCP-Server",
+    "summary": "Repository describing an evidence-first MCP control plane, tenant boundaries, deployment state, and India-oriented technical-control profiles. Documentation claims about regulatory mapping are not certifications or verified production integrations.",
+    "paragraphs": [
+      "Repository describing an evidence-first MCP control plane, tenant boundaries, deployment state, and India-oriented technical-control profiles. Documentation claims about regulatory mapping are not certifications or verified production integrations.",
+      "Read the project tracker alongside the architecture planes. Distinguish design, implementation, testing, runtime, and production status. Test a specific gateway or evidence operation before treating the complete diagram as delivered capability."
+    ],
+    "highlights": [
+      "Scope review needed",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-09-22"
+    ],
+    "stack": [
+      "TypeScript",
+      "Python"
+    ],
+    "status": "field",
+    "label": "Scope review needed",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-09-22",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "agent-swarm",
+      "om-personal-ai",
+      "open-swarm-ai"
+    ],
+    "articles": []
+  },
+  {
+    "slug": "github-mcpserver--ci-cd-engine",
+    "name": "MCP CI/CD engine",
+    "category": "Developer Tools",
+    "language": "Repository review",
+    "url": "https://github.com/CodesbyFebin/github-mcpserver--ci-cd-engine",
+    "summary": "Repository describing synchronization, evidence collection, and discovery routes for MCP metadata. The README includes broad feature and marketing claims, so the implementation must be inspected before treating those as operational results.",
+    "paragraphs": [
+      "Repository describing synchronization, evidence collection, and discovery routes for MCP metadata. The README includes broad feature and marketing claims, so the implementation must be inspected before treating those as operational results.",
+      "Look for the concrete synchronization entry point, configuration, record schema, and invalidation behavior. Verify a small operation against real input. Avoid importing unsupported conversion, ranking, or search-performance numbers from promotional documentation."
+    ],
+    "highlights": [
+      "Scope review needed",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-07-25"
+    ],
+    "stack": [
+      "Repository review"
+    ],
+    "status": "field",
+    "label": "Scope review needed",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-07-25",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "xfree",
+      "xfree-app",
+      "bestaiagent.in"
+    ],
+    "articles": []
+  },
+  {
+    "slug": "open-swarm-ai",
+    "name": "Open Swarm AI",
+    "category": "Agentic Systems",
+    "language": "Repository review",
+    "url": "https://github.com/CodesbyFebin/Open-Swarm-ai",
+    "summary": "Multi-agent repository with a README describing its intended structure. It is included as an inspectable source surface, without assuming a fully qualified runtime, a production customer base, or measured autonomous execution.",
+    "paragraphs": [
+      "Multi-agent repository with a README describing its intended structure. It is included as an inspectable source surface, without assuming a fully qualified runtime, a production customer base, or measured autonomous execution.",
+      "Map the worker entry point, tool permissions, and task persistence. Determine which behavior is implemented and which is an example. A review should include an unavailable-provider path and a concrete artifact, rather than relying on an animated dashboard."
+    ],
+    "highlights": [
+      "Scope review needed",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-08-20"
+    ],
+    "stack": [
+      "Repository review"
+    ],
+    "status": "field",
+    "label": "Scope review needed",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-08-20",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "agent-swarm",
+      "om-personal-ai",
+      "indian-mcp-server"
+    ],
+    "articles": [
+      "configured-agent"
+    ]
+  },
+  {
+    "slug": "worker-agent",
+    "name": "Worker Agent.Cloud",
+    "category": "Agentic Systems",
+    "language": "TypeScript",
+    "url": "https://github.com/CodesbyFebin/Worker-Agent",
+    "summary": "Fork describing a content-agent control-plane direction. The README makes broad automation claims and references upstream surfaces. This card preserves fork attribution and avoids treating every claimed publishing integration as independently tested.",
+    "paragraphs": [
+      "Fork describing a content-agent control-plane direction. The README makes broad automation claims and references upstream surfaces. This card preserves fork attribution and avoids treating every claimed publishing integration as independently tested.",
+      "Compare the fork with its upstream parent and inspect specific tool adapters. For a publishing workflow, verify configured permissions, human approval, and the final operation on the intended platform. A planned connector does not establish a live integration."
+    ],
+    "highlights": [
+      "Fork",
+      "Fork. Upstream: https://github.com/Cyberteckmaster/Worker-Agent",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-08-17"
+    ],
+    "stack": [
+      "TypeScript"
+    ],
+    "status": "reference",
+    "label": "Fork",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-08-17",
+    "fork": true,
+    "upstream": "https://github.com/Cyberteckmaster/Worker-Agent",
+    "checkedAt": "2026-10-03",
+    "related": [
+      "agent-swarm",
+      "om-personal-ai",
+      "indian-mcp-server"
+    ],
+    "articles": []
+  },
+  {
+    "slug": "awesome-zkvm",
+    "name": "awesome-zkvm reference",
+    "category": "Verifiable Compute",
+    "language": "Reference list",
+    "url": "https://github.com/CodesbyFebin/awesome-zkvm",
+    "summary": "Fork of an upstream zkVM resource list. It is a research/discovery reference rather than an original proof-system implementation. Upstream authorship and resource maintenance should be attributed to the parent project.",
+    "paragraphs": [
+      "Fork of an upstream zkVM resource list. It is a research/discovery reference rather than an original proof-system implementation. Upstream authorship and resource maintenance should be attributed to the parent project.",
+      "Use the list to find primary project documentation and papers, then check those sources directly. Capability tables can become stale as implementations change. Compare proof systems using a specified workload, hardware, security parameters, and measurement method."
+    ],
+    "highlights": [
+      "Fork",
+      "Fork. Upstream: https://github.com/rkdud007/awesome-zkvm",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-08-31"
+    ],
+    "stack": [
+      "Reference list"
+    ],
+    "status": "reference",
+    "label": "Fork",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-08-31",
+    "fork": true,
+    "upstream": "https://github.com/rkdud007/awesome-zkvm",
+    "checkedAt": "2026-10-03",
+    "related": [
+      "rust-stark-zkvm"
+    ],
+    "articles": [
+      "small-stark-vm"
+    ]
+  },
+  {
+    "slug": "evidence-cookbook",
+    "name": "Evidence cookbook",
+    "category": "Knowledge",
+    "language": "Markdown",
+    "url": "https://github.com/CodesbyFebin/evidence-cookbook",
+    "summary": "Documentation scaffold for evidence-driven development. Its current README contains generic examples, placeholder metrics, and placeholder resource links. It is not represented as a completed collection of runnable evidence recipes.",
+    "paragraphs": [
+      "Documentation scaffold for evidence-driven development. Its current README contains generic examples, placeholder metrics, and placeholder resource links. It is not represented as a completed collection of runnable evidence recipes.",
+      "A useful contribution replaces one placeholder with a real source-bound manifest and an independent verification command. Include a tampered-artifact rejection test and explain the expected output. Preserve unknown values rather than filling them with example performance numbers."
+    ],
+    "highlights": [
+      "Documentation scaffold",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-10-02"
+    ],
+    "stack": [
+      "Markdown"
+    ],
+    "status": "reference",
+    "label": "Documentation scaffold",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-10-02",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "mcp-cookbook",
+      "agent-skills-cookbook",
+      "kubernetes-ai-cookbook"
+    ],
+    "articles": [
+      "readme-against-the-tree"
+    ]
+  },
+  {
+    "slug": "mcp-cookbook",
+    "name": "MCP cookbook",
+    "category": "Knowledge",
+    "language": "Markdown",
+    "url": "https://github.com/CodesbyFebin/mcp-cookbook",
+    "summary": "Documentation scaffold for MCP learning material. The current README uses generic tutorial and code placeholders. Repository existence is verified, but complete runnable examples and platform integrations are not established by that template.",
+    "paragraphs": [
+      "Documentation scaffold for MCP learning material. The current README uses generic tutorial and code placeholders. Repository existence is verified, but complete runnable examples and platform integrations are not established by that template.",
+      "Begin with one minimal real tool, its schema, and its permission boundary. Document how a client connects and what happens for invalid input. Validate the example against the applicable protocol implementation before publishing it as a working recipe."
+    ],
+    "highlights": [
+      "Documentation scaffold",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-10-02"
+    ],
+    "stack": [
+      "Markdown"
+    ],
+    "status": "reference",
+    "label": "Documentation scaffold",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-10-02",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "evidence-cookbook",
+      "agent-skills-cookbook",
+      "kubernetes-ai-cookbook"
+    ],
+    "articles": []
+  },
+  {
+    "slug": "agent-skills-cookbook",
+    "name": "Agent skills cookbook",
+    "category": "Knowledge",
+    "language": "Markdown",
+    "url": "https://github.com/CodesbyFebin/agent-skills-cookbook",
+    "summary": "Scaffold for reusable agent-workflow documentation. Current template content is not evidence of tested skills, production automation, or verified tool access. The repository is included as a visible area for future focused contributions.",
+    "paragraphs": [
+      "Scaffold for reusable agent-workflow documentation. Current template content is not evidence of tested skills, production automation, or verified tool access. The repository is included as a visible area for future focused contributions.",
+      "Replace a broad template with a single scoped workflow. Name prerequisites, allowed operations, and expected artifacts. Test a missing-context case and a failure path, and ensure the instructions preserve the operator\u2019s authority over external actions."
+    ],
+    "highlights": [
+      "Documentation scaffold",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-10-02"
+    ],
+    "stack": [
+      "Markdown"
+    ],
+    "status": "reference",
+    "label": "Documentation scaffold",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-10-02",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "evidence-cookbook",
+      "mcp-cookbook",
+      "kubernetes-ai-cookbook"
+    ],
+    "articles": []
+  },
+  {
+    "slug": "kubernetes-ai-cookbook",
+    "name": "Kubernetes AI cookbook",
+    "category": "Knowledge",
+    "language": "Markdown",
+    "url": "https://github.com/CodesbyFebin/kubernetes-ai-cookbook",
+    "summary": "Documentation scaffold about Kubernetes and AI workloads. Generic setup and benchmark placeholders in the current README should not be interpreted as a tested cluster deployment or measured inference performance.",
+    "paragraphs": [
+      "Documentation scaffold about Kubernetes and AI workloads. Generic setup and benchmark placeholders in the current README should not be interpreted as a tested cluster deployment or measured inference performance.",
+      "A concrete recipe should name the manifests, image digests, resource limits, model service, and readiness criteria. Explain where credentials are stored and how the workload is removed. Record real cluster behavior instead of an illustrative throughput target."
+    ],
+    "highlights": [
+      "Documentation scaffold",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-10-02"
+    ],
+    "stack": [
+      "Markdown"
+    ],
+    "status": "reference",
+    "label": "Documentation scaffold",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-10-02",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "evidence-cookbook",
+      "mcp-cookbook",
+      "agent-skills-cookbook"
+    ],
+    "articles": []
+  },
+  {
+    "slug": "self-hosted-cloud-cookbook",
+    "name": "Self-hosted cloud cookbook",
+    "category": "Knowledge",
+    "language": "Markdown",
+    "url": "https://github.com/CodesbyFebin/self-hosted-cloud-cookbook",
+    "summary": "Documentation scaffold for self-hosting guidance. Its current generic README does not establish a completed operator runbook or a qualified deployment stack. It is labeled separately from the runnable deployment mesh.",
+    "paragraphs": [
+      "Documentation scaffold for self-hosting guidance. Its current generic README does not establish a completed operator runbook or a qualified deployment stack. It is labeled separately from the runnable deployment mesh.",
+      "Start with a bounded installation that another operator can reproduce. Include backup and restore, identity handling, and a clear failure path. Explain the hardware and network assumptions before suggesting that the same runbook supports other environments."
+    ],
+    "highlights": [
+      "Documentation scaffold",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-10-02"
+    ],
+    "stack": [
+      "Markdown"
+    ],
+    "status": "reference",
+    "label": "Documentation scaffold",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-10-02",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "evidence-cookbook",
+      "mcp-cookbook",
+      "agent-skills-cookbook"
+    ],
+    "articles": []
+  },
+  {
+    "slug": "ai-security-cookbook",
+    "name": "AI security cookbook",
+    "category": "Knowledge",
+    "language": "Markdown",
+    "url": "https://github.com/CodesbyFebin/ai-security-cookbook",
+    "summary": "Scaffold for AI security learning material. Generic code and resource placeholders remain in the README. The portfolio does not describe it as an audited defense framework or a tested collection of security controls.",
+    "paragraphs": [
+      "Scaffold for AI security learning material. Generic code and resource placeholders remain in the README. The portfolio does not describe it as an audited defense framework or a tested collection of security controls.",
+      "Develop one adversarial fixture with a stated threat and observable expected rejection. Trace the policy enforcement boundary and preserve the failed input safely. A passing positive example alone does not show that a control rejects the attack it targets."
+    ],
+    "highlights": [
+      "Documentation scaffold",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-10-02"
+    ],
+    "stack": [
+      "Markdown"
+    ],
+    "status": "reference",
+    "label": "Documentation scaffold",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-10-02",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "evidence-cookbook",
+      "mcp-cookbook",
+      "agent-skills-cookbook"
+    ],
+    "articles": []
+  },
+  {
+    "slug": "ai-observability-cookbook",
+    "name": "AI observability cookbook",
+    "category": "Knowledge",
+    "language": "Markdown",
+    "url": "https://github.com/CodesbyFebin/ai-observability-cookbook",
+    "summary": "Documentation scaffold for AI observability topics. Current placeholder metrics and examples do not establish real telemetry integrations, measured costs, or production latency. This status remains visible in the directory and machine-readable data.",
+    "paragraphs": [
+      "Documentation scaffold for AI observability topics. Current placeholder metrics and examples do not establish real telemetry integrations, measured costs, or production latency. This status remains visible in the directory and machine-readable data.",
+      "Add one source-backed observation flow from provider response to persisted event and user interface. Make missing usage explicitly unknown. Define timestamps and correlation identifiers, and show how an operator distinguishes a replayed event from new execution."
+    ],
+    "highlights": [
+      "Documentation scaffold",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-10-02"
+    ],
+    "stack": [
+      "Markdown"
+    ],
+    "status": "reference",
+    "label": "Documentation scaffold",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-10-02",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "evidence-cookbook",
+      "mcp-cookbook",
+      "agent-skills-cookbook"
+    ],
+    "articles": []
+  },
+  {
+    "slug": "verifiable-ai-cookbook",
+    "name": "Verifiable AI cookbook",
+    "category": "Knowledge",
+    "language": "Markdown",
+    "url": "https://github.com/CodesbyFebin/verifiable-ai-cookbook",
+    "summary": "Scaffold for verifiable-AI explanations and examples. The current generic README does not establish private model inference, proof-backed AI outputs, or benchmarked verification. It remains a documentation contribution opportunity.",
+    "paragraphs": [
+      "Scaffold for verifiable-AI explanations and examples. The current generic README does not establish private model inference, proof-backed AI outputs, or benchmarked verification. It remains a documentation contribution opportunity.",
+      "A first recipe should state exactly what the check proves, which inputs are public, and what remains trusted. Include the verifier procedure and a negative control. Keep an authenticated assertion distinct from a cryptographic proof of computation."
+    ],
+    "highlights": [
+      "Documentation scaffold",
+      "Not marked as a fork",
+      "Snapshot 2026-10-03: 0 stars, 0 forks",
+      "Updated 2026-10-02"
+    ],
+    "stack": [
+      "Markdown"
+    ],
+    "status": "reference",
+    "label": "Documentation scaffold",
+    "stars": 0,
+    "forks": 0,
+    "updated": "2026-10-02",
+    "fork": false,
+    "upstream": null,
+    "checkedAt": "2026-10-03",
+    "related": [
+      "evidence-cookbook",
+      "mcp-cookbook",
+      "agent-skills-cookbook"
+    ],
+    "articles": []
+  }
+]

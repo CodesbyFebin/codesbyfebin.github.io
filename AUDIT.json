@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "articles": 107,
+  "projects": 23,
+  "indexablePages": 148,
+  "internalReferencesChecked": 7027,
+  "relatedEdges": 816,
+  "compressedDeployBytes": 1215996,
+  "articleBodyWords": 60690,
+  "minimumBodyWords": 229,
+  "maximumBodyWords": 1707,
+  "errors": [],
+  "verificationLimits": [
+    "No browser visual or accessibility certification performed.",
+    "External links and current repository state not qualified.",
+    "No example code or proposed experiments executed.",
+    "No production deployment, Search Console submission, indexing, or ranking verified.",
+    "Adapted drafts and new guides; no universal 2000-word minimum claimed."
+  ]
+}
