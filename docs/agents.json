@@ -1,0 +1,159 @@
+{
+  "name": "Febin Francis",
+  "handle": "CodesbyFebin",
+  "role": "Systems Engineer",
+  "location": "Kerala, India",
+  "checkedAt": "2026-10-03",
+  "discovery": {
+    "website": "https://codesbyfebin.github.io/",
+    "llms": "https://codesbyfebin.github.io/llms.txt",
+    "projects": "https://codesbyfebin.github.io/data/projects.json",
+    "sitemap": "https://codesbyfebin.github.io/sitemap.xml"
+  },
+  "projects": [
+    {
+      "name": "rust-stark-zkvm",
+      "repository": "https://github.com/CodesbyFebin/rust-stark-zkvm",
+      "reviewStatus": "Source documented",
+      "fork": false
+    },
+    {
+      "name": "Decentralized.Host",
+      "repository": "https://github.com/CodesbyFebin/Decentralized-",
+      "reviewStatus": "Scope review needed",
+      "fork": false
+    },
+    {
+      "name": "Deployment mesh",
+      "repository": "https://github.com/CodesbyFebin/decentralized.hosting",
+      "reviewStatus": "Source documented",
+      "fork": false
+    },
+    {
+      "name": "XFree website",
+      "repository": "https://github.com/CodesbyFebin/xfree.in",
+      "reviewStatus": "Source documented",
+      "fork": false
+    },
+    {
+      "name": "XFree Studio",
+      "repository": "https://github.com/CodesbyFebin/xfree-app",
+      "reviewStatus": "Source documented",
+      "fork": false
+    },
+    {
+      "name": "AgentSwarm",
+      "repository": "https://github.com/CodesbyFebin/Agent-Swarm",
+      "reviewStatus": "Source documented",
+      "fork": false
+    },
+    {
+      "name": "OM \u00b7 Personal AI",
+      "repository": "https://github.com/CodesbyFebin/-Om-Personal-Ai",
+      "reviewStatus": "Source documented",
+      "fork": false
+    },
+    {
+      "name": "BestAIAgent directory",
+      "repository": "https://github.com/CodesbyFebin/bestaiagent.in",
+      "reviewStatus": "Fork",
+      "fork": true
+    },
+    {
+      "name": "MCPserver.in",
+      "repository": "https://github.com/CodesbyFebin/MCP-SERVER",
+      "reviewStatus": "Source documented",
+      "fork": false
+    },
+    {
+      "name": "Android Flashing Tool",
+      "repository": "https://github.com/CodesbyFebin/Android-Flashing-Tool",
+      "reviewStatus": "Scope review needed",
+      "fork": false
+    },
+    {
+      "name": "MCPServer OS",
+      "repository": "https://github.com/CodesbyFebin/Indian-MCP-Server",
+      "reviewStatus": "Scope review needed",
+      "fork": false
+    },
+    {
+      "name": "MCP CI/CD engine",
+      "repository": "https://github.com/CodesbyFebin/github-mcpserver--ci-cd-engine",
+      "reviewStatus": "Scope review needed",
+      "fork": false
+    },
+    {
+      "name": "Open Swarm AI",
+      "repository": "https://github.com/CodesbyFebin/Open-Swarm-ai",
+      "reviewStatus": "Scope review needed",
+      "fork": false
+    },
+    {
+      "name": "Worker Agent.Cloud",
+      "repository": "https://github.com/CodesbyFebin/Worker-Agent",
+      "reviewStatus": "Fork",
+      "fork": true
+    },
+    {
+      "name": "awesome-zkvm reference",
+      "repository": "https://github.com/CodesbyFebin/awesome-zkvm",
+      "reviewStatus": "Fork",
+      "fork": true
+    },
+    {
+      "name": "Evidence cookbook",
+      "repository": "https://github.com/CodesbyFebin/evidence-cookbook",
+      "reviewStatus": "Documentation scaffold",
+      "fork": false
+    },
+    {
+      "name": "MCP cookbook",
+      "repository": "https://github.com/CodesbyFebin/mcp-cookbook",
+      "reviewStatus": "Documentation scaffold",
+      "fork": false
+    },
+    {
+      "name": "Agent skills cookbook",
+      "repository": "https://github.com/CodesbyFebin/agent-skills-cookbook",
+      "reviewStatus": "Documentation scaffold",
+      "fork": false
+    },
+    {
+      "name": "Kubernetes AI cookbook",
+      "repository": "https://github.com/CodesbyFebin/kubernetes-ai-cookbook",
+      "reviewStatus": "Documentation scaffold",
+      "fork": false
+    },
+    {
+      "name": "Self-hosted cloud cookbook",
+      "repository": "https://github.com/CodesbyFebin/self-hosted-cloud-cookbook",
+      "reviewStatus": "Documentation scaffold",
+      "fork": false
+    },
+    {
+      "name": "AI security cookbook",
+      "repository": "https://github.com/CodesbyFebin/ai-security-cookbook",
+      "reviewStatus": "Documentation scaffold",
+      "fork": false
+    },
+    {
+      "name": "AI observability cookbook",
+      "repository": "https://github.com/CodesbyFebin/ai-observability-cookbook",
+      "reviewStatus": "Documentation scaffold",
+      "fork": false
+    },
+    {
+      "name": "Verifiable AI cookbook",
+      "repository": "https://github.com/CodesbyFebin/verifiable-ai-cookbook",
+      "reviewStatus": "Documentation scaffold",
+      "fork": false
+    }
+  ],
+  "claimPolicy": {
+    "simulated": "must remain explicitly simulated",
+    "unknown": "must remain unknown",
+    "roadmap": "must not be represented as implemented",
+    "verification": "source documentation is not independent runtime qualification"
+  }
+}

@@ -1,0 +1,7 @@
+# CodesbyFebin discovery
+Website: https://codesbyfebin.github.io/
+LLM discovery: https://codesbyfebin.github.io/llms.txt
+Repository dataset: https://codesbyfebin.github.io/data/projects.json
+Structured discovery: https://codesbyfebin.github.io/agents.json
+
+Discovery metadata only. No executable agent capabilities or MCP endpoints are implied.

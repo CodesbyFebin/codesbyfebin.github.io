@@ -1,0 +1,313 @@
+<!doctype html><html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Protocols, Evidence &amp; Technical Specifications | Febin</title><meta name="description" content="Explore execution state, evidence contracts, negative controls, and source-linked STARK and conformance references from CodesbyFebin projects."><meta name="author" content="Febin Francis"><meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large"><meta name="theme-color" content="#050c10"><meta name="geo.region" content="IN-KL"><meta name="geo.placename" content="Kerala, India"><link rel="canonical" href="https://codesbyfebin.github.io/specifications.html"><meta property="og:title" content="Protocols, Evidence &amp; Technical Specifications | Febin"><meta property="og:description" content="Explore execution state, evidence contracts, negative controls, and source-linked STARK and conformance references from CodesbyFebin projects."><meta property="og:type" content="website"><meta property="og:url" content="https://codesbyfebin.github.io/specifications.html"><meta property="og:image" content="https://codesbyfebin.github.io/assets/images/og-image-1200x630.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="CodesbyFebin — AI Infrastructure, Verifiable Compute, Sovereign Systems"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Protocols, Evidence &amp; Technical Specifications | Febin"><meta name="twitter:description" content="Explore execution state, evidence contracts, negative controls, and source-linked STARK and conformance references from CodesbyFebin projects."><meta name="twitter:image" content="https://codesbyfebin.github.io/assets/images/twitter-1200x675.png"><link rel="icon" href="assets/images/logo.svg" type="image/svg+xml"><link rel="manifest" href="manifest.json"><link rel="stylesheet" href="assets/css/styles.css"><script defer src="assets/js/main.js"></script><script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Person", "@id": "https://codesbyfebin.github.io/#person", "name": "Febin Francis", "alternateName": "CodesbyFebin", "url": "https://codesbyfebin.github.io/", "jobTitle": "Systems Engineer", "homeLocation": {"@type": "Place", "name": "Kerala, India"}, "sameAs": ["https://github.com/CodesbyFebin", "https://www.linkedin.com/in/codes-by-febin/", "https://orcid.org/0009-0002-8123-1531"], "knowsAbout": ["AI infrastructure", "Verifiable compute", "Sovereign systems", "Distributed systems"]}, {"@type": "WebSite", "@id": "https://codesbyfebin.github.io/#website", "name": "CodesbyFebin", "url": "https://codesbyfebin.github.io/", "inLanguage": "en", "author": {"@id": "https://codesbyfebin.github.io/#person"}}, {"@type": "WebPage", "@id": "https://codesbyfebin.github.io/specifications.html#webpage", "url": "https://codesbyfebin.github.io/specifications.html", "name": "Protocols, Evidence & Technical Specifications | Febin", "description": "Explore execution state, evidence contracts, negative controls, and source-linked STARK and conformance references from CodesbyFebin projects.", "inLanguage": "en", "isPartOf": {"@id": "https://codesbyfebin.github.io/#website"}, "about": {"@id": "https://codesbyfebin.github.io/#person"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://codesbyfebin.github.io/"}, {"@type": "ListItem", "position": 2, "name": "Specs", "item": "https://codesbyfebin.github.io/specifications.html"}]}, {"@type": "FAQPage", "@id": "https://codesbyfebin.github.io/specifications.html#answers", "mainEntity": [{"@type": "Question", "name": "Are the technical references independent test results?", "acceptedAnswer": {"@type": "Answer", "text": "No. Repository documentation snapshots are labeled with their source and review date. They describe contracts, scope, and testing approaches; they are not fresh runtime test reports or proof of production deployment."}}]}]}</script></head><body><a class="skip" href="#main">Skip to content</a><header class="header"><div class="wrap header-inner"><a class="brand" href="index.html"><span aria-hidden="true">&gt;_</span>CodesbyFebin</a><button class="icon-button menu-button" data-menu aria-controls="navigation" aria-expanded="false">Menu</button><nav class="navigation" id="navigation" aria-label="Main navigation"><a href="index.html">Home</a><a href="about.html">About</a><a href="systems.html">Systems</a><a href="projects.html">Projects</a><a href="blog.html">Writing</a><a href="services.html">Services</a><a href="research.html">Research</a><a href="contributions.html">Open source</a><a href="contact.html">Contact</a><a href="specifications.html" aria-current="page">Specs</a></nav><button class="icon-button" data-theme-toggle aria-label="Switch to light theme">Light</button></div></header><main id="main"><section class="hero hero-small"><div class="wrap"><div class="breadcrumbs"><a href="index.html">Home</a> / Specs</div><div class="eyebrow">// Specs</div><h1>A contract you can check.</h1><p class="lede">Explore execution state, evidence contracts, negative controls, and source-linked STARK and conformance references from CodesbyFebin projects.</p></div></section><div class="wrap content-layout"><aside class="toc" aria-label="On this page"><p>ON THIS PAGE</p><a href="#contracts-before-status-badges">Contracts before status badges</a><a href="#state-vocabulary">State vocabulary</a><a href="#evidence-records">Evidence records</a><a href="#negative-controls">Negative controls</a><a href="#model-and-tool-boundaries">Model and tool boundaries</a><a href="#proof-and-attestation-boundaries">Proof and attestation boundaries</a><a href="#source-references">Source references</a><a href="#zkvm-host-service">zkVM host service</a><a href="#zkvm-roadmap">zkVM scope and roadmap</a><a href="#zkvm-threat-model">zkVM threat model</a><a href="#dh-conformance">dh/v1 conformance</a><a href="#answers">Direct answer</a></aside><article class="prose"><h2 id="contracts-before-status-badges">Contracts before status badges</h2>
+<p>A specification should explain the inputs, authority, transitions, outputs, and failure behavior of a system. It should be precise enough that an independent implementation or reviewer can check a defined claim. This page combines portfolio review guidance with source-linked technical references. It is not an invented standards body, RFC publication record, or certification program.</p>
+<h2 id="state-vocabulary">State vocabulary</h2>
+<div class="table-wrap"><table><thead><tr><th scope="col">State</th><th scope="col">What it establishes</th><th scope="col">What it does not establish</th></tr></thead><tbody><tr><td>Desired</td><td>A request or target exists</td><td>Host admission or execution</td></tr><tr><td>Admitted</td><td>A policy decision permits the request</td><td>Successful runtime behavior</td></tr><tr><td>Executing</td><td>A worker or runtime reports activity</td><td>Correct output</td></tr><tr><td>Observed</td><td>A measurement was collected</td><td>Agreement with all acceptance criteria</td></tr><tr><td>Verified</td><td>A defined check accepted the evidence</td><td>Claims outside that check’s scope</td></tr><tr><td>Unknown</td><td>Required information is missing</td><td>Healthy or failed behavior</td></tr><tr><td>Simulated</td><td>A demonstration substitutes for execution</td><td>An actual live operation</td></tr></tbody></table></div>
+<p>An interface should not erase these differences to make a dashboard look healthy. If a source reports an unavailable integration, the portfolio should not convert it into a live capability. If a proof verifier establishes a limited statement, the product description should preserve that limit. Explicit state is useful both for the operator and for external developer tools.</p>
+<h2 id="evidence-records">Evidence records</h2>
+<p>A useful record binds its claim to a source revision and an environment. It names the action, inputs, timestamps, result, and supporting artifacts. Artifact digests help identify the exact bytes that were checked. A signer identifies who attested to the record. The verification procedure explains what the consumer must do before accepting it.</p>
+<p>Different evidence types answer different questions. Configuration evidence shows how a service was set up. Runtime evidence records what happened during execution. Source evidence identifies the implementation. Approval evidence records a decision by an authorized person or process. A complete workflow can combine these without pretending that any one of them answers everything.</p>
+<h2 id="negative-controls">Negative controls</h2>
+<p>Acceptance tests should include rejection paths. Alter an artifact after a signature is created. Substitute a different program for a proof. Replay an expired request. Remove a required observation. Use a signer outside the admitted trust set. The system should reject the relevant condition and preserve enough context to explain the refusal.</p>
+<p>The expected rejection must be specific. A crashed process is not the same as a verifier correctly refusing an invalid artifact. A timeout may be an infrastructure failure rather than proof of a security property. Record the result category and the supporting output so a reviewer can distinguish them.</p>
+<h2 id="model-and-tool-boundaries">Model and tool boundaries</h2>
+<p>A model can propose a task, but policy should govern tool execution. Inputs should be validated against a schema before they become authoritative state. Permissions should be checked at the operation boundary. Approvals should bind to the action and its important parameters rather than a vague permission to “continue.”</p>
+<p>Durable task systems additionally need idempotency, leases, bounded retries, and explicit terminal states. A queue can improve dispatch latency while the database remains authoritative. Replayed events should be distinguishable from newly executed work. <a href="/systems.html#agentswarm">AgentSwarm</a> documents a concrete version of these boundaries and its current verification limits.</p>
+<h2 id="proof-and-attestation-boundaries">Proof and attestation boundaries</h2>
+<p>A signature and a computational proof are different objects. A signature can authenticate an assertion made by a key holder. A proof can establish a defined relation under a proof system’s assumptions. Neither object automatically proves that the input data is true or that the surrounding business process is correct.</p>
+<p>The Rust VM documentation is useful because it states the current instruction and witness scope. Its host-service and threat-model references below separate proving, backend routing, MCP access, and on-chain attestation. Keep those distinctions when building an application on top of the service.</p>
+<h2 id="source-references">Source references</h2>
+<p>The technical references below are snapshots of project documentation reviewed on 3 October 2026. Each includes a direct source URL and the returned GitHub blob identifier. They make detailed setup and limitations available without JavaScript. Commands are documentation, not a report that this portfolio build executed the underlying project.</p>
+<p>Use <a href="systems.html">systems</a> for architecture context and <a href="projects.html">projects</a> for repository discovery. If a specification changes, review the implementation and its conformance evidence together before updating public claims. A stable URL is useful, but it should not hide a changed contract.</p><section class="source-doc" id="zkvm-host-service"><h2>zkVM host service</h2><div class="source-note"><strong>Repository documentation snapshot</strong><br>Reviewed 2026-10-03. <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/HOST_SERVICE.md">Read the current source file</a><br>GitHub blob: <code>5509ef43181a693dd551436349103a467554e5d7</code><br>This is source documentation, not a new runtime test report.</div><h3 id="zkvm-host-service-what-s-real-vs-what-s-pitched-for-zkvm-host">What&#x27;s real vs. what&#x27;s pitched, for &quot;zkvm.host&quot;</h3>
+<p>The &quot;zkvm.host&quot; pitch describes a company: a multi-VM router (SP1/RISC Zero/Jolt/ ZKWASM), a serverless pay-per-proof API, CI/CD integration, an edge/WASM proving SDK, AI-agent-execution verification, and a four-tier business model. This repo cannot honestly claim to have built that. What it *can* claim, and does, is the one piece that&#x27;s directly buildable on top of the real zkVM already in this repo: <strong>&quot;push a program, get a proof&quot; as an actual HTTP call.</strong></p>
+<h4 id="zkvm-host-service-what-exists-crates-zkvm-host-server-crates-zkvm-host-server">What exists: <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/crates/zkvm-host-server">ZZTOKEN0ZZ</a></h4>
+<ul>
+<li><code>POST /v1/proofs</code> — body <code>{&quot;program&quot;: &quot;&lt;.zkasm text&gt;&quot;}</code>, returns the STARK proof</li>
+</ul>
+<p>(base64) and public inputs. This *is* the core mechanic of &quot;no circuits, no prover clusters, no infra&quot; — the caller doesn&#x27;t link against <code>zkvm-stark</code> or run a prover locally, they make one HTTP call.</p>
+<ul>
+<li><code>POST /v1/verify</code> — checks a proof against a program. The server re-executes the</li>
+</ul>
+<p>program itself (cheap) to know what public inputs to check against; it never needs the caller&#x27;s execution trace.</p>
+<ul>
+<li><code>GET /healthz</code>.</li>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/crates/zkvm-cli">ZZTOKEN0ZZ</a>&#x27;s <code>deploy</code> subcommand: reads a <code>.zkasm</code> file,</li>
+</ul>
+<p>POSTs it to a running server, saves the returned proof locally. Verification stays local and CLI-driven — deliberately: you should never have to trust a proving service&#x27;s own claim that a proof is valid, only the (cheap, fast) verification you ran yourself. Tested end to end: the CLI&#x27;s <code>deploy</code> → <code>verify</code> round-trip is a real HTTP request against a real running server, not a mock.</p>
+<ul>
+<li>A <code>ProverBackend</code> trait (<code>src/backend.rs</code>) and <code>ProverRouter</code> (<code>src/router.rs</code>):</li>
+</ul>
+<p><code>GET /v1/backends</code> lists what&#x27;s registered, <code>POST /v1/backends/{name}/proofs</code> and <code>/verify</code> dispatch to a named backend. Two are registered: <code>stark</code> (the real prover above, reachable this way too) and <code>mock-echo</code> — a routing stub that is explicit about doing nothing cryptographic (its <code>verify</code> always returns an error, never <code>valid: true</code>; see <code>backends/mock_echo.rs</code>). This makes &quot;multi-VM router&quot; an architecturally real, tested claim — adding SP1 or RISC Zero later is one new file plus one <code>router.register()</code> call, not an HTTP-layer rewrite — while being explicit that no second *real* backend exists yet. Deliberately not named <code>sp1</code> / <code>risc-zero</code>: naming a stub after a project it doesn&#x27;t implement would misrepresent it, the same mistake <code>contracts/</code>&#x27;s original <code>verifyProof() { return true; }</code> draft made in the other direction.</p>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/scripts/onchain_demo.sh">ZZTOKEN0ZZ</a> closes the loop this doc</li>
+</ul>
+<p>used to list as missing: it deploys <code>contracts/</code>, gets a *real* proof from a *real* running server, verifies it locally, attests it on-chain, and confirms the prover is actually paid — see the &quot;On-chain settlement&quot; section below.</p>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/.github/workflows/zk-ci.yml">ZZTOKEN0ZZ</a>: on every PR</li>
+</ul>
+<p>touching <code>.zkasm</code> examples, the server/CLI crates, or <code>contracts/</code>, it builds the workspace, runs every Rust and Solidity test, then boots the real server and runs <code>zkvm deploy</code> + <code>zkvm verify</code> against every example program — the PR fails if any of them don&#x27;t actually verify. &quot;Proof as a CI check,&quot; for real, not just described.</p>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/crates/zkvm-host-server/src/mcp.rs">ZZTOKEN0ZZ</a>: <code>prove</code> and <code>verify</code> exposed</li>
+</ul>
+<p>as real MCP tools (via the <a href="https://github.com/modelcontextprotocol/rust-sdk">ZZTOKEN0ZZ</a> crate), so any MCP client (Claude, Cursor, or anything else speaking the protocol) can call this server directly. Verified with an actual MCP <code>initialize</code> → <code>tools/list</code> → <code>tools/call</code> handshake over HTTP, not just written and assumed to work — see the &quot;MCP&quot; section below for why it runs on its own port instead of nested onto <code>/v1/*</code>.</p>
+<p>That&#x27;s genuinely the demand-side developer-experience mechanic the pitch describes, architecturally extended to more than one backend, with the on-chain and CI pieces that used to be listed below as gaps now closed.</p>
+<h4 id="zkvm-host-service-mcp-why-it-s-a-separate-port-not-nestservice">MCP: why it&#x27;s a separate port, not <code>nest_service</code></h4>
+<p><code>rmcp</code>&#x27;s <code>StreamableHttpService</code> implements <code>tower::Service</code>, but its <code>Response</code> body type doesn&#x27;t line up with <code>axum::Router::nest_service</code> without an adapter layer — and <code>rmcp</code>&#x27;s own examples serve it via a raw <code>hyper</code> accept loop rather than mounting it on an existing <code>axum::Router</code>, which is a strong signal that isn&#x27;t a supported plug-and-play path. <code>mcp::serve</code> follows the same verified pattern the upstream examples use, on its own listener (port 4478 by default), rather than asserting an untested &quot;just nest it&quot; integration.</p>
+<h4 id="zkvm-host-service-a-second-real-backend-investigated-not-built">A second real backend: investigated, not built</h4>
+<p>SP1 (<code>sp1-sdk</code>) was checked for real, not assumed:</p>
+<ul>
+<li>The crate and its API are real (confirmed against the <code>succinctlabs/sp1</code></li>
+</ul>
+<p>source at the exact released tag) — <code>ProverClient::from_env().await</code>, <code>.setup(elf).await</code> and <code>.prove(&amp;pk, stdin).groth16().await</code> all exist. Two API details from an earlier draft were wrong, though: <code>setup()</code> returns a single <code>SP1ProvingKey</code>, not a <code>(pk, vk)</code> tuple, and <code>prove()</code> takes <code>stdin</code> by value, not by reference.</p>
+<ul>
+<li>A bare &quot;hello world&quot; depending on <code>sp1-sdk</code> resolves <strong>518 crates</strong> — more</li>
+</ul>
+<p>than 3x this entire workspace&#x27;s current dependency count — and includes a Go-based FFI dependency (<code>sp1-recursion-gnark-ffi</code>) for its Groth16/PLONK wrapping step, on top of Rust.</p>
+<ul>
+<li><code>cargo check</code> on that bare project ran for **~4 minutes of wall time (861s of</li>
+</ul>
+<p>CPU time)** before failing on a missing system dependency (<code>protoc</code>), having not yet reached the RISC-V guest toolchain, network-fetched proving parameters, or an actual proof.</p>
+<ul>
+<li>More fundamentally: SP1 proves compiled RISC-V ELF binaries from Rust guest</li>
+</ul>
+<p>programs via its own build toolchain. It has no relationship to this repo&#x27;s <code>.zkasm</code> accumulator ISA — integrating it as &quot;just another <code>ProverBackend</code>&quot; would mean either compiling <code>.zkasm</code> programs down to a RISC-V guest binary (a real compiler that doesn&#x27;t exist) or changing the trait to accept an entirely different input type for this one backend, breaking the shared <code>Program</code> abstraction the other two backends rely on.</p>
+<p>None of this makes SP1 a bad choice eventually — it&#x27;s the opposite of the <code>mock-echo</code> problem, a backend that&#x27;s *too* real to fake a quick integration of. But &quot;one file + one <code>register()</code> call&quot; undersells it substantially, and attempting it blind risked repeating the exact category of error (guessed APIs, untested toolchains) this whole exercise has been about catching. Not pursued further this session.</p>
+<h4 id="zkvm-host-service-what-s-explicitly-not-here">What&#x27;s explicitly not here</h4>
+<ul>
+<li><strong>A second real proving backend.</strong> <code>mock-echo</code> proves the *router* works; it is</li>
+</ul>
+<p>not, and is not trying to be, SP1/RISC Zero/Jolt/ZKWASM. See above for what investigating SP1 specifically turned up.</p>
+<ul>
+<li><strong>Trustless on-chain verification.</strong> <code>scripts/onchain_demo.sh</code> pays a prover for a</li>
+</ul>
+<p>real proof, but only after an <code>AttestedVerifier</code> attestation — a trusted bridge, not a cryptographic check of the STARK proof itself. See <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/ONCHAIN_VERIFIER.md">ZZTOKEN1ZZ</a> for exactly what closing that gap for real requires.</p>
+<ul>
+<li><strong>Multi-tenant serverless infrastructure, billing, usage tiers.</strong> The server here</li>
+</ul>
+<p>is a single process with no auth, no rate limiting, no persistence, no queuing — it&#x27;s meant to be run locally or in a trusted network, not exposed as a public paid API. &quot;Free / $49/mo / usage-based / Enterprise&quot; implies a whole billing and account system that doesn&#x27;t exist.</p>
+<ul>
+<li><strong>Edge/WASM proving SDK.</strong> Nothing runs the prover in-browser or on an edge</li>
+</ul>
+<p>runtime; <code>zkvm-stark</code>&#x27;s dependencies (and STARK proving in general) are not scoped for that today.</p>
+<ul>
+<li><strong>AI agent verification.</strong> No integration with any agent framework, and no AIR</li>
+</ul>
+<p>designed around &quot;did this agent follow a policy&quot; — that would need its own instruction-set/constraint design, not a wrapper around the existing accumulator machine.</p>
+<h4 id="zkvm-host-service-if-this-were-actually-going-further">If this were actually going further</h4>
+<p>In rough order of &quot;most directly extends what&#x27;s real, least new infrastructure&quot;:</p>
+<ol>
+<li>Add auth (even something as simple as a static API key) and per-key rate</li>
+</ol>
+<p>limiting to the server — the minimum needed before it could be exposed beyond a trusted network.</p>
+<ol>
+<li>Persist submitted proofs/tasks (currently everything is synchronous, in-memory,</li>
+</ol>
+<p>request-scoped) so a <code>GET /v1/proofs/:id</code> style status check is meaningful for proofs that take longer than an HTTP request timeout.</p>
+<ol>
+<li>Replace <code>scripts/onchain_demo.sh</code>&#x27;s manual <code>cast</code> calls with a <code>zkvm-cli attest</code></li>
+</ol>
+<p>(or similar) subcommand once the attestation flow needs to run somewhere other than a developer&#x27;s terminal — e.g. as the CI job&#x27;s own follow-up step.</p>
+<ol>
+<li>Only after those: a second *real* backend, to prove the abstraction actually</li>
+</ol>
+<p>generalizes rather than assuming it does from one mock.</p></section><section class="source-doc" id="zkvm-roadmap"><h2>zkVM scope and roadmap</h2><div class="source-note"><strong>Repository documentation snapshot</strong><br>Reviewed 2026-10-03. <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/ROADMAP.md">Read the current source file</a><br>GitHub blob: <code>d8d6978e08cdc1aa1a71fdef76bd4c1bc210a2ab</code><br>This is source documentation, not a new runtime test report.</div><h3 id="zkvm-roadmap-roadmap">Roadmap</h3>
+<p>This repo started from a five-phase, 36-month strategy document envisioning a &quot;universal zero-knowledge layer&quot; (zkVM.host): a security-audited proving foundation, a sub-second proving stack, a full developer platform, a token-based proving economy, and eventually cross-chain network effects.</p>
+<p>That document is a business strategy, not an engineering spec. This repo is the first real engineering artifact underneath it: a genuine, working, tested zkVM MVP — an interpreter, a from-scratch AIR (algebraic constraint system), a real STARK prover and verifier (via <a href="https://github.com/facebook/winterfell">Winterfell</a>), and soundness tests that actually try to break it. Everything below is honest about what&#x27;s real today versus what the strategy doc aspires to.</p>
+<p><strong>Decided direction: this is a zkVM, not a multi-VM router.</strong> The SP1 investigation (see below) surfaced a real fork: keep extending this repo&#x27;s own <code>.zkasm</code> ISA and own that stack end to end (this option), or treat <code>.zkasm</code> as a demo fixture and make the <code>ProverBackend</code> router the actual product, routing to whatever proving backend a user brings. The router abstraction (<code>crates/zkvm-host-server/src/router.rs</code>) stays — future backends aren&#x27;t ruled out — but they&#x27;d need to speak this ISA&#x27;s semantics or a from-scratch equivalent maintained in this repo, not &quot;plug in SP1 as-is.&quot; The practical consequence: trustless on-chain verification means building recursive STARK compression *for this specific AIR* eventually — a genuine research undertaking (see <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/ONCHAIN_VERIFIER.md">ZZTOKEN4ZZ</a>) — not something inherited for free from an external prover&#x27;s existing recursion pipeline.</p>
+<h4 id="zkvm-roadmap-what-exists-today-phase-0-phase-1-first-slice">What exists today (Phase 0 → Phase 1, first slice)</h4>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/crates/zkvm-isa">ZZTOKEN0ZZ</a>: the VM itself. An accumulator machine</li>
+</ul>
+<p>(<code>ADD</code>/<code>SUB</code>/<code>MUL</code>) with <strong>real conditional control flow</strong> (<code>JZ</code>/<code>JNZ</code>, forward-only — see below), <strong>a small fixed register file</strong> (<code>LOAD</code>/<code>STORE</code>, 4 registers — see below), a real interpreter, and a tiny assembly format (<code>.zkasm</code>, with labels) for writing programs.</p>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/crates/zkvm-stark">ZZTOKEN0ZZ</a>: arithmetization. Defines the AIR</li>
+</ul>
+<p>(transition constraints + boundary assertions) that binds a STARK proof to one specific program *and* its actual control-flow outcome — not just &quot;some valid trace&quot; — and a prover/verifier built on Winterfell.</p>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/crates/zkvm-cli">ZZTOKEN0ZZ</a>: a <code>zkvm</code> binary — <code>run</code>, <code>prove</code>, <code>verify</code>,</li>
+</ul>
+<p>and <code>demo</code> (which also runs two tamper attempts to show they get rejected).</p>
+<ul>
+<li>Tests at both layers, including negative tests: a proof must be rejected if the</li>
+</ul>
+<p>claimed result or the claimed program is tampered with after the fact. This is the actual soundness property a zkVM needs — not a slogan, a thing the test suite checks.</p>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/contracts">ZZTOKEN0ZZ</a>: an on-chain task/reward orchestrator (Foundry/Solidity,</li>
+</ul>
+<p>tested with <code>forge test</code>) that delegates every accept/reject decision to a pluggable <code>IProofVerifier</code>. The two verifiers that exist are deliberately honest about not being a real cryptographic verifier yet — see <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/ONCHAIN_VERIFIER.md">ZZTOKEN2ZZ</a> for exactly what one would require and why that&#x27;s a separate, large undertaking (not shipped as a &quot;close enough&quot; stub).</p>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/crates/zkvm-host-server">ZZTOKEN0ZZ</a>: an HTTP &quot;push a program, get</li>
+</ul>
+<p>a proof&quot; service wrapping the one real proving backend in this repo, plus a <code>zkvm deploy</code> CLI command that drives it end to end (tested with a real HTTP round-trip, not mocked). It also exposes a <code>ProverBackend</code>-trait <code>/v1/backends*</code> surface so &quot;multi-VM router&quot; is an architecturally real, tested claim rather than a promise — today with one real backend (<code>stark</code>) and one honestly-labeled routing stub (<code>mock-echo</code>, which refuses to verify anything rather than faking success). See <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/HOST_SERVICE.md">ZZTOKEN5ZZ</a> for how this relates to the much larger &quot;zkvm.host&quot; multi-VM/serverless/CI-CD/edge-proving pitch it grew out of — most of that pitch has no code here on purpose.</p>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/scripts/onchain_demo.sh">ZZTOKEN0ZZ</a>: the previously-missing</li>
+</ul>
+<p>wiring between the server and <code>contracts/</code> — deploys both contracts to a local chain, gets a real proof from the real server, verifies it locally, attests it on-chain, and confirms the prover is actually paid. Run and passing.</p>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/.github/workflows/zk-ci.yml">ZZTOKEN0ZZ</a>: &quot;proof as a CI</li>
+</ul>
+<p>check&quot; for real — every PR touching the VM, server, CLI, or contracts builds, runs every test, then deploys and locally verifies every example program against a live server, failing the PR if any proof doesn&#x27;t check out.</p>
+<ul>
+<li>MCP tools (<a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/MCP.md">ZZTOKEN0ZZ</a>): <code>prove</code>/<code>verify</code> exposed to any MCP client</li>
+</ul>
+<p>(Claude Desktop, Cursor, ...), verified with a real <code>initialize</code> → <code>tools/call</code> transcript against a running server, not just written.</p>
+<ul>
+<li><a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/THREAT_MODEL.md">ZZTOKEN0ZZ</a>: states plainly what&#x27;s trustless (the</li>
+</ul>
+<p>proof itself) versus what isn&#x27;t (the on-chain payment, which trusts one attester key) — a documented design decision rather than a silent gap.</p>
+<ul>
+<li><strong>Conditional branching (<code>JZ</code>/<code>JNZ</code>).</strong> Proof of a program whose result genuinely</li>
+</ul>
+<p>depends on runtime data, not just straight-line arithmetic — <code>examples/branching.zkasm</code>, tested both branches taken and not, plus a negative test that tampering with the claimed control-flow outcome (which row actually executed) is rejected. Sound without a lookup/permutation argument specifically because this system has no private witness: the verifier already re-executes the program to know the correct per-row <code>active</code> flag, the same way it already knew the correct opcode selectors — see the doc comment at the top of <code>zkvm-stark/src/lib.rs</code> for the full argument. Jumps are forward-only (no loops yet — see &quot;Suggested next slice&quot; below).</p>
+<ul>
+<li><strong>A small fixed register file (<code>LOAD</code>/<code>STORE</code>, 4 registers).</strong> <code>examples/counter.zkasm</code></li>
+</ul>
+<p>stores a value, does unrelated arithmetic, then loads it back — the first program this VM can write that needs to hold more than one live value at once. The same &quot;no secret witness&quot; trick that made branching sound without a gadget extends here too: which register a <code>LOAD</code>/<code>STORE</code> addresses is a one-hot column asserted per row (like the opcode selectors), not derived via an algebraic mux — see the updated doc comment in <code>zkvm-stark/src/lib.rs</code>. Tested including a negative test that claiming a different register was addressed is rejected.</p>
+<h5 id="zkvm-roadmap-why-this-scope-specifically">Why this scope, specifically</h5>
+<p>Building a real STARK-based VM with unconstrained branching, memory, and a full RISC-V-compatible instruction set is a multi-year effort for a team, not a single session. Rather than fake that scope with stubs, this MVP picks the smallest slice that still has the essential hard part: <strong>an AIR whose transition constraints correctly gate multiple instruction types via opcode selectors, with per-row assertions that bind the proof to an exact program.</strong> That&#x27;s the same core technique (generalized) that real STARK-based VMs — RISC Zero, SP1, Cairo, Miden — use to prove arbitrary programs. Once this pattern is validated, extending it is additive work, not a redesign.</p>
+<h4 id="zkvm-roadmap-what-s-explicitly-not-here-yet">What&#x27;s explicitly NOT here yet</h4>
+<p>Mapped against the original roadmap&#x27;s phases, so it&#x27;s clear what&#x27;s aspirational:</p>
+<ul>
+<li><strong>Loops.</strong> <code>JZ</code>/<code>JNZ</code> are forward-only; nothing revisits a static instruction twice.</li>
+</ul>
+<p>Real loops need a dynamically-sized execution trace (padded/truncated based on how many iterations actually ran, not the fixed program length) — a bigger change than adding control flow to a fixed-length trace was.</p>
+<ul>
+<li><strong>Memory (addressable RAM, distinct from the fixed register file).</strong> The register</li>
+</ul>
+<p>file is 4 fixed, statically-named slots — addressing is entirely static (which register is baked into the instruction). Real memory means a *dynamic* address (computed at runtime, e.g. <code>LD r0, [r1]</code> where <code>r1</code> holds the address), which is a materially different problem: the verifier can still re-execute and know the correct value at every access (see <code>docs/ROADMAP.md</code>&#x27;s note on this below), but proving *which* address was accessed, when that address is itself a trace value rather than a constant baked into the instruction, is closer to the branching problem (a dynamic pc) than to the register file (static slots) — worth designing deliberately rather than assuming either pattern extends for free.</p>
+<ul>
+<li><strong>RISC-V compatibility.</strong> The instruction set here is custom and minimal, not RV32I.</li>
+</ul>
+<p>Real ELF-binary execution is future work.</p>
+<ul>
+<li>**Formal verification, fuzzing, external audits, a public &quot;Soundness Shield&quot;</li>
+</ul>
+<p>dashboard.** None of this exists. The only soundness evidence right now is the unit test suite in <code>zkvm-stark</code>.</p>
+<ul>
+<li><strong>Performance work</strong> (GPU/ASIC proving, recursion, aggregation, sub-second proving</li>
+</ul>
+<p>targets). Not started; <code>Blake3_256</code> + a 128-bit field with default parameters is a correctness-first, not performance-first, configuration.</p>
+<ul>
+<li><strong>Trustless on-chain proof verification.</strong> <code>contracts/</code>&#x27;s <code>AttestedVerifier</code> is a</li>
+</ul>
+<p>trusted bridge (an off-chain party attests a proof checked out), not a cryptographic verifier. Making that trustless means porting FRI/Merkle/field-arithmetic verification into Solidity (or wrapping the STARK in a SNARK) — see <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/ONCHAIN_VERIFIER.md">ZZTOKEN0ZZ</a>.</p>
+<ul>
+<li><strong>Everything economic/network-effect-related</strong> — the <code>$ZKVM</code> token, a proving</li>
+</ul>
+<p>marketplace, decentralized prover network, cross-chain bridges, DAO/alliance formation. None of that has a code artifact, and several of those items (running a token launch, executing trades) are outside what an engineering session like this one should be doing regardless of implementation status.</p>
+<ul>
+<li><strong>A second real proving backend — SP1, specifically investigated and not pursued.</strong></li>
+</ul>
+<p>Confirmed real crate, real API, but: 518 resolved dependencies for a bare &quot;hello world&quot; (&gt;3x this whole workspace), a Go-based FFI dependency for Groth16 wrapping, and a <code>cargo check</code> that took ~4 minutes before failing on a missing system dependency without yet reaching the RISC-V toolchain or an actual proof. More fundamentally, SP1 proves compiled RISC-V ELF binaries — unrelated to this repo&#x27;s <code>.zkasm</code> ISA — so integrating it isn&#x27;t &quot;one file,&quot; it&#x27;s a compiler project first. See <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/HOST_SERVICE.md">ZZTOKEN2ZZ</a> for the full writeup.</p>
+<h4 id="zkvm-roadmap-suggested-next-slice">Suggested next slice</h4>
+<p>In rough order of &quot;smallest change with the biggest validation value&quot;:</p>
+<ol>
+<li>Loops: a dynamically-sized trace (bounded by a max-cycle count, padded/truncated</li>
+</ol>
+<p>based on actual execution length) so <code>JZ</code>/<code>JNZ</code> can jump backward too. This is a materially bigger change than forward-only branching — the &quot;verifier re-executes and asserts everything&quot; trick still works (the verifier can still just run the loop itself), but trace-length selection and the resulting proof-size variability need real design.</p>
+<ol>
+<li>Addressable memory (dynamic addresses, distinct from the static register file --</li>
+</ol>
+<p>see above). Worth checking first whether the &quot;verifier re-executes and asserts everything&quot; trick extends here too before assuming a full permutation/lookup argument is required — the trick has held for everything so far specifically *because* there&#x27;s no secret witness anywhere in this system; that&#x27;s also the open question <code>docs/RECURSION.md</code> flags about whether hiding data is ever added later.</p>
+<ol>
+<li>Only after 1–2 are solid: consider RV32I compatibility.</li>
+</ol></section><section class="source-doc" id="zkvm-threat-model"><h2>zkVM threat model</h2><div class="source-note"><strong>Repository documentation snapshot</strong><br>Reviewed 2026-10-03. <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/THREAT_MODEL.md">Read the current source file</a><br>GitHub blob: <code>b9a34714d2b6a45b80c93bb03f1baa9404fe5b98</code><br>This is source documentation, not a new runtime test report.</div><h3 id="zkvm-threat-model-threat-model-what-you-re-trusting-and-why">Threat model: what you&#x27;re trusting, and why</h3>
+<p>This is the one-page version. For the underlying cryptographic detail, see <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/ONCHAIN_VERIFIER.md">ZZTOKEN0ZZ</a>; for what&#x27;s built versus pitched overall, see <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/HOST_SERVICE.md">ZZTOKEN1ZZ</a>.</p>
+<h4 id="zkvm-threat-model-the-proof-itself-trustless">The proof itself: trustless</h4>
+<p>A <code>zkvm-stark</code> proof (produced by <code>prove_program</code>, checked by <code>verify_program</code>) is a real STARK. Verifying it — locally via <code>zkvm verify</code>, over HTTP via <code>/v1/verify</code>, or via the <code>verify</code> MCP tool — requires no trust in whoever generated it. This is standard, load-bearing cryptography: <code>zkvm-stark</code>&#x27;s test suite includes negative tests (<code>rejects_tampered_result</code>, <code>rejects_tampered_program</code>) that confirm a proof manufactured for one claim is rejected against a different one.</p>
+<p><strong>This is the only trustless part of the system end to end.</strong> Everything below is about what happens once that proof needs to affect something outside a local process — specifically, an on-chain payment.</p>
+<h4 id="zkvm-threat-model-the-on-chain-path-an-attested-bridge-not-a-cryptographic-verifier">The on-chain path: an attested bridge, not a cryptographic verifier</h4>
+<p><code>contracts/</code>&#x27;s <code>ProofOrchestrator</code> pays a prover once a proof is &quot;accepted.&quot; What &quot;accepted&quot; means depends entirely on which <code>IProofVerifier</code> it&#x27;s configured with:</p>
+<ul>
+<li><strong><code>UnimplementedStarkVerifier</code></strong> — accepts nothing. Every <code>submitProof</code> call</li>
+</ul>
+<p>reverts. No trust required because no payment is possible.</p>
+<ul>
+<li><strong><code>AttestedVerifier</code></strong> (the one <code>scripts/onchain_demo.sh</code> actually uses) — accepts</li>
+</ul>
+<p>a proof once a designated <code>attester</code> address calls <code>attest(publicInputsHash, proofHash)</code>. <strong>You are trusting that this one key only attests to proofs it (or whoever holds it) actually ran <code>zkvm verify</code> against and got <code>Ok(())</code>.</strong></p>
+<p>Concretely, the trust assumption is: *the attester key is not compromised, and whoever controls it always verifies locally before attesting, never on faith.* If that assumption fails — key theft, or a careless/malicious attester — a false attestation pays out a real reward for a proof that either doesn&#x27;t exist or doesn&#x27;t verify. The contract has no way to detect this; it only checks that the attester&#x27;s signature is present, not that the underlying math is sound.</p>
+<p>This is the same trust model a centralized sequencer has before its fraud/validity proofs go live (e.g. early-stage optimistic rollups): a known, single point of trust, acceptable because it&#x27;s explicit and small, not because it&#x27;s absent.</p>
+<h5 id="zkvm-threat-model-key-management-honestly">Key management, honestly</h5>
+<p>There is currently no key management story beyond &quot;a private key exists and someone runs <code>cast send ... --private-key</code>.&quot; Concretely, for anything beyond a local demo, at minimum:</p>
+<ul>
+<li>The attester key should never be the same key used for anything else (deploying</li>
+</ul>
+<p>contracts, holding funds) — a compromise of one shouldn&#x27;t compromise the other.</p>
+<ul>
+<li>It should live in whatever secrets store the deployment environment already has</li>
+</ul>
+<p>(not a <code>.env</code> file, not shell history — <code>scripts/onchain_demo.sh</code>&#x27;s hardcoded Anvil test keys are demo-only and must never be reused anywhere real funds could reach them).</p>
+<ul>
+<li>Rotation means deploying a new <code>AttestedVerifier</code> with the new attester address —</li>
+</ul>
+<p>there&#x27;s no in-place key-rotation function on the current contract. That&#x27;s a real gap if this ever needs to run continuously.</p>
+<p>None of this is implemented. It&#x27;s written here so the gap is a documented decision, not a silent omission.</p>
+<h4 id="zkvm-threat-model-when-does-this-stop-being-true">When does this stop being true?</h4>
+<p>Only when a real cryptographic verifier replaces <code>AttestedVerifier</code> — porting FRI/Merkle/field-arithmetic verification into Solidity, or wrapping the STARK in a SNARK cheap enough to verify on-chain. Both are described, with why they&#x27;re substantial independent undertakings, in <a href="https://github.com/CodesbyFebin/rust-stark-zkvm/blob/main/docs/ONCHAIN_VERIFIER.md">ZZTOKEN1ZZ</a>. Until one of those exists, &quot;the proof is trustless, the payment is not&quot; is the accurate description of this system, and should be stated in exactly those terms to anyone relying on it.</p></section><section class="source-doc" id="dh-conformance"><h2>dh/v1 conformance</h2><div class="source-note"><strong>Repository documentation snapshot</strong><br>Reviewed 2026-10-03. <a href="https://github.com/CodesbyFebin/Decentralized-/blob/main/docs/protocol/conformance.md">Read the current source file</a><br>GitHub blob: <code>a160f9c6d18ebbc3051064b21a9b5b3828343311</code><br>This is source documentation, not a new runtime test report.</div><h3 id="dh-conformance-dh-v1-conformance">dh/v1 conformance</h3>
+<p>The conformance suite checks that an implementation produces and accepts exactly the bytes the protocol specifies. It has three parts:</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">part</th><th scope="col">where</th></tr></thead><tbody><tr><td>test vectors</td><td><code>conformance/vectors/dh-v1.json</code> (generated; 136 vectors)</td></tr><tr><td>runner and Go reference adapter</td><td><code>cmd/dh-conformance</code>, <code>pkg/conformance</code></td></tr><tr><td>independent implementation</td><td><code>conformance/python</code> (pure-Python BLAKE3; Ed25519 via <code>cryptography</code>, or pure RFC 8032 fallback)</td></tr></tbody></table></div>
+<h4 id="dh-conformance-running">Running</h4>
+<pre><code class="language-bash">go build -o bin/ ./cmd/dh-conformance
+./bin/dh-conformance run -self                                          # Go reference, in process
+./bin/dh-conformance run -adapter &quot;./bin/dh-conformance adapter&quot;         # Go reference over stdio
+./bin/dh-conformance run -adapter &quot;python3 conformance/python/adapter.py&quot; # independent implementation
+DH_PY_PURE_ED25519=1 ./bin/dh-conformance run -adapter &quot;python3 conformance/python/adapter.py&quot;
+./bin/dh-conformance check      # vectors still match the reference (drift guard)</code></pre>
+<p>Useful flags for <code>run</code>: <code>-ops canon,verify</code> selects a subset, <code>-report out.json</code> writes a machine-readable report, and <code>-allow-skip</code> lets an adapter that does not implement some ops still pass on the rest. <code>go test ./pkg/conformance</code> runs the drift guard, the reference and the Python implementation.</p>
+<h4 id="dh-conformance-adapter-protocol">Adapter protocol</h4>
+<p>An adapter is any executable. It reads one JSON request per line on stdin and writes one JSON response per line on stdout, in order:</p>
+<pre><code class="language-">→ {&quot;id&quot;:&quot;verify/wrong-kind&quot;,&quot;op&quot;:&quot;verify&quot;,&quot;input&quot;:{…}}
+← {&quot;id&quot;:&quot;verify/wrong-kind&quot;,&quot;ok&quot;:true,&quot;output&quot;:{&quot;valid&quot;:false,&quot;error&quot;:&quot;kind-mismatch&quot;}}
+← {&quot;id&quot;:&quot;canon/reject-float&quot;,&quot;ok&quot;:false,&quot;error&quot;:&quot;reject&quot;}
+← {&quot;id&quot;:&quot;x&quot;,&quot;ok&quot;:false,&quot;error&quot;:&quot;unsupported&quot;}        (op not implemented → skipped)</code></pre>
+<p>The runner compares <code>canonical({&quot;output&quot;: output})</code> or <code>canonical({&quot;error&quot;: code})</code> with the vector&#x27;s <code>expect</code>, so key order and whitespace in responses do not matter. Binary data is standard base64 with padding in fields ending <code>_b64</code>. Wire keys and signatures are unpadded base64url, as in the protocol.</p>
+<div class="table-wrap"><table><thead><tr><th scope="col">op</th><th scope="col">input</th><th scope="col">output</th></tr></thead><tbody><tr><td><code>canon</code></td><td><code>json_b64</code></td><td><code>canonical_b64</code>, or error <code>reject</code></td></tr><tr><td><code>identity</code></td><td><code>seed</code> (hex, 32 bytes) or <code>pub</code></td><td><code>pub</code>, <code>id</code>; error <code>bad-key</code></td></tr><tr><td><code>digest</code></td><td><code>value</code></td><td><code>hash</code>; error <code>reject</code></td></tr><tr><td><code>domain-hash</code></td><td><code>domain</code>, <code>value</code></td><td><code>hash</code>; error <code>reject</code></td></tr><tr><td><code>sign</code></td><td><code>seed</code>, <code>signer</code> (<code>&quot;&quot;</code> = own id), <code>kind</code>, <code>payload</code></td><td><code>envelope</code>, <code>signing_input_b64</code></td></tr><tr><td><code>verify</code></td><td><code>envelope_b64</code>, <code>kind</code>, <code>self</code>, <code>allowed</code></td><td><code>valid</code>, <code>error</code> (§4 codes or <code>&quot;&quot;</code>)</td></tr><tr><td><code>audit-hash</code></td><td>a ledger entry</td><td><code>hash</code></td></tr><tr><td><code>audit-verify</code></td><td><code>entries</code>, <code>startSeq</code>, <code>startPrev</code>, <code>checkpoints</code>, <code>keys</code></td><td><code>break</code>: <code>null</code> or <code>{seq, reason}</code></td></tr><tr><td><code>capability-mint</code></td><td><code>blocks: [{seed, caveats, next, note}]</code></td><td><code>token</code></td></tr><tr><td><code>capability-verify</code></td><td><code>token</code>, <code>roots</code>, <code>request</code></td><td><code>ok</code>, <code>block</code></td></tr><tr><td><code>chunk</code></td><td><code>data_b64</code></td><td><code>chunks: [{offset, length, id}]</code></td></tr><tr><td><code>merkle</code></td><td><code>ids</code></td><td><code>root</code></td></tr></tbody></table></div>
+<p>Vectors for <code>chunk</code> store <code>data_gen: {alg, seed, length}</code> instead of the bytes, and the runner expands it to <code>data_b64</code> before sending:</p>
+<ul>
+<li><code>xorshift64*</code>: <code>x ^= x&gt;&gt;12; x ^= x&lt;&lt;25; x ^= x&gt;&gt;27</code>, then emit</li>
+</ul>
+<p><code>x·0x2545F4914F6CDD1D mod 2^64</code> as 8 little-endian bytes, truncated to <code>length</code>;</p>
+<ul>
+<li><code>zero</code>: <code>length</code> zero bytes;</li>
+<li><code>pattern</code>: byte *i* is <code>i mod 251</code>.</li>
+</ul>
+<p>Test identities use seed *n* = <code>BLAKE3(&quot;decentralized.host/conformance-seed/v1&quot; || n)</code>.</p>
+<h4 id="dh-conformance-what-the-vectors-cover">What the vectors cover</h4>
+<ul>
+<li><strong>canon (42):</strong> key order by UTF-8 bytes; every escape rule; raw U+2028</li>
+</ul>
+<p>and <code>&lt;&gt;&amp;</code>; surrogate pairs; <code>-0</code>; the ±(2^53−1) boundary; and rejection of floats, exponents, out-of-range and huge integers, duplicate keys (also via escapes and nesting), trailing data, NaN/Infinity, leading zeros, lone and reversed surrogates, invalid and overlong UTF-8, a BOM, raw controls and an empty document.</p>
+<ul>
+<li><strong>identity (9):</strong> seeds, arbitrary keys, and malformed, padded or</li>
+</ul>
+<p>standard-alphabet keys.</p>
+<ul>
+<li><strong>digest / domain-hash (9)</strong>, including rejection of non-canonical values.</li>
+<li><strong>sign (5)</strong>, including HTML characters, Unicode and a rotated signer.</li>
+<li><strong>verify (14):</strong></li>
+<li>valid envelopes, with self-certifying keys, allowed sets and rotated keys;</li>
+<li>one of each error code;</li>
+<li>transport re-encoding (reordered keys, <code>\u003c</code>), which must still verify;</li>
+<li>duplicate and float payloads (<code>not-canonical</code>);</li>
+<li>truncated or padded signatures, and key substitution.</li>
+<li><strong>audit (14):</strong> hashes, intact chains and suffixes, and every break reason,</li>
+</ul>
+<p>including all four checkpoint failures.</p>
+<ul>
+<li><strong>capability (29):</strong> minting, and each caveat at its boundary</li>
+</ul>
+<p>(<code>now == expires</code> is expired). Also:</p>
+<ul>
+<li>narrowing across blocks;</li>
+<li>wildcard, prefix and <code>path.Match</code> resource rules;</li>
+<li>an untrusted root, a wrong delegate and a sealed chain;</li>
+<li>tampered encodings and blocks, and the 16-block limit.</li>
+<li><strong>chunk (8):</strong> empty input, 1 byte, exactly and just over the minimum,</li>
+</ul>
+<p>random data, all-zero data (cut at the maximum) and a repeating pattern.</p>
+<ul>
+<li><strong>merkle (6):</strong> the empty set, odd promotion, and de-duplication with</li>
+</ul>
+<p>sorting.</p>
+<h4 id="dh-conformance-changing-the-protocol">Changing the protocol</h4>
+<p>Vectors are generated from the Go reference implementation, and <code>TestVectorsMatchReference</code> fails if the committed file is stale. A change that alters vector bytes is a protocol change: regenerate with <code>dh-conformance gen</code>, review the diff, update <code>dh-v1.md</code>, update the Python implementation to match, and bump <code>SuiteVersion</code>. Anything that breaks an existing vector&#x27;s meaning needs <code>dh/v2</code>.</p></section><section id="answers"><h2>Direct answer</h2><h3>Are the technical references independent test results?</h3><p>No. Repository documentation snapshots are labeled with their source and review date. They describe contracts, scope, and testing approaches; they are not fresh runtime test reports or proof of production deployment.</p></section><section class="related-reading"><h2>Continue exploring</h2><ul><li><a href="systems.html">Verifiable compute and self-hosted systems</a></li><li><a href="projects.html">Open-source repository directory</a></li><li><a href="research.html">Verifiable compute research interests</a></li><li><a href="contributions.html">Open-source contribution workflow</a></li></ul></section></article></div><div class="wrap"><section class="callout"><div><h2>Build. Measure. Verify. Improve.</h2><p>Have a concrete system, question, or contribution in mind? Start with source, scope, and the result you want to inspect.</p></div><a class="button" href="contact.html">Start a conversation</a></section></div></main><footer class="footer"><div class="wrap"><div class="footer-grid"><div><a class="brand" href="index.html">&gt;_ CodesbyFebin</a><p>Systems Engineer · AI Infrastructure · Verifiable Compute<br>Kerala, India · IST UTC+5:30</p><p>Building systems that prove what happened instead of asking you to trust what happened.</p></div><nav aria-label="Explore"><a href="systems.html">Selected systems</a><a href="projects.html">Repository directory</a><a href="blog.html">Engineering notes</a><a href="research.html">Research interests</a><a href="specifications.html">Technical references</a></nav><nav aria-label="Connect"><a href="contact.html">Contact</a><a href="services.html">Collaboration</a><a href="contributions.html">Open-source workflow</a><a href="https://github.com/CodesbyFebin">GitHub</a><a href="https://www.linkedin.com/in/codes-by-febin/">LinkedIn</a><a href="https://orcid.org/0009-0002-8123-1531">ORCID</a></nav></div><div class="footer-bottom"><span>© 2026 Febin Francis · Proof over promises</span><span><a href="sitemap.xml">Sitemap</a> · <a href="llms.txt">AI discovery</a> · No third-party analytics</span></div></div></footer></body></html>

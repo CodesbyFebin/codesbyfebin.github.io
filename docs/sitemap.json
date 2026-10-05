@@ -1,0 +1,235 @@
+{
+  "pages": [
+    {
+      "url": "https://codesbyfebin.github.io/",
+      "path": "index.html",
+      "title": "AI Infrastructure & Verifiable Compute | CodesbyFebin",
+      "description": "Explore Febin Francis\u2019s source-backed portfolio of AI infrastructure, verifiable compute, and self-hosted systems, built from Kerala, India.",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/about.html",
+      "path": "about.html",
+      "title": "About Febin Francis \u00b7 Systems Engineer | CodesbyFebin",
+      "description": "Meet Febin Francis, CodesbyFebin: a systems engineer in Kerala, India focused on AI infrastructure, verifiable compute, and sovereign systems.",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/systems.html",
+      "path": "systems.html",
+      "title": "AI, STARK & Self-Hosted Systems Guide | CodesbyFebin",
+      "description": "Inspect the architecture and boundaries of CodesbyFebin\u2019s STARK VM, hosting systems, AgentSwarm, OM workspace, and browser developer tooling.",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects.html",
+      "path": "projects.html",
+      "title": "Open-Source Projects & Repository Guide | CodesbyFebin",
+      "description": "Browse 23 source-linked repositories across AI, self-hosting, cryptography, and developer tools, with dated metadata and explicit review status.",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/blog.html",
+      "path": "blog.html",
+      "title": "AI Infrastructure & Systems Engineering | CodesbyFebin",
+      "description": "Read original engineering notes on agent execution, STARK proofs, self-hosting, and evidence-backed discovery, with links to project sources.",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/services.html",
+      "path": "services.html",
+      "title": "AI Infrastructure Consulting & Collaboration | Febin",
+      "description": "Explore collaboration on AI infrastructure, systems architecture, self-hosting, and verifiable compute with Febin Francis in Kerala, India.",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/research.html",
+      "path": "research.html",
+      "title": "Verifiable Compute & AI Research Interests | Febin",
+      "description": "Explore Febin Francis\u2019s research interests in execution integrity, small proof systems, sovereign control planes, and governed AI infrastructure.",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/contributions.html",
+      "path": "contributions.html",
+      "title": "Open-Source Contributions & Review Guide | Febin",
+      "description": "Find practical contribution paths for CodesbyFebin projects: reproducible issues, focused patches, honest documentation, and source-backed review.",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/contact.html",
+      "path": "contact.html",
+      "title": "Contact Febin Francis \u00b7 Kerala, India | CodesbyFebin",
+      "description": "Connect with Febin Francis on GitHub or LinkedIn and prepare a local collaboration brief for AI infrastructure, research, or open-source work.",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/specifications.html",
+      "path": "specifications.html",
+      "title": "Protocols, Evidence & Technical Specifications | Febin",
+      "description": "Explore execution state, evidence contracts, negative controls, and source-linked STARK and conformance references from CodesbyFebin projects.",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/rust-stark-zkvm/",
+      "path": "projects/rust-stark-zkvm/index.html",
+      "title": "rust-stark-zkvm \u00b7 Project Guide | CodesbyFebin",
+      "description": "Small STARK VM with arithmetic, forward branches, a fixed register file, Winterfell proving, and HTTP/MCP interfaces. The current verifier re-executes public",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/decentralized-/",
+      "path": "projects/decentralized-/index.html",
+      "title": "Decentralized.Host \u00b7 Project Guide | CodesbyFebin",
+      "description": "Go control-plane work centered on signed intent, local admission, explicit state, and sovereign hosts. The current README mixes foundation descriptions and p",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/decentralized.hosting/",
+      "path": "projects/decentralized.hosting/index.html",
+      "title": "Deployment mesh \u00b7 Project Guide | CodesbyFebin",
+      "description": "FastAPI, PostgreSQL, Docker, Traefik, and the dhost CLI form a documented local deployment mesh. Source snapshots can be uploaded for a server-side build. Op",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/xfree.in/",
+      "path": "projects/xfree.in/index.html",
+      "title": "XFree website \u00b7 Project Guide | CodesbyFebin",
+      "description": "The current XFree marketing repository documents a Next.js discovery website. It explicitly replaces the older xfree repository for that site. XFree Studio i",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/xfree-app/",
+      "path": "projects/xfree-app/index.html",
+      "title": "XFree Studio \u00b7 Project Guide | CodesbyFebin",
+      "description": "Separate XFree application repository. The README is brief, so feature and stack claims should be checked in the implementation. This card identifies the app",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/agent-swarm/",
+      "path": "projects/agent-swarm/index.html",
+      "title": "AgentSwarm \u00b7 Project Guide | CodesbyFebin",
+      "description": "Mission/API/model/event/artifact MVP with persisted state, workers, organization boundaries, and Redis/PostgreSQL dispatch. The documented completion gate ch",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/om-personal-ai/",
+      "path": "projects/om-personal-ai/index.html",
+      "title": "OM \u00b7 Personal AI \u00b7 Project Guide | CodesbyFebin",
+      "description": "Personal AI workspace with project, note, prompt, finding, mission, and service-configuration surfaces. The README distinguishes persisted workspace features",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/bestaiagent.in/",
+      "path": "projects/bestaiagent.in/index.html",
+      "title": "BestAIAgent directory \u00b7 Project Guide | CodesbyFebin",
+      "description": "Fork repository describing an evidence-first catalog for agents, models, frameworks, providers, and MCP infrastructure. GitHub identifies this repository as ",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/mcp-server/",
+      "path": "projects/mcp-server/index.html",
+      "title": "MCPserver.in \u00b7 Project Guide | CodesbyFebin",
+      "description": "Public MCP directory and separate registry-ingestion surface. The README documents a shared publication gate, evidence records, sitemap eligibility, and dry-",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/android-flashing-tool/",
+      "path": "projects/android-flashing-tool/index.html",
+      "title": "Android Flashing Tool \u00b7 Project Guide | CodesbyFebin",
+      "description": "Android firmware toolkit repository with documentation for device operations and verification workflows. This portfolio confirms the source exists; it does n",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/indian-mcp-server/",
+      "path": "projects/indian-mcp-server/index.html",
+      "title": "MCPServer OS \u00b7 Project Guide | CodesbyFebin",
+      "description": "Repository describing an evidence-first MCP control plane, tenant boundaries, deployment state, and India-oriented technical-control profiles. Documentation ",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/github-mcpserver--ci-cd-engine/",
+      "path": "projects/github-mcpserver--ci-cd-engine/index.html",
+      "title": "MCP CI/CD engine \u00b7 Project Guide | CodesbyFebin",
+      "description": "Repository describing synchronization, evidence collection, and discovery routes for MCP metadata. The README includes broad feature and marketing claims, so",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/open-swarm-ai/",
+      "path": "projects/open-swarm-ai/index.html",
+      "title": "Open Swarm AI \u00b7 Project Guide | CodesbyFebin",
+      "description": "Multi-agent repository with a README describing its intended structure. It is included as an inspectable source surface, without assuming a fully qualified r",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/worker-agent/",
+      "path": "projects/worker-agent/index.html",
+      "title": "Worker Agent.Cloud \u00b7 Project Guide | CodesbyFebin",
+      "description": "Fork describing a content-agent control-plane direction. The README makes broad automation claims and references upstream surfaces. This card preserves fork ",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/awesome-zkvm/",
+      "path": "projects/awesome-zkvm/index.html",
+      "title": "awesome-zkvm reference \u00b7 Project Guide | CodesbyFebin",
+      "description": "Fork of an upstream zkVM resource list. It is a research/discovery reference rather than an original proof-system implementation. Upstream authorship and res",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/evidence-cookbook/",
+      "path": "projects/evidence-cookbook/index.html",
+      "title": "Evidence cookbook \u00b7 Project Guide | CodesbyFebin",
+      "description": "Documentation scaffold for evidence-driven development. Its current README contains generic examples, placeholder metrics, and placeholder resource links. It",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/mcp-cookbook/",
+      "path": "projects/mcp-cookbook/index.html",
+      "title": "MCP cookbook \u00b7 Project Guide | CodesbyFebin",
+      "description": "Documentation scaffold for MCP learning material. The current README uses generic tutorial and code placeholders. Repository existence is verified, but compl",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/agent-skills-cookbook/",
+      "path": "projects/agent-skills-cookbook/index.html",
+      "title": "Agent skills cookbook \u00b7 Project Guide | CodesbyFebin",
+      "description": "Scaffold for reusable agent-workflow documentation. Current template content is not evidence of tested skills, production automation, or verified tool access",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/kubernetes-ai-cookbook/",
+      "path": "projects/kubernetes-ai-cookbook/index.html",
+      "title": "Kubernetes AI cookbook \u00b7 Project Guide | CodesbyFebin",
+      "description": "Documentation scaffold about Kubernetes and AI workloads. Generic setup and benchmark placeholders in the current README should not be interpreted as a teste",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/self-hosted-cloud-cookbook/",
+      "path": "projects/self-hosted-cloud-cookbook/index.html",
+      "title": "Self-hosted cloud cookbook \u00b7 Project Guide | CodesbyFebin",
+      "description": "Documentation scaffold for self-hosting guidance. Its current generic README does not establish a completed operator runbook or a qualified deployment stack.",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/ai-security-cookbook/",
+      "path": "projects/ai-security-cookbook/index.html",
+      "title": "AI security cookbook \u00b7 Project Guide | CodesbyFebin",
+      "description": "Scaffold for AI security learning material. Generic code and resource placeholders remain in the README. The portfolio does not describe it as an audited def",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/ai-observability-cookbook/",
+      "path": "projects/ai-observability-cookbook/index.html",
+      "title": "AI observability cookbook \u00b7 Project Guide | CodesbyFebin",
+      "description": "Documentation scaffold for AI observability topics. Current placeholder metrics and examples do not establish real telemetry integrations, measured costs, or",
+      "lastModified": "2026-10-03"
+    },
+    {
+      "url": "https://codesbyfebin.github.io/projects/verifiable-ai-cookbook/",
+      "path": "projects/verifiable-ai-cookbook/index.html",
+      "title": "Verifiable AI cookbook \u00b7 Project Guide | CodesbyFebin",
+      "description": "Scaffold for verifiable-AI explanations and examples. The current generic README does not establish private model inference, proof-backed AI outputs, or benc",
+      "lastModified": "2026-10-03"
+    }
+  ]
+}
