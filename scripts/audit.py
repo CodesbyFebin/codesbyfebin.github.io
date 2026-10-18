@@ -29,7 +29,7 @@ class Page(HTMLParser):
    try:self.json.append(json.loads(self.buffer))
    except Exception as e:errors.append('Invalid JSON-LD '+str(e))
    self.capture=False
-skip_pages = {'404.html', 'portfolio.html', 'docs/index.html', 'docs/portfolio.html'}
+skip_pages = {'404.html', 'portfolio.html', 'docs/index.html', 'docs/portfolio.html', 'docs/404.html'}
 for p in DIST.rglob('*.html'):
  q=Page();q.feed(p.read_text());parsed[p]=q;ids[p]=set(q.ids)
  rel_path = str(p.relative_to(DIST))
