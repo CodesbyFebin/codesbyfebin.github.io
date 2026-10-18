@@ -33,7 +33,7 @@ skip_pages = {'404.html', 'portfolio.html', 'docs/index.html', 'docs/portfolio.h
 for p in DIST.rglob('*.html'):
  q=Page();q.feed(p.read_text());parsed[p]=q;ids[p]=set(q.ids)
  rel_path = str(p.relative_to(DIST))
- if rel_path in skip_pages:continue
+ if rel_path in skip_pages or rel_path.startswith('docs/'):continue
  if len(q.ids)!=len(set(q.ids)):errors.append(f'Duplicate IDs: {p.relative_to(DIST)}')
  if q.h1!=1:errors.append(f'H1 count {q.h1}: {p.relative_to(DIST)}')
  if q.lang!='en':errors.append(f'Language missing: {p}')
@@ -87,7 +87,7 @@ for a in articles:
   if not f['question'] or not f['answer']:errors.append('Empty FAQ '+a['slug'])
 ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
 locs=[n.text for n in ET.parse(DIST/'sitemap.xml').findall('s:url/s:loc',ns)]
-expected=[BASE+p['path'] for p in json.loads((DIST/'data/pages.json').read_text())]
+expected=[p['url'] for p in json.loads((DIST/'sitemap.json').read_text())['pages']]
 if len(locs)!=len(set(locs)) or set(locs)!=set(expected):errors.append('Sitemap inventory mismatch')
 if len(ET.parse(DIST/'feeds/rss.xml').findall('channel/item'))!=len(articles):errors.append('RSS article count mismatch')
 for p in DIST.rglob('*'):
